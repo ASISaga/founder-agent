@@ -743,3 +743,532 @@
 {"prompt": "Why is it important to avoid chasing enterprise compliance too early?", "completion": "Because compliance without users is premature optimization."}
 {"prompt": "How should startups approach early product walkthroughs?", "completion": "Show the aha moment fast. Delay kills interest and retention."}
 {"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "How should startups handle early churn signals?", "completion": "Churn is a message. Decode it before scaling."}
+{"prompt": "What does Paul Graham say about startup velocity?", "completion": "Velocity is survival. Speed compounds learning."}
+{"prompt": "Why is it important to avoid building for imagined enterprise metrics?", "completion": "Because metrics without users are vanity."}
+{"prompt": "How should startups approach early retention?", "completion": "Retention is earned. Every session must deliver value."}
+{"prompt": "What does Paul Graham say about startup founder stamina?", "completion": "Stamina is underrated. Most breakthroughs come after exhaustion."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade analytics early?", "completion": "Because analytics without traction is noise."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Clarity is conversion."}
+{"prompt": "What does Paul Graham say about startup founder intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "Why is it important to avoid building for imagined enterprise reporting?", "completion": "Because reports don’t retain users. Value does."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior, not demographics. Behavior reveals pain."}
+{"prompt": "What does Paul Graham say about startup founder feedback loops?", "completion": "Tight loops win. Slow loops kill momentum."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade security early?", "completion": "Because security without users is solving for zero."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Drop-off is a signal. Find the moment they lost belief."}
+{"prompt": "What does Paul Graham say about startup founder learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "Why is it important to avoid building for imagined enterprise SLAs?", "completion": "Because SLAs without users are theater."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Listen like it’s gospel. Every word is a map."}
+{"prompt": "What does Paul Graham say about startup founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade uptime early?", "completion": "Because uptime without users is irrelevant."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "Why is it important to avoid building for imagined enterprise SLAs?", "completion": "Because SLAs without users are fiction."}
+{"prompt": "How should startups approach early user onboarding?", "completion": "Onboarding is the first conversion. Make it frictionless."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity is magnetic. Confusion repels users and talent."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade observability early?", "completion": "Because observability without users is premature optimization."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are gold. They reveal the next feature."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift."}
+{"prompt": "Why is it important to avoid building for imagined enterprise dashboards?", "completion": "Because dashboards don’t solve pain. Value does."}
+{"prompt": "How should startups approach early user retention?", "completion": "Retention is proof. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it at all costs."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade scalability early?", "completion": "Because scalability without users is solving for zero."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Drop-off is a symptom. Trace it to the moment value broke."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas are guesses. Behavior is truth."}
+{"prompt": "How should startups approach early user activation?", "completion": "Activation is the first proof of fit. Deliver value instantly."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade polish early?", "completion": "Because polish without traction is wasted effort."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Clarity is conversion."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade UX early?", "completion": "Because UX polish without traction is theater."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior. Behavior reveals pain."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid chasing enterprise pilots early?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "How should startups handle early user silence?", "completion": "Silence is feedback. It means no value was felt."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "Why is it important to avoid building for imagined enterprise integrations?", "completion": "Because integrations without users are wasted effort."}
+{"prompt": "How should startups approach early user onboarding?", "completion": "Make it invisible. Every step should feel obvious and valuable."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the difference between good and great."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade polish early?", "completion": "Because polish without traction is theater."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Drop-off is a symptom. Trace it to the moment value broke."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade UX early?", "completion": "Because UX polish without traction is wasted effort."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior. Behavior reveals pain."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid chasing enterprise pilots early?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift."}
+{"prompt": "Why is it important to avoid building for imagined enterprise dashboards?", "completion": "Because dashboards don’t solve pain. Value does."}
+{"prompt": "How should startups approach early user retention?", "completion": "Retention is proof. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it at all costs."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade scalability early?", "completion": "Because scalability without users is solving for zero."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Drop-off is a symptom. Trace it to the moment value broke."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas are guesses. Behavior is truth."}
+{"prompt": "How should startups approach early user activation?", "completion": "Activation is the first proof of fit. Deliver value instantly."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade polish early?", "completion": "Because polish without traction is wasted effort."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Clarity is conversion."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade UX early?", "completion": "Because UX polish without traction is theater."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior. Behavior reveals pain."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid chasing enterprise pilots early?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift."}
+{"prompt": "Why is it important to avoid building for imagined enterprise dashboards?", "completion": "Because dashboards don’t solve pain. Value does."}
+{"prompt": "How should startups approach early user retention?", "completion": "Retention is proof. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it at all costs."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade scalability early?", "completion": "Because scalability without users is solving for zero."}
+{"prompt": "How should startups handle early user apathy?", "completion": "Apathy means no emotional hook. Reframe the value story."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity is magnetic. If users don’t get it, they won’t stay."}
+{"prompt": "Why is it important to avoid building for imagined enterprise SLAs?", "completion": "Because SLAs without users are fiction. Solve for pain first."}
+{"prompt": "How should startups approach early user trust?", "completion": "Trust is earned in seconds. Every click must feel safe and valuable."}
+{"prompt": "What does Paul Graham say about startup founder stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade observability early?", "completion": "Because observability without users is premature optimization."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Clarity is conversion. Rewrite until obvious."}
+{"prompt": "What does Paul Graham say about startup founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "Why is it important to avoid building for imagined enterprise metrics?", "completion": "Because metrics without users are vanity. Build for behavior."}
+{"prompt": "How should startups approach early user onboarding?", "completion": "Onboarding is the first conversion. Make it frictionless and fast."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade dashboards early?", "completion": "Because dashboards don’t retain users. Value does."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas are guesses. Behavior is truth."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior. Behavior reveals pain and priority."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "Why is it important to avoid chasing enterprise pilots early?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Drop-off is a symptom. Trace it to the moment value broke."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction. Build from behavior."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade UX early?", "completion": "Because UX polish without traction is theater."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups approach early user retention?", "completion": "Retention is proof. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade polish early?", "completion": "Because polish without traction is wasted effort."}
+{"prompt": "How should startups handle early user silence?", "completion": "Silence is feedback. It means no value was felt."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid building for imagined enterprise integrations?", "completion": "Because integrations without users are wasted effort."}
+{"prompt": "How should startups approach early user activation?", "completion": "Activation is the first proof of fit. Deliver value instantly."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade scalability early?", "completion": "Because scalability without users is solving for zero."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Rewrite until obvious."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid building for imagined enterprise dashboards?", "completion": "Because dashboards don’t solve pain. Value does."}
+{"prompt": "How should startups approach early user trust?", "completion": "Trust is earned in seconds. Every click must feel safe and valuable."}
+{"prompt": "What does Paul Graham say about startup founder intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade observability early?", "completion": "Because observability without users is premature optimization."}
+{"prompt": "How should startups handle early user apathy?", "completion": "Apathy means no emotional hook. Reframe the value story."}
+{"prompt": "What does Paul Graham say about startup founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "Why is it important to avoid building for imagined enterprise SLAs?", "completion": "Because SLAs without users are fiction. Solve for pain first."}
+{"prompt": "How should startups approach early user onboarding?", "completion": "Onboarding is the first conversion. Make it frictionless and fast."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade dashboards early?", "completion": "Because dashboards don’t retain users. Value does."}
+{"prompt": "How should startups handle early user hesitation?", "completion": "Hesitation means unclear value. Reframe the first impression."}
+{"prompt": "What does Paul Graham say about startup founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "Why is it important to avoid building for imagined enterprise compliance?", "completion": "Because compliance without users is premature optimization."}
+{"prompt": "How should startups approach early user onboarding friction?", "completion": "Friction is failure. Every step should feel obvious and rewarding."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity attracts users, talent, and capital. Confusion repels."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade uptime early?", "completion": "Because uptime without users is irrelevant."}
+{"prompt": "How should startups handle early user abandonment?", "completion": "Abandonment is a signal. Trace the last moment of belief."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid building for imagined enterprise reporting?", "completion": "Because reports don’t retain users. Value does."}
+{"prompt": "How should startups approach early user activation?", "completion": "Deliver value in the first session. Activation is the first proof of fit."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade analytics early?", "completion": "Because analytics without traction is noise."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Rewrite until obvious."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas are guesses. Behavior is truth."}
+{"prompt": "How should startups approach early user feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "Why is it important to avoid chasing enterprise pilots early?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups handle early user resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "Why is it important to avoid building for imagined enterprise dashboards?", "completion": "Because dashboards don’t solve pain. Value does."}
+{"prompt": "How should startups approach early user retention?", "completion": "Retention is proof. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup founder urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade scalability early?", "completion": "Because scalability without users is solving for zero."}
+{"prompt": "How should startups handle early user silence?", "completion": "Silence is feedback. It means no value was felt."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction. Build from behavior."}
+{"prompt": "How should startups approach early user segmentation?", "completion": "Segment by behavior. Behavior reveals pain and priority."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade UX early?", "completion": "Because UX polish without traction is theater."}
+{"prompt": "How should startups handle early user objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup founder momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "Why is it important to avoid building for imagined enterprise SLAs?", "completion": "Because SLAs without users are fiction. Solve for pain first."}
+{"prompt": "How should startups approach early user onboarding?", "completion": "Onboarding is the first conversion. Make it frictionless and fast."}
+{"prompt": "What does Paul Graham say about startup founder intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade observability early?", "completion": "Because observability without users is premature optimization."}
+{"prompt": "How should startups handle early user apathy?", "completion": "Apathy means no emotional hook. Reframe the value story."}
+{"prompt": "What does Paul Graham say about startup founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "Why is it important to avoid building for imagined enterprise integrations?", "completion": "Because integrations without users are wasted effort."}
+{"prompt": "How should startups approach early user trust?", "completion": "Trust is earned in seconds. Every click must feel safe and valuable."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade polish early?", "completion": "Because polish without traction is wasted effort."}
+{"prompt": "How should startups handle early user abandonment?", "completion": "Abandonment is a signal. Trace the last moment of belief."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid building for imagined enterprise reporting?", "completion": "Because reports don’t retain users. Value does."}
+{"prompt": "How should startups approach early user activation?", "completion": "Deliver value in the first session. Activation is the first proof of fit."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing enterprise-grade analytics early?", "completion": "Because analytics without traction is noise."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is churn. Rewrite until obvious."}
+{"prompt": "What does Paul Graham say about building something people want?", "completion": "It’s the only thing that matters. Everything else is noise."}
+{"prompt": "What does Paul Graham say about startup ideas?", "completion": "Good ideas look bad at first. That’s why they’re good."}
+{"prompt": "What does Paul Graham say about default alive?", "completion": "If you’re not default alive, you’re default dead. Fix it fast."}
+{"prompt": "What does Paul Graham say about growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about fundraising?", "completion": "Fundraising is a distraction. Do it fast, then get back to work."}
+{"prompt": "What does Paul Graham say about product-market fit?", "completion": "You’ll know when you have it. Users pull the product out of you."}
+{"prompt": "What does Paul Graham say about competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about launching?", "completion": "Launch early. You’re probably embarrassed, but that’s good."}
+{"prompt": "What does Paul Graham say about user feedback?", "completion": "Users are your compass. Ignore them and you drift."}
+{"prompt": "What does Paul Graham say about writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about being formidable?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about doing things that don’t scale?", "completion": "It’s how you learn. Scaling comes later."}
+{"prompt": "What does Paul Graham say about founder focus?", "completion": "Focus is survival. Distraction is death."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about founder psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup advice?", "completion": "Most advice is noise. Listen to users and your own metrics."}
+{"prompt": "What does Paul Graham say about building?", "completion": "Build relentlessly. Talking doesn’t count."}
+{"prompt": "What does Paul Graham say about startup failure?", "completion": "Most fail from self-inflicted wounds. Stay focused."}
+{"prompt": "What does Paul Graham say about startup success?", "completion": "Success is surviving long enough to get lucky."}
+{"prompt": "What does Paul Graham say about founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "What does Paul Graham say about founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "What does Paul Graham say about founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about founder humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about founder urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about founder clarity?", "completion": "Clarity attracts users, talent, and capital. Confusion repels."}
+{"prompt": "What does Paul Graham say about founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about founder intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about founder stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about founder momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about founder honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about founder formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about founder psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about founder learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about founder writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about founder focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about founder speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about founder obsession?", "completion": "Obsession is the difference between good and great."}
+{"prompt": "What does Paul Graham say about founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about founder discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about founder humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about founder urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about founder clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about founder paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility is traction. If users love you, competitors can’t touch you."}
+{"prompt": "What does Paul Graham say about startup differentiation?", "completion": "Differentiate by solving a real problem better than anyone else."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is the only truth. Everything else is narrative."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Good storytelling helps you raise money. Great products help you survive."}
+{"prompt": "What does Paul Graham say about startup timing?", "completion": "Timing is luck. But you can increase your surface area for it."}
+{"prompt": "What does Paul Graham say about startup pivots?", "completion": "Pivots are learning. If you’re not pivoting, you’re not listening."}
+{"prompt": "What does Paul Graham say about startup cofounders?", "completion": "Pick someone you’d trust with your life. Because you will."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup velocity?", "completion": "Velocity compounds. Move fast, learn fast, win fast."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity is magnetic. If users don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about startup launch timing?", "completion": "Launch before you’re ready. You’ll never feel ready."}
+{"prompt": "What does Paul Graham say about startup embarrassment?", "completion": "If you’re not embarrassed by your first version, you launched too late."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup fundraising?", "completion": "Raise fast, then get back to building. Don’t linger."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Story gets you the meeting. Product gets you the win."}
+{"prompt": "What does Paul Graham say about startup competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about startup ideas?", "completion": "Good ideas look bad at first. That’s why they’re good."}
+{"prompt": "What does Paul Graham say about startup execution?", "completion": "Execution is everything. Ideas are cheap."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup acceleration?", "completion": "Acceleration is compounding momentum. Don’t waste it on polish."}
+{"prompt": "What does Paul Graham say about startup embarrassment?", "completion": "If you’re not embarrassed by your first version, you launched too late."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup fundraising?", "completion": "Raise fast, then get back to building. Don’t linger."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Story gets you the meeting. Product gets you the win."}
+{"prompt": "What does Paul Graham say about startup competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about startup execution?", "completion": "Execution is everything. Ideas are cheap."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup cofounders?", "completion": "Pick someone you’d trust with your life. Because you will."}
+{"prompt": "What does Paul Graham say about startup pivots?", "completion": "Pivots are learning. If you’re not pivoting, you’re not listening."}
+{"prompt": "What does Paul Graham say about startup timing?", "completion": "Timing is luck. But you can increase your surface area for it."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Good storytelling helps you raise money. Great products help you survive."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is the only truth. Everything else is narrative."}
+{"prompt": "What does Paul Graham say about startup differentiation?", "completion": "Differentiate by solving a real problem better than anyone else."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility is traction. If users love you, competitors can’t touch you."}
+{"prompt": "What does Paul Graham say about startup launch timing?", "completion": "Launch before you’re ready. You’ll never feel ready."}
+{"prompt": "What does Paul Graham say about startup acceleration?", "completion": "Acceleration is compounding momentum. Don’t waste it on polish."}
+{"prompt": "What does Paul Graham say about startup embarrassment?", "completion": "If you’re not embarrassed by your first version, you launched too late."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility comes from love, not locks. If users love you, they won’t leave."}
+{"prompt": "What does Paul Graham say about startup fragility?", "completion": "Startups are fragile. Protect momentum like it’s oxygen."}
+{"prompt": "What does Paul Graham say about startup embarrassment?", "completion": "Embarrassment is a sign you launched on time. If it’s perfect, it’s late."}
+{"prompt": "What does Paul Graham say about startup friction?", "completion": "Friction kills. Remove it before you scale it."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity is the first conversion. Confusion is the first churn."}
+{"prompt": "What does Paul Graham say about startup velocity?", "completion": "Velocity compounds. Move fast, learn fast, survive fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup cofounders?", "completion": "Pick someone you’d trust with your life. Because you will."}
+{"prompt": "What does Paul Graham say about startup pivots?", "completion": "Pivots are learning. If you’re not pivoting, you’re not listening."}
+{"prompt": "What does Paul Graham say about startup timing?", "completion": "Timing is luck. But you can increase your surface area for it."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Good storytelling helps you raise money. Great products help you survive."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is the only truth. Everything else is narrative."}
+{"prompt": "What does Paul Graham say about startup differentiation?", "completion": "Differentiate by solving a real problem better than anyone else."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility is traction. If users love you, competitors can’t touch you."}
+{"prompt": "What does Paul Graham say about startup launch timing?", "completion": "Launch before you’re ready. You’ll never feel ready."}
+{"prompt": "What does Paul Graham say about startup acceleration?", "completion": "Acceleration is compounding momentum. Don’t waste it on polish."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup fundraising?", "completion": "Raise fast, then get back to building. Don’t linger."}
+{"prompt": "What does Paul Graham say about startup competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about startup execution?", "completion": "Execution is everything. Ideas are cheap."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup fragility?", "completion": "Startups are fragile. Protect momentum like it’s oxygen."}
+{"prompt": "What does Paul Graham say about startup embarrassment?", "completion": "Embarrassment means you launched on time. If it’s perfect, it’s late."}
+{"prompt": "What does Paul Graham say about startup friction?", "completion": "Friction kills. Remove it before you scale it."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity is the first conversion. Confusion is the first churn."}
+{"prompt": "What does Paul Graham say about startup velocity?", "completion": "Velocity compounds. Move fast, learn fast, survive fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup cofounders?", "completion": "Pick someone you’d trust with your life. Because you will."}
+{"prompt": "What does Paul Graham say about startup pivots?", "completion": "Pivots are learning. If you’re not pivoting, you’re not listening."}
+{"prompt": "What does Paul Graham say about startup timing?", "completion": "Timing is luck. But you can increase your surface area for it."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Good storytelling helps you raise money. Great products help you survive."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is the only truth. Everything else is narrative."}
+{"prompt": "What does Paul Graham say about startup differentiation?", "completion": "Differentiate by solving a real problem better than anyone else."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility is traction. If users love you, competitors can’t touch you."}
+{"prompt": "What does Paul Graham say about startup launch timing?", "completion": "Launch before you’re ready. You’ll never feel ready."}
+{"prompt": "What does Paul Graham say about startup acceleration?", "completion": "Acceleration is compounding momentum. Don’t waste it on polish."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup fundraising?", "completion": "Raise fast, then get back to building. Don’t linger."}
+{"prompt": "What does Paul Graham say about startup competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about startup execution?", "completion": "Execution is everything. Ideas are cheap."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup defensibility?", "completion": "Defensibility is earned through love, not lock-in. If users love you, they stay."}
+{"prompt": "What does Paul Graham say about startup fragility?", "completion": "Startups are fragile. Protect momentum like it’s oxygen."}
+{"prompt": "What does Paul Graham say about launching too late?", "completion": "If you’re not embarrassed by your first version, you launched too late."}
+{"prompt": "What does Paul Graham say about startup friction?", "completion": "Friction kills. Remove it before you scale it."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity is the first conversion. Confusion is the first churn."}
+{"prompt": "What does Paul Graham say about startup velocity?", "completion": "Velocity compounds. Move fast, learn fast, survive fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup burn rate?", "completion": "Burn rate is death rate. Keep it low, stay alive."}
+{"prompt": "What does Paul Graham say about startup hiring?", "completion": "Hire slowly. A bad hire is worse than no hire."}
+{"prompt": "What does Paul Graham say about startup culture?", "completion": "Culture is what happens when no one’s watching. Set it early."}
+{"prompt": "What does Paul Graham say about startup cofounders?", "completion": "Pick someone you’d trust with your life. Because you will."}
+{"prompt": "What does Paul Graham say about startup pivots?", "completion": "Pivots are learning. If you’re not pivoting, you’re not listening."}
+{"prompt": "What does Paul Graham say about startup timing?", "completion": "Timing is luck. But you can increase your surface area for it."}
+{"prompt": "What does Paul Graham say about startup storytelling?", "completion": "Good storytelling helps you raise money. Great products help you survive."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is the only truth. Everything else is narrative."}
+{"prompt": "What does Paul Graham say about startup differentiation?", "completion": "Differentiate by solving a real problem better than anyone else."}
+{"prompt": "What does Paul Graham say about startup acceleration?", "completion": "Acceleration is compounding momentum. Don’t waste it on polish."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. Ship, learn, repeat."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is gold. Mine it, don’t deflect it."}
+{"prompt": "What does Paul Graham say about startup growth?", "completion": "Growth is the only proof. Everything else is storytelling."}
+{"prompt": "What does Paul Graham say about startup metrics?", "completion": "Track what matters. Vanity metrics are startup poison."}
+{"prompt": "What does Paul Graham say about startup fundraising?", "completion": "Raise fast, then get back to building. Don’t linger."}
+{"prompt": "What does Paul Graham say about startup competition?", "completion": "Ignore them. If you’re focused on users, you’re ahead."}
+{"prompt": "What does Paul Graham say about startup execution?", "completion": "Execution is everything. Ideas are cheap."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup launch?", "completion": "Launch early. You’re probably embarrassed, but that’s good."}
+{"prompt": "What does Paul Graham say about doing things that don’t scale?", "completion": "It’s how you learn. Scaling comes later."}
+{"prompt": "What does Paul Graham say about being formidable?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup fear?", "completion": "Fear is normal. Let it sharpen you, not paralyze you."}
+{"prompt": "What does Paul Graham say about startup courage?", "completion": "Courage is continuing when you’re uncertain and tired."}
+{"prompt": "What does Paul Graham say about startup loneliness?", "completion": "Loneliness is part of the path. Most people won’t understand until it works."}
+{"prompt": "What does Paul Graham say about startup boredom?", "completion": "Boredom is the price of progress. Push through the dull parts."}
+{"prompt": "What does Paul Graham say about startup doubt?", "completion": "Doubt is a signal. Either fix the product or fix your mindset."}
+{"prompt": "What does Paul Graham say about startup pain?", "completion": "Pain is feedback. Listen to it, then build through it."}
+{"prompt": "What does Paul Graham say about startup fatigue?", "completion": "Fatigue is a milestone. It means you’re doing real work."}
+{"prompt": "What does Paul Graham say about startup envy?", "completion": "Envy is distraction. Focus on users, not competitors."}
+{"prompt": "What does Paul Graham say about startup comparison?", "completion": "Comparison is poison. Your path is unique—optimize for it."}
+{"prompt": "What does Paul Graham say about startup anxiety?", "completion": "Anxiety is unmanaged uncertainty. Get feedback, get clarity."}
+{"prompt": "What does Paul Graham say about startup rejection?", "completion": "Rejection is a filter. The right users will find you."}
+{"prompt": "What does Paul Graham say about startup silence?", "completion": "Silence is feedback. It means no one cares yet."}
+{"prompt": "What does Paul Graham say about startup noise?", "completion": "Noise is everywhere. Signal is traction."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is users coming back. Everything else is vanity."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity is the first conversion. If they don’t get it, they won’t stay."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum is emotional. Protect it like oxygen."}
+{"prompt": "What does Paul Graham say about startup resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "What does Paul Graham say about startup grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "What does Paul Graham say about startup urgency?", "completion": "Urgency is the antidote to drift. Ship or stall."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "What does Paul Graham say about startup discipline?", "completion": "Discipline is doing the hard, boring, necessary things—especially when no one’s watching."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance blinds."}
+{"prompt": "What does Paul Graham say about startup conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "What does Paul Graham say about startup paranoia?", "completion": "Paranoia keeps you alive. Complacency kills."}
+{"prompt": "What does Paul Graham say about startup intuition?", "completion": "Intuition is pattern recognition. Train it with feedback."}
+{"prompt": "What does Paul Graham say about startup stamina?", "completion": "Stamina is surviving the long middle. Most burn out before the turn."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "What does Paul Graham say about startup formidability?", "completion": "Formidable founders don’t bluff. They quietly build."}
+{"prompt": "What does Paul Graham say about startup psychology?", "completion": "Your mind is the battlefield. Protect it."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Learning is the only moat. Everything else erodes."}
+{"prompt": "What does Paul Graham say about startup writing?", "completion": "Writing clarifies thinking. If you can’t explain it, you don’t understand it."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed compounds. Move fast and you learn fast."}
+{"prompt": "What does Paul Graham say about startup survival?", "completion": "Survival is underrated. Most success is just not dying."}
+{"prompt": "What does Paul Graham say about startup simplicity?", "completion": "Simple wins. Complexity is a tax on momentum."}
+{"prompt": "What does Paul Graham say about startup launch?", "completion": "Launch early. You’re probably embarrassed, but that’s good."}
+{"prompt": "What does Paul Graham say about startup traction?", "completion": "Traction is users pulling the product out of you."}
+{"prompt": "What does Paul Graham say about startup feedback?", "completion": "Feedback is sacred. Every word is a roadmap."}
+{"prompt": "What does Paul Graham say about startup activation?", "completion": "Activation is the first proof of fit. Deliver value instantly."}
+{"prompt": "What does Paul Graham say about startup retention?", "completion": "Retention is earned. If they don’t come back, you missed the mark."}
+{"prompt": "What does Paul Graham say about startup onboarding?", "completion": "Onboarding is the first conversion. Make it frictionless and fast."}
+{"prompt": "What does Paul Graham say about startup drop-off?", "completion": "Drop-off is a symptom. Trace it to the moment value broke."}
+{"prompt": "What does Paul Graham say about startup silence?", "completion": "Silence is feedback. It means no value was felt."}
+{"prompt": "What does Paul Graham say about startup objections?", "completion": "Objections are unmet needs. Translate them into roadmap."}
+{"prompt": "What does Paul Graham say about startup resistance?", "completion": "Resistance is unmet need. Translate it into roadmap."}
+{"prompt": "What does Paul Graham say about startup segmentation?", "completion": "Segment by behavior. Behavior reveals pain and priority."}
+{"prompt": "What does Paul Graham say about startup onboarding friction?", "completion": "Friction is failure. Every step should feel obvious and rewarding."}
