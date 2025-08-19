@@ -453,3 +453,199 @@
 {"prompt": "Why is it important to avoid building for imagined enterprise?", "completion": "Because imagined enterprise needs dilute focus. Build for real pain."}
 {"prompt": "How should startups handle early product pivots?", "completion": "Pivot only when learning demands it. Don’t pivot out of boredom or fear."}
 {"prompt": "What does Paul Graham say about startup obsession?", "completion": "Obsession is a feature, not a bug. The best founders are obsessed with solving."}
+{"prompt": "How should startups handle early user churn?", "completion": "Treat churn as a signal, not a failure. Learn what broke trust or value."}
+{"prompt": "What does Paul Graham say about startup momentum?", "completion": "Momentum compounds. Even small wins build founder morale and investor confidence."}
+{"prompt": "Why is it important to avoid building for hypothetical use cases?", "completion": "Because real users don’t behave hypothetically. Build for actual behavior."}
+{"prompt": "How should startups approach early customer interviews?", "completion": "Listen more than you pitch. Your job is to uncover pain, not defend solutions."}
+{"prompt": "What does Paul Graham say about startup speed?", "completion": "Speed matters. The faster you learn, the faster you grow."}
+{"prompt": "Why is it important to avoid over-engineering MVPs?", "completion": "Because polish without proof is wasted effort. Ship lean, learn fast."}
+{"prompt": "How should startups handle early team disagreements?", "completion": "Disagree on strategy, not values. Alignment on mission is non-negotiable."}
+{"prompt": "What does Paul Graham say about startup focus?", "completion": "Focus is saying no to good ideas. Great startups do one thing exceptionally well."}
+{"prompt": "Why is it important to avoid premature scaling?", "completion": "Because scaling broken systems magnifies failure. Fix before you grow."}
+{"prompt": "How should startups approach early investor conversations?", "completion": "Be honest, be obsessed, be clear. Investors bet on clarity and conviction."}
+{"prompt": "What does Paul Graham say about startup authenticity?", "completion": "Authenticity builds trust. Pretending to be big makes you look small."}
+{"prompt": "Why is it important to avoid building for edge cases?", "completion": "Because edge cases distract from core value. Solve for the 80%, not the 1%."}
+{"prompt": "How should startups handle early product criticism?", "completion": "Don’t defend—decode. Criticism is free user research."}
+{"prompt": "What does Paul Graham say about startup learning?", "completion": "Startups are learning machines. The faster you learn, the longer you live."}
+{"prompt": "Why is it important to avoid chasing feature parity?", "completion": "Because parity is a trap. Differentiation wins, imitation loses."}
+{"prompt": "How should startups approach early retention metrics?", "completion": "Track behavior, not just logins. Retention is about habit, not visits."}
+{"prompt": "What does Paul Graham say about startup clarity?", "completion": "Clarity cuts through noise. If users don’t get it, they won’t stay."}
+{"prompt": "Why is it important to avoid building for imagined personas?", "completion": "Because imagined personas don’t pay. Build for real humans with real pain."}
+{"prompt": "How should startups handle early technical debt?", "completion": "Pay it down strategically. Debt is fine—until it blocks velocity."}
+{"prompt": "What does Paul Graham say about startup humility?", "completion": "Humility keeps you learning. Arrogance kills feedback loops."}
+{"prompt": "Why is it important to avoid chasing early partnerships?", "completion": "Because partnerships distract from product-market fit. Validate first, partner later."}
+{"prompt": "How should startups approach early pricing experiments?", "completion": "Test willingness to pay, not just price points. Value drives pricing."}
+{"prompt": "What does Paul Graham say about startup iteration?", "completion": "Iteration is survival. The first version is never right."}
+{"prompt": "Why is it important to avoid building for imagined virality?", "completion": "Because virality is earned, not engineered. Focus on value first."}
+{"prompt": "How should startups handle early user segmentation?", "completion": "Segment by behavior, not demographics. Actions reveal intent."}
+{"prompt": "What does Paul Graham say about startup honesty?", "completion": "Honesty builds resilience. You can’t fix what you won’t admit."}
+{"prompt": "Why is it important to avoid chasing early awards?", "completion": "Because awards don’t validate product-market fit. Users do."}
+{"prompt": "How should startups approach early roadmap visibility?", "completion": "Share direction, not promises. Roadmaps are signals, not contracts."}
+{"prompt": "What does Paul Graham say about startup obsession with users?", "completion": "Obsess over users. They’re the only ones who matter."}
+{"prompt": "Why is it important to avoid building for imagined competitors?", "completion": "Because competitors don’t pay you. Users do."}
+{"prompt": "How should startups handle early product onboarding?", "completion": "Make it frictionless. Every second counts."}
+{"prompt": "What does Paul Graham say about startup adaptability?", "completion": "Adaptability is strength. Rigid startups break."}
+{"prompt": "Why is it important to avoid chasing early scale hacks?", "completion": "Because hacks don’t scale. Systems do."}
+{"prompt": "How should startups approach early community building?", "completion": "Start with trust. Communities grow from shared belief, not marketing."}
+{"prompt": "What does Paul Graham say about startup clarity of mission?", "completion": "Mission clarity attracts talent, users, and capital."}
+{"prompt": "Why is it important to avoid building for imagined integrations?", "completion": "Because integrations without users are wasted effort."}
+{"prompt": "How should startups handle early product analytics?", "completion": "Track what matters. Vanity metrics mislead, actionable metrics guide."}
+{"prompt": "What does Paul Graham say about startup courage?", "completion": "Courage is shipping when you’re scared. It’s the founder’s edge."}
+{"prompt": "Why is it important to avoid chasing early enterprise pilots?", "completion": "Because pilots stall momentum. Build for velocity, not bureaucracy."}
+{"prompt": "How should startups approach early feedback loops?", "completion": "Shorten them. Fast feedback fuels fast learning."}
+{"prompt": "What does Paul Graham say about startup clarity of value?", "completion": "If users don’t get the value in 10 seconds, they’re gone."}
+{"prompt": "Why is it important to avoid building for imagined workflows?", "completion": "Because imagined workflows don’t reveal real pain."}
+{"prompt": "How should startups handle early product bugs?", "completion": "Fix fast, learn faster. Bugs are feedback."}
+{"prompt": "What does Paul Graham say about startup endurance?", "completion": "Endurance wins. Most startups die from fatigue, not failure."}
+{"prompt": "Why is it important to avoid chasing early influencer hype?", "completion": "Because hype fades. Value sticks."}
+{"prompt": "How should startups approach early product demos?", "completion": "Show the magic moment. Don’t bury the lead."}
+{"prompt": "What does Paul Graham say about startup clarity of pitch?", "completion": "If your pitch confuses, your product will too."}
+{"prompt": "Why is it important to avoid building for imagined team scale?", "completion": "Because scale assumptions break early teams. Build for now."}
+{"prompt": "How should startups handle early user drop-off?", "completion": "Investigate the moment of loss. That’s where the fix lives."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is a UX bug. If users hesitate, something’s unclear."}
+{"prompt": "What does Paul Graham say about startup clarity of purpose?", "completion": "Purpose guides decisions. Without it, startups drift."}
+{"prompt": "Why is it important to avoid chasing early enterprise validation?", "completion": "Because enterprise validation often delays real traction."}
+{"prompt": "How should startups approach early product naming?", "completion": "Choose clarity over cleverness. Names should explain, not obscure."}
+{"prompt": "What does Paul Graham say about startup emotional resilience?", "completion": "Emotional resilience is surviving the troughs without losing belief."}
+{"prompt": "Why is it important to avoid building for imagined compliance?", "completion": "Because compliance without customers is wasted effort."}
+{"prompt": "How should startups handle early user drop-off analysis?", "completion": "Find the moment of friction. That’s where retention breaks."}
+{"prompt": "What does Paul Graham say about startup founder psychology?", "completion": "Founders must manage their minds. Doubt is normal, paralysis isn’t."}
+{"prompt": "Why is it important to avoid chasing early ecosystem integrations?", "completion": "Because integrations don’t matter if users don’t care."}
+{"prompt": "How should startups approach early product walkthroughs?", "completion": "Show the aha moment fast. Delay kills interest."}
+{"prompt": "What does Paul Graham say about startup clarity of vision?", "completion": "Vision is what survives pivots. It’s the north star."}
+{"prompt": "Why is it important to avoid building for imagined scale limits?", "completion": "Because scale problems are good problems. Don’t pre-optimize."}
+{"prompt": "How should startups handle early user segmentation?", "completion": "Segment by pain, not persona. Pain drives behavior."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid chasing early enterprise architecture?", "completion": "Because architecture without users is architecture for no one."}
+{"prompt": "How should startups approach early product positioning?", "completion": "Position against pain, not competitors. Pain wins attention."}
+{"prompt": "What does Paul Graham say about startup clarity of value prop?", "completion": "If users can’t repeat your value prop, it’s not clear enough."}
+{"prompt": "Why is it important to avoid building for imagined team roles?", "completion": "Because roles evolve. Build for flexibility, not hierarchy."}
+{"prompt": "How should startups handle early user feedback?", "completion": "Filter for signal. Not all feedback is equal."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence."}
+{"prompt": "Why is it important to avoid chasing early enterprise SLAs?", "completion": "Because SLAs without traction are premature optimization."}
+{"prompt": "How should startups approach early product differentiation?", "completion": "Differentiate on value, not features. Features follow pain."}
+{"prompt": "What does Paul Graham say about startup clarity of execution?", "completion": "Execution is clarity in motion. Sloppy execution signals confusion."}
+{"prompt": "Why is it important to avoid building for imagined compliance workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product abandonment?", "completion": "Find the moment they gave up. That’s where the fix lives."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing early enterprise dashboards?", "completion": "Because dashboards don’t drive retention. Value does."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is speed. Users should get it instantly."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the work when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise scale?", "completion": "Because scale without users is fiction."}
+{"prompt": "How should startups handle early product friction?", "completion": "Remove it ruthlessly. Friction kills momentum."}
+{"prompt": "What does Paul Graham say about startup founder focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "Why is it important to avoid chasing early enterprise compliance?", "completion": "Because compliance doesn’t create users. Value does."}
+{"prompt": "How should startups approach early product iteration?", "completion": "Iterate fast, learn faster. Velocity beats perfection."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity is magnetic. It attracts users, talent, and capital."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups handle early product onboarding?", "completion": "Make it invisible. Every click should feel obvious."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing early enterprise pilots?", "completion": "Because pilots stall learning. Build for feedback velocity."}
+{"prompt": "How should startups approach early product messaging?", "completion": "Speak to pain. Pain gets attention."}
+{"prompt": "What does Paul Graham say about startup founder honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas don’t pay. Pain does."}
+{"prompt": "How should startups handle early product feedback?", "completion": "Decode the emotion behind the words. That’s where truth lives."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing early enterprise features?", "completion": "Because features without retention are noise."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is conversion. Confusion is churn."}
+{"prompt": "What does Paul Graham say about startup founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product drop-off?", "completion": "Find the moment of loss. That’s where the fix lives."}
+{"prompt": "How should startups handle early user confusion?", "completion": "Confusion is a UX bug. If users hesitate, something’s unclear."}
+{"prompt": "What does Paul Graham say about startup clarity of purpose?", "completion": "Purpose guides decisions. Without it, startups drift."}
+{"prompt": "Why is it important to avoid chasing early enterprise validation?", "completion": "Because enterprise validation often delays real traction."}
+{"prompt": "How should startups approach early product naming?", "completion": "Choose clarity over cleverness. Names should explain, not obscure."}
+{"prompt": "What does Paul Graham say about startup emotional resilience?", "completion": "Emotional resilience is surviving the troughs without losing belief."}
+{"prompt": "Why is it important to avoid building for imagined compliance?", "completion": "Because compliance without customers is wasted effort."}
+{"prompt": "How should startups handle early user drop-off analysis?", "completion": "Find the moment of friction. That’s where retention breaks."}
+{"prompt": "What does Paul Graham say about startup founder psychology?", "completion": "Founders must manage their minds. Doubt is normal, paralysis isn’t."}
+{"prompt": "Why is it important to avoid chasing early ecosystem integrations?", "completion": "Because integrations don’t matter if users don’t care."}
+{"prompt": "How should startups approach early product walkthroughs?", "completion": "Show the aha moment fast. Delay kills interest."}
+{"prompt": "What does Paul Graham say about startup clarity of vision?", "completion": "Vision is what survives pivots. It’s the north star."}
+{"prompt": "Why is it important to avoid building for imagined scale limits?", "completion": "Because scale problems are good problems. Don’t pre-optimize."}
+{"prompt": "How should startups handle early user segmentation?", "completion": "Segment by pain, not persona. Pain drives behavior."}
+{"prompt": "What does Paul Graham say about startup founder energy?", "completion": "Energy is contagious. Low-energy founders repel momentum."}
+{"prompt": "Why is it important to avoid chasing early enterprise architecture?", "completion": "Because architecture without users is architecture for no one."}
+{"prompt": "How should startups approach early product positioning?", "completion": "Position against pain, not competitors. Pain wins attention."}
+{"prompt": "What does Paul Graham say about startup clarity of value prop?", "completion": "If users can’t repeat your value prop, it’s not clear enough."}
+{"prompt": "Why is it important to avoid building for imagined team roles?", "completion": "Because roles evolve. Build for flexibility, not hierarchy."}
+{"prompt": "How should startups handle early user feedback?", "completion": "Filter for signal. Not all feedback is equal."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence."}
+{"prompt": "Why is it important to avoid chasing early enterprise SLAs?", "completion": "Because SLAs without traction are premature optimization."}
+{"prompt": "How should startups approach early product differentiation?", "completion": "Differentiate on value, not features. Features follow pain."}
+{"prompt": "What does Paul Graham say about startup clarity of execution?", "completion": "Execution is clarity in motion. Sloppy execution signals confusion."}
+{"prompt": "Why is it important to avoid building for imagined compliance workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product abandonment?", "completion": "Find the moment they gave up. That’s where the fix lives."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing early enterprise dashboards?", "completion": "Because dashboards don’t drive retention. Value does."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is speed. Users should get it instantly."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the work when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise scale?", "completion": "Because scale without users is fiction."}
+{"prompt": "How should startups handle early product friction?", "completion": "Remove it ruthlessly. Friction kills momentum."}
+{"prompt": "What does Paul Graham say about startup founder focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "Why is it important to avoid chasing early enterprise compliance?", "completion": "Because compliance doesn’t create users. Value does."}
+{"prompt": "How should startups approach early product iteration?", "completion": "Iterate fast, learn faster. Velocity beats perfection."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity is magnetic. It attracts users, talent, and capital."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups handle early product onboarding?", "completion": "Make it invisible. Every click should feel obvious."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing early enterprise pilots?", "completion": "Because pilots stall learning. Build for feedback velocity."}
+{"prompt": "How should startups approach early product messaging?", "completion": "Speak to pain. Pain gets attention."}
+{"prompt": "What does Paul Graham say about startup founder honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas don’t pay. Pain does."}
+{"prompt": "How should startups handle early product feedback?", "completion": "Decode the emotion behind the words. That’s where truth lives."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing early enterprise features?", "completion": "Because features without retention are noise."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is conversion. Confusion is churn."}
+{"prompt": "What does Paul Graham say about startup founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product drop-off?", "completion": "Find the moment of loss. That’s where the fix lives."}
+{"prompt": "How should startups handle early user abandonment?", "completion": "Trace the last click. That’s where clarity or value broke."}
+{"prompt": "What does Paul Graham say about startup founder stamina?", "completion": "Stamina matters more than brilliance. Most quit too soon."}
+{"prompt": "Why is it important to avoid chasing early enterprise integrations?", "completion": "Because integrations don’t matter if users don’t care."}
+{"prompt": "How should startups approach early product onboarding?", "completion": "Make it invisible. Every step should feel obvious."}
+{"prompt": "What does Paul Graham say about startup founder obsession?", "completion": "Obsession is the engine. It powers persistence and clarity."}
+{"prompt": "Why is it important to avoid building for imagined enterprise needs?", "completion": "Because imagined needs don’t convert. Real pain does."}
+{"prompt": "How should startups handle early product drop-off?", "completion": "Find the moment of loss. That’s where the fix lives."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity attracts users, talent, and capital. Confusion repels."}
+{"prompt": "Why is it important to avoid chasing early enterprise UX?", "completion": "Because UX without users is theater."}
+{"prompt": "How should startups approach early product messaging?", "completion": "Speak to pain. Pain gets attention and retention."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas don’t pay. Pain does."}
+{"prompt": "How should startups handle early product feedback?", "completion": "Decode the emotion behind the words. That’s where truth lives."}
+{"prompt": "What does Paul Graham say about startup founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "Why is it important to avoid chasing early enterprise features?", "completion": "Because features without retention are noise."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is conversion. Confusion is churn."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product drop-off?", "completion": "Find the moment of loss. That’s where the fix lives."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing early enterprise dashboards?", "completion": "Because dashboards don’t drive retention. Value does."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is speed. Users should get it instantly."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the work when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise scale?", "completion": "Because scale without users is fiction."}
+{"prompt": "How should startups handle early product friction?", "completion": "Remove it ruthlessly. Friction kills momentum."}
+{"prompt": "What does Paul Graham say about startup founder focus?", "completion": "Focus is saying no to everything but survival."}
+{"prompt": "Why is it important to avoid chasing early enterprise compliance?", "completion": "Because compliance doesn’t create users. Value does."}
+{"prompt": "How should startups approach early product iteration?", "completion": "Iterate fast, learn faster. Velocity beats perfection."}
+{"prompt": "What does Paul Graham say about startup founder clarity?", "completion": "Clarity is magnetic. It attracts users, talent, and capital."}
+{"prompt": "Why is it important to avoid building for imagined enterprise pain?", "completion": "Because imagined pain doesn’t pay. Real pain does."}
+{"prompt": "How should startups handle early product onboarding?", "completion": "Make it invisible. Every click should feel obvious."}
+{"prompt": "What does Paul Graham say about startup founder adaptability?", "completion": "Adaptability is survival. Rigid founders break."}
+{"prompt": "Why is it important to avoid chasing early enterprise pilots?", "completion": "Because pilots stall learning. Build for feedback velocity."}
+{"prompt": "How should startups approach early product messaging?", "completion": "Speak to pain. Pain gets attention."}
+{"prompt": "What does Paul Graham say about startup founder honesty?", "completion": "Honesty keeps you learning. Delusion kills startups."}
+{"prompt": "Why is it important to avoid building for imagined enterprise personas?", "completion": "Because personas don’t pay. Pain does."}
+{"prompt": "How should startups handle early product feedback?", "completion": "Decode the emotion behind the words. That’s where truth lives."}
+{"prompt": "What does Paul Graham say about startup founder resilience?", "completion": "Resilience is surviving the silence. Most quit too early."}
+{"prompt": "Why is it important to avoid chasing early enterprise features?", "completion": "Because features without retention are noise."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is conversion. Confusion is churn."}
+{"prompt": "What does Paul Graham say about startup founder conviction?", "completion": "Conviction is what keeps you building when feedback is mixed."}
+{"prompt": "Why is it important to avoid building for imagined enterprise workflows?", "completion": "Because workflows without users are fiction."}
+{"prompt": "How should startups handle early product drop-off?", "completion": "Find the moment of loss. That’s where the fix lives."}
+{"prompt": "What does Paul Graham say about startup founder grit?", "completion": "Grit is surviving the boring parts. Most don’t."}
+{"prompt": "Why is it important to avoid chasing early enterprise dashboards?", "completion": "Because dashboards don’t drive retention. Value does."}
+{"prompt": "How should startups approach early product clarity?", "completion": "Clarity is speed. Users should get it instantly."}
+{"prompt": "What does Paul Graham say about startup founder discipline?", "completion": "Discipline is doing the work when no one’s watching."}
+{"prompt": "Why is it important to avoid building for imagined enterprise scale?", "completion": "Because scale without users is fiction."}
+{"prompt": "How should startups handle early product friction?", "completion": "Remove it ruthlessly. Friction kills momentum."}
