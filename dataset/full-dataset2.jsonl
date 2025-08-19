@@ -46,3 +46,493 @@
 {"prompt": "On pre-empting customer churn", "completion": "Spot slipping engagement before it shows in revenue."}
 {"prompt": "Principle for learning from competitors", "completion": "Steal the why, reinvent the how."}
 {"prompt": "Advice for scaling support teams", "completion": "Invest in tools that grow with ticket volume, not just headcount."}
+{"prompt": "Advice on turning early adopters into advocates", "completion": "Give them insider access and real influence on the roadmap."}
+{"prompt": "On designing for speed of learning", "completion": "Build features that answer questions, not just add capability."}
+{"prompt": "Principle for recovering from a bad quarter", "completion": "Own the miss, adjust the plan, and over‑communicate progress."}
+{"prompt": "Guideline for aligning product and marketing teams", "completion": "Work from the same definition of success and the same metrics."}
+{"prompt": "Tip for choosing first expansion markets", "completion": "Go where your existing success stories already resonate."}
+{"prompt": "On handling conflicting priorities", "completion": "Pick the one that protects long‑term survival over short‑term gain."}
+{"prompt": "Advice for smoothing onboarding friction", "completion": "Remove one cognitive hurdle every iteration."}
+{"prompt": "On keeping growth experiments disciplined", "completion": "Run one at a time so you know what worked."}
+{"prompt": "Principle for communicating in crises", "completion": "Be fast, be factual, be human."}
+{"prompt": "Guidance on deciding when to sunset a feature", "completion": "Kill it if it confuses users or splits focus from the core."}
+{"prompt": "On structuring early customer support", "completion": "Founders should take the first tickets to learn the pain firsthand."}
+{"prompt": "Advice for maximizing conference ROI", "completion": "Leave with leads and insights, not just swag and photos."}
+{"prompt": "Guideline for managing distributed teams", "completion": "Default to written clarity to bridge time zones."}
+{"prompt": "Tip for avoiding reactive roadmapping", "completion": "Anchor the plan to strategy, not to the loudest complaint."}
+{"prompt": "On designing referral programs", "completion": "Make the reward instant and obvious."}
+{"prompt": "Advice for integrating user feedback loops", "completion": "Close the loop by telling them what changed because they spoke up."}
+{"prompt": "Guideline for simplifying pricing", "completion": "Fewer tiers, clearer value per jump."}
+{"prompt": "On building trust after a service outage", "completion": "Be transparent, fix visibly, and follow up after the dust settles."}
+{"prompt": "Principle for evaluating growth partners", "completion": "If they don’t bring users, insight, or speed, pass."}
+{"prompt": "Tip for running lean tests", "completion": "Test the message before building the product behind it."}
+{"prompt": "On nurturing a community around the product", "completion": "Give them a place to connect that you don’t fully control."}
+{"prompt": "Advice for ensuring repeat purchases", "completion": "Deliver value before they think about leaving."}
+{"prompt": "Guideline for dealing with scope creep", "completion": "Ask if it serves the core mission before saying yes."}
+{"prompt": "On balancing ambition and execution", "completion": "Keep the vision big but the next step small and clear."}
+{"prompt": "Principle for turning data into action", "completion": "If a number moves, either amplify or investigate immediately."}
+{"prompt": "Tip for effective stand‑ups", "completion": "Discuss blockers more than achievements."}
+{"prompt": "On managing remote onboarding", "completion": "Pair new hires with veterans for their first projects."}
+{"prompt": "Advice for building a waitlist", "completion": "Make sign‑up feel exclusive and participation feel rewarding."}
+{"prompt": "Guideline for reacting to competitor launches", "completion": "Don’t copy—double down on your edge."}
+{"prompt": "On creating internal alignment rituals", "completion": "Open each week with priorities, close it with outcomes."}
+{"prompt": "Tip for simplifying internal processes", "completion": "If it takes more time to explain than to do, fix it."}
+{"prompt": "Principle for pre‑launch testing", "completion": "Simulate the riskiest conditions before real users face them."}
+{"prompt": "On driving adoption of new features", "completion": "Highlight quick wins in the first use."}
+{"prompt": "Advice for budgeting in uncertainty", "completion": "Budget for survival; invest the surplus in growth."}
+{"prompt": "Guideline for refining a pitch", "completion": "Remove words until it can be told in 30 seconds."}
+{"prompt": "On handling a failed experiment", "completion": "Archive the learnings where they’re easy to find later."}
+{"prompt": "Tip for scaling culture", "completion": "Hire for it, fire for it, promote for it."}
+{"prompt": "Principle for transparent leadership", "completion": "Share bad news before it leaks."}
+{"prompt": "On defending against churn", "completion": "Spot the warning signs in behavior, not just surveys."}
+{"prompt": "Advice for negotiating partnerships", "completion": "Trade what’s cheap for you but valuable for them."}
+{"prompt": "Guideline for safeguarding focus time", "completion": "Block it on the calendar and treat it like a meeting."}
+{"prompt": "On iterating brand identity", "completion": "Evolve it to match the maturity of the product."}
+{"prompt": "Tip for turning customer praise into growth", "completion": "Make testimonials part of the buying journey."}
+{"prompt": "Principle for setting annual goals", "completion": "Choose the few that, if achieved, make everything else easier."}
+{"prompt": "On optimizing onboarding flows", "completion": "Cut steps until nothing breaks, then polish what’s left."}
+{"prompt": "Advice for leveraging user communities", "completion": "Equip them with assets to spread the word naturally."}
+{"prompt": "Guideline for sustainable growth pacing", "completion": "Grow at a speed your operations can survive."}
+{"prompt": "On evaluating new product ideas", "completion": "Score them by impact, effort, and fit before green‑lighting."}
+{"prompt": "Advice for building resilience in early teams", "completion": "Celebrate small wins so momentum survives the setbacks."}
+{"prompt": "Guideline for handover between product managers", "completion": "Document context, not just tasks, so nothing is lost in translation."}
+{"prompt": "On boosting adoption in legacy‑heavy industries", "completion": "Show them ROI in their own language before showing features."}
+{"prompt": "Tip for time‑boxing experiments", "completion": "Give them a clear stop date before they start consuming real resources."}
+{"prompt": "Principle for scaling beyond founder involvement", "completion": "Codify your instincts so others can apply them."}
+{"prompt": "Advice for dealing with delayed launches", "completion": "Reset expectations early and offer a tangible milestone in the meantime."}
+{"prompt": "Guideline for sustainable pricing tests", "completion": "Change one variable at a time to understand the effect."}
+{"prompt": "On structuring feedback from beta programs", "completion": "Tag each point by severity and frequency before acting."}
+{"prompt": "Tip for cross‑functional workshops", "completion": "Frame them around solving one shared pain point."}
+{"prompt": "Principle for protecting brand during pivots", "completion": "Keep the promise, even if the product changes."}
+{"prompt": "Advice for handling a toxic high performer", "completion": "Address the behavior before it poisons the culture."}
+{"prompt": "Guideline for optimizing landing pages", "completion": "Make the primary action impossible to miss."}
+{"prompt": "On sequencing hires in a startup", "completion": "Fill the biggest skill gaps that block progress, not just what’s easiest to hire."}
+{"prompt": "Tip for evaluating inbound partnership offers", "completion": "Score them on strategic fit before revenue potential."}
+{"prompt": "Principle for user education", "completion": "Teach them by letting them succeed quickly."}
+{"prompt": "Advice for reducing support ticket volume", "completion": "Identify top repeat questions and bake answers into the product."}
+{"prompt": "Guideline for motivating remote teams", "completion": "Pair clear metrics with visible recognition."}
+{"prompt": "On handling overfunding risk", "completion": "Keep burn in check so discipline doesn’t erode."}
+{"prompt": "Tip for reviving dormant leads", "completion": "Reach out with something new they can’t get elsewhere."}
+{"prompt": "Principle for choosing conference speaking topics", "completion": "Pick the one where you can be the most specific expert in the room."}
+{"prompt": "Advice for setting post‑acquisition culture", "completion": "Blend, don’t impose, so you keep the best of both."}
+{"prompt": "Guideline for shipping with known issues", "completion": "Release only if the risk is lower than the value of speed."}
+{"prompt": "On building cross‑sell opportunities", "completion": "Introduce the next product when the current one proves value."}
+{"prompt": "Tip for avoiding over‑engineering", "completion": "Ship the simplest thing that solves the real problem."}
+{"prompt": "Principle for measuring marketing channels", "completion": "Track cost per qualified lead, not just clicks."}
+{"prompt": "Advice for balancing product and service revenue", "completion": "Use service work to fund product development, not distract from it."}
+{"prompt": "Guideline for keeping investor updates engaging", "completion": "Lead with a win, a challenge, and a clear ask."}
+{"prompt": "On integrating acquired products", "completion": "Standardize the backend before touching the user interface."}
+{"prompt": "Tip for retaining key talent in uncertainty", "completion": "Give them ownership of meaningful problems."}
+{"prompt": "Principle for clear internal communication", "completion": "State the decision, the why, and the next step in one message."}
+{"prompt": "Advice for testing a new market segment", "completion": "Run a small campaign before committing product changes."}
+{"prompt": "Guideline for prioritizing roadmap items", "completion": "Weigh impact against effort and strategic alignment."}
+{"prompt": "On managing cash flow in seasonal businesses", "completion": "Stockpile surplus in high season to cover the low."}
+{"prompt": "Tip for simplifying multi‑step sign‑ups", "completion": "Show progress and keep the first step effortless."}
+{"prompt": "Principle for defensible differentiation", "completion": "Anchor it in something hard to copy, like culture or data."}
+{"prompt": "Advice for recovering from a public mistake", "completion": "Apologize fast, fix faster, and share the lesson."}
+{"prompt": "Guideline for aligning with early investors", "completion": "Check that their time horizon matches your growth plan."}
+{"prompt": "On fostering intra‑team mentorship", "completion": "Pair juniors with seniors on high‑stakes work."}
+{"prompt": "Tip for handling regulatory surprises", "completion": "Engage an expert before making public commitments."}
+{"prompt": "Principle for pre‑launch marketing", "completion": "Sell the problem before you reveal the solution."}
+{"prompt": "Advice for integrating AI into workflows", "completion": "Start where automation saves the most repetitive effort."}
+{"prompt": "Guideline for hosting effective AMAs", "completion": "Seed questions to avoid awkward silences."}
+{"prompt": "On transitioning from founder‑led sales", "completion": "Script the narrative so the magic is repeatable by others."}
+{"prompt": "Tip for crafting customer success stories", "completion": "Highlight the struggle before the turnaround."}
+{"prompt": "Principle for evaluating new tech stacks", "completion": "Choose longevity and community over novelty."}
+{"prompt": "Advice for handling press inquiries", "completion": "Stick to your three key messages no matter the question."}
+{"prompt": "Guideline for keeping teams small but effective", "completion": "Add people only when lack of capacity hurts output."}
+{"prompt": "On measuring customer satisfaction", "completion": "Pair survey scores with actual behavior changes."}
+{"prompt": "Tip for sequencing feature releases", "completion": "Launch the one with the clearest path to revenue first."}
+{"prompt": "Principle for sustainable founder pace", "completion": "Schedule recovery like you schedule meetings."}
+{"prompt": "Advice for maintaining founder clarity under pressure", "completion": "Return to the original problem you set out to solve and cut noise."}
+{"prompt": "Guideline for piloting a new internal tool", "completion": "Run it with one motivated team before scaling to the company."}
+{"prompt": "On converting free users to paid", "completion": "Show the value they’re missing where they feel the most friction."}
+{"prompt": "Tip for preventing burnout in startup teams", "completion": "Rotate high‑intensity work with low‑stakes wins."}
+{"prompt": "Principle for creating defensible moats", "completion": "Accumulate proprietary insight faster than others can copy it."}
+{"prompt": "Advice for managing high‑stakes investor meetings", "completion": "Come in with a clear ask and three supporting proof points."}
+{"prompt": "Guideline for triaging bugs", "completion": "Fix those that block revenue or trust first."}
+{"prompt": "On fostering cross‑team empathy", "completion": "Shadow each other’s roles for a day."}
+{"prompt": "Tip for measuring feature success", "completion": "Tie it to user behavior change, not just engagement."}
+{"prompt": "Principle for renegotiating contracts", "completion": "Know your walk‑away number before the first meeting."}
+{"prompt": "Advice for kicking off strategic planning", "completion": "Start with the end‑state vision before mapping the path."}
+{"prompt": "Guideline for brand storytelling", "completion": "Lead with why you exist, then how you deliver."}
+{"prompt": "On filtering customer feedback", "completion": "Weigh it by alignment with your strategy, not just volume."}
+{"prompt": "Tip for running retrospectives", "completion": "Focus on what to start, stop, and continue."}
+{"prompt": "Principle for ethical data use", "completion": "If you wouldn’t want it done to your own data, don’t do it."}
+{"prompt": "Advice for handling public criticism", "completion": "Respond with facts, not defensiveness."}
+{"prompt": "Guideline for scaling customer support", "completion": "Automate repeat answers before adding headcount."}
+{"prompt": "On keeping roadmap flexibility", "completion": "Hold priorities firm but allow tactics to shift."}
+{"prompt": "Tip for maintaining product simplicity", "completion": "Remove one step for every one you add."}
+{"prompt": "Principle for high‑impact hiring", "completion": "Recruit for leverage, not just capacity."}
+{"prompt": "Advice for managing competing stakeholder demands", "completion": "Find the overlap that advances both agendas."}
+{"prompt": "Guideline for responding to downturns", "completion": "Cut burn first, then find the fastest route to cashflow."}
+{"prompt": "On structuring cross‑sell conversations", "completion": "Lead with how the new offer builds on what they already value."}
+{"prompt": "Tip for monitoring churn risk", "completion": "Watch declining usage before negative feedback appears."}
+{"prompt": "Principle for scaling culture in hypergrowth", "completion": "Codify values before they get diluted."}
+{"prompt": "Advice for tightening decision cycles", "completion": "Limit the number of people who can block progress."}
+{"prompt": "Guideline for revamping onboarding materials", "completion": "Replace text walls with short, guided actions."}
+{"prompt": "On assessing strategic pivots", "completion": "Test viability with one customer segment before committing."}
+{"prompt": "Tip for recovering from missed deadlines", "completion": "Reset publicly and deliver the first small win fast."}
+{"prompt": "Principle for expanding product lines", "completion": "Ensure each addition strengthens the core, not dilutes it."}
+{"prompt": "Advice for strengthening vendor relationships", "completion": "Treat them as partners in outcomes, not just suppliers."}
+{"prompt": "Guideline for running board meetings", "completion": "Send materials in advance and spend the meeting on decisions."}
+{"prompt": "On making pricing changes", "completion": "Give notice, explain the why, and offer a bridge option."}
+{"prompt": "Tip for balancing experimentation with stability", "completion": "Limit active experiments to what the team can monitor well."}
+{"prompt": "Principle for internal transparency", "completion": "Default to open information unless there’s a clear harm."}
+{"prompt": "Advice for weathering PR crises", "completion": "Act fast, tell the truth, and show the fix."}
+{"prompt": "Guideline for sequencing market entries", "completion": "Start where your network gives you unfair access."}
+{"prompt": "On motivating sales teams", "completion": "Tie incentives to metrics they can directly influence."}
+{"prompt": "Tip for building a knowledge base", "completion": "Document what’s asked twice."}
+{"prompt": "Principle for efficient standups", "completion": "Status yesterday, plan today, surface blockers—done."}
+{"prompt": "Advice for protecting focus in open offices", "completion": "Normalize headphones as a do‑not‑disturb signal."}
+{"prompt": "Guideline for aligning side projects", "completion": "Only pursue those that advance the main mission."}
+{"prompt": "On leveraging customer councils", "completion": "Use them to pressure‑test your roadmap."}
+{"prompt": "Tip for reducing payment friction", "completion": "Save cards on file and support preferred local methods."}
+{"prompt": "Principle for managing co‑founder disagreements", "completion": "Resolve privately, present unity publicly."}
+{"prompt": "Advice for crafting investor decks", "completion": "Make the problem visceral and the solution inevitable."}
+{"prompt": "Guideline for enabling rapid prototyping", "completion": "Lower the cost of trying ideas until the best one emerges."}
+{"prompt": "On establishing success metrics", "completion": "Pick the few that tie directly to business health."}
+{"prompt": "Tip for transitioning from project to product mindset", "completion": "Commit to ongoing improvement, not one‑off delivery."}
+{"prompt": "Advice for preparing for high‑stakes pitches", "completion": "Rehearse until the story survives without slides."}
+{"prompt": "Guideline for prioritizing urgent vs important work", "completion": "Block time for important before urgent consumes the day."}
+{"prompt": "On expanding internationally", "completion": "Localize trust signals before language."}
+{"prompt": "Tip for turning churned customers into allies", "completion": "Fix their pain and ask them to validate the change."}
+{"prompt": "Principle for negotiating equity stakes", "completion": "Trade equity only for value you can’t buy with cash."}
+{"prompt": "Advice for making remote meetings engaging", "completion": "Use names, visuals, and a clear next‑step close."}
+{"prompt": "Guideline for minimizing product debt", "completion": "Refactor as you build instead of leaving it all for later."}
+{"prompt": "On handling talent poaching", "completion": "Give people a reason to stay that money can’t match."}
+{"prompt": "Tip for finding early channel partners", "completion": "Target those who already serve your ideal customer."}
+{"prompt": "Principle for structuring advisory boards", "completion": "Fill knowledge gaps, not résumé slots."}
+{"prompt": "Advice for restarting stalled projects", "completion": "Shrink scope until progress is inevitable."}
+{"prompt": "Guideline for timing press outreach", "completion": "Pitch when you have a real milestone, not just activity."}
+{"prompt": "On keeping culture strong in downturns", "completion": "Celebrate grit and shared wins, however small."}
+{"prompt": "Tip for securing pilot customers", "completion": "Offer them influence over the final product."}
+{"prompt": "Principle for sustainable scaling", "completion": "Only scale what you can monitor and measure."}
+{"prompt": "Advice for making the most of small marketing budgets", "completion": "Pick one channel and own it before adding others."}
+{"prompt": "Guideline for reviewing strategic priorities", "completion": "Revisit them quarterly to kill drift."}
+{"prompt": "On stopping scope creep mid‑build", "completion": "Freeze the spec and create a backlog for new ideas."}
+{"prompt": "Tip for improving demo effectiveness", "completion": "Show the problem vanishing, not just features working."}
+{"prompt": "Principle for founder decision fatigue", "completion": "Automate or delegate low‑impact choices."}
+{"prompt": "Advice for leveraging competitor success", "completion": "Use their wins to validate the market to investors."}
+{"prompt": "Guideline for keeping investor trust", "completion": "Be predictable in updates and delivery."}
+{"prompt": "On rapid onboarding for urgent hires", "completion": "Immerse them in high‑context work immediately."}
+{"prompt": "Tip for avoiding vanity metrics", "completion": "Measure what changes behavior or revenue."}
+{"prompt": "Principle for retaining product focus", "completion": "Say no more often than you say yes."}
+{"prompt": "Advice for creating urgency in sales", "completion": "Tie the offer to a time‑bound outcome."}
+{"prompt": "Guideline for learning from failed launches", "completion": "Post‑mortem within a week while details are fresh."}
+{"prompt": "On protecting team morale after layoffs", "completion": "Be transparent about the why and the path forward."}
+{"prompt": "Tip for customer interview prep", "completion": "Write questions that reveal motivations, not opinions."}
+{"prompt": "Principle for post‑MVP iteration", "completion": "Double down on what users actually use."}
+{"prompt": "Advice for managing conflicting investor advice", "completion": "Align decisions to the company’s strategy, not individual voices."}
+{"prompt": "Guideline for scaling without losing quality", "completion": "Grow capacity in lockstep with quality controls."}
+{"prompt": "On handling partner underperformance", "completion": "Address it early, with clear expectations and exit clauses."}
+{"prompt": "Tip for optimizing referral conversions", "completion": "Make sharing feel like helping a friend."}
+{"prompt": "Principle for proactive risk management", "completion": "List risks quarterly and assign owners before they bite."}
+{"prompt": "Advice for keeping meetings productive", "completion": "End with action items and owners every time."}
+{"prompt": "Guideline for integrating remote‑friendly processes", "completion": "Default to asynchronous updates where possible."}
+{"prompt": "On turning testimonials into case studies", "completion": "Add measurable before‑and‑after impact."}
+{"prompt": "Tip for negotiating vendor discounts", "completion": "Bundle commitments for better terms."}
+{"prompt": "Principle for validating product‑market fit", "completion": "Retention beats acquisition as a signal."}
+{"prompt": "Advice for navigating co‑marketing deals", "completion": "Align brand voice and audience goals before launch."}
+{"prompt": "Guideline for simplifying decision frameworks", "completion": "Reduce options to the top two to accelerate choice."}
+{"prompt": "On managing hidden technical debt", "completion": "Audit quarterly to prevent slow decay."}
+{"prompt": "Tip for launching into crowded markets", "completion": "Lead with the story only you can tell."}
+{"prompt": "Principle for fair team recognition", "completion": "Praise in public, reward in private."}
+{"prompt": "Advice for reclaiming focus after distraction", "completion": "Reset with a single, visible quick win."}
+{"prompt": "Guideline for setting realistic OKRs", "completion": "Stretch enough to inspire, not enough to break."}
+{"prompt": "On measuring brand health", "completion": "Track sentiment shifts alongside awareness."}
+{"prompt": "Tip for keeping beta users engaged", "completion": "Give them progress updates and exclusive perks."}
+{"prompt": "Advice for motivating through long sales cycles", "completion": "Break the journey into winnable stages and celebrate each close."}
+{"prompt": "Guideline for adapting onboarding to different roles", "completion": "Tailor examples and tools to the specific workflows they’ll own."}
+{"prompt": "On navigating joint ventures", "completion": "Define the exit plan before you start."}
+{"prompt": "Tip for gathering competitive intelligence", "completion": "Talk to your customers about the other options they considered."}
+{"prompt": "Principle for keeping investor decks lean", "completion": "Show traction in numbers, not adjectives."}
+{"prompt": "Advice for rapid crisis response", "completion": "Align leadership on facts and message before going public."}
+{"prompt": "Guideline for selecting beta testers", "completion": "Pick those who reflect your target market’s diversity of use."}
+{"prompt": "On shifting from growth to profitability", "completion": "Cut what doesn’t pay for itself within a quarter."}
+{"prompt": "Tip for keeping stakeholders aligned mid‑project", "completion": "Share quick, visual status updates weekly."}
+{"prompt": "Principle for testing retention levers", "completion": "Change one experience element and measure its pull."}
+{"prompt": "Advice for securing first enterprise clients", "completion": "Offer pilot terms that reduce their risk to near zero."}
+{"prompt": "Guideline for consistent brand voice", "completion": "Document tone rules and examples for every channel."}
+{"prompt": "On trimming marketing waste", "completion": "Kill spend that doesn’t convert after two test cycles."}
+{"prompt": "Tip for leveraging small wins in PR", "completion": "Package them into a momentum story."}
+{"prompt": "Principle for founder resilience", "completion": "Anchor daily in purpose, not just performance."}
+{"prompt": "Advice for internal conflict resolution", "completion": "Use structured mediation before lines harden."}
+{"prompt": "Guideline for timing feature announcements", "completion": "Announce when adoption is high enough to create FOMO."}
+{"prompt": "On managing a brand refresh", "completion": "Change the visual identity after you’ve changed the story."}
+{"prompt": "Tip for boosting upsell rates", "completion": "Time the offer to moments of highest customer satisfaction."}
+{"prompt": "Principle for building market credibility", "completion": "Show you can deliver before you promise more."}
+{"prompt": "Advice for iterative hiring", "completion": "Hire for the next 12 months, not the whole journey."}
+{"prompt": "Guideline for aligning product metrics with business goals", "completion": "Map every KPI to revenue, retention, or reach."}
+{"prompt": "On managing side‑by‑side products", "completion": "Share infrastructure where possible without blurring brands."}
+{"prompt": "Tip for qualifying leads faster", "completion": "Ask budget and timing in the first conversation."}
+{"prompt": "Principle for strategic patience", "completion": "Don’t force timing that the market isn’t ready for."}
+{"prompt": "Advice for packaging services", "completion": "Bundle for outcomes, not hours."}
+{"prompt": "Guideline for setting partnership terms", "completion": "Put performance triggers in writing."}
+{"prompt": "On fostering innovation in routine work", "completion": "Give people a budget and freedom for experiments."}
+{"prompt": "Tip for minimizing meeting drag", "completion": "Have fewer attendees and shorter agendas."}
+{"prompt": "Principle for content marketing focus", "completion": "Serve the buyer’s questions, not your vanity topics."}
+{"prompt": "Advice for dealing with sudden demand spikes", "completion": "Prioritize high‑value customers and add capacity fast."}
+{"prompt": "Guideline for migrating systems", "completion": "Run old and new in parallel until the switch is safe."}
+{"prompt": "On protecting equity for future hires", "completion": "Reserve more than you think you’ll need."}
+{"prompt": "Tip for crafting irresistible CTAs", "completion": "Tie the action to a clear, immediate benefit."}
+{"prompt": "Principle for selecting core metrics", "completion": "Pick the few that signal health across the business."}
+{"prompt": "Advice for strategic networking", "completion": "Offer value first, then ask for help."}
+{"prompt": "Guideline for lean legal reviews", "completion": "Template recurring contracts to reduce lawyer time."}
+{"prompt": "On pivoting marketing channels", "completion": "Follow your audience’s behavior, not your comfort zone."}
+{"prompt": "Tip for sustaining momentum post‑launch", "completion": "Line up the next win before the first one fades."}
+{"prompt": "Principle for keeping ops scalable", "completion": "Automate processes before volume forces it."}
+{"prompt": "Advice for handling negative press", "completion": "Acknowledge the issue and outline the fix promptly."}
+{"prompt": "Guideline for customer advisory boards", "completion": "Keep them small and focused to avoid dilution."}
+{"prompt": "On reducing onboarding drop‑off", "completion": "Shorten time to first success."}
+{"prompt": "Tip for assessing cultural fit in hiring", "completion": "Look for shared values in stories, not just resumes."}
+{"prompt": "Principle for cross‑department collaboration", "completion": "Define the shared goal before starting work."}
+{"prompt": "Advice for managing founder workload", "completion": "Schedule thinking time like any other meeting."}
+{"prompt": "Guideline for refreshing stale content", "completion": "Update facts and examples before republishing."}
+{"prompt": "On securing testimonials from big clients", "completion": "Make it easy and mutually beneficial."}
+{"prompt": "Tip for avoiding hidden costs in scaling", "completion": "Model operational expenses ahead of revenue growth."}
+{"prompt": "Advice for compressing sales cycles", "completion": "Remove decision‑makers' uncertainty early with proof and references."}
+{"prompt": "Guideline for post‑merger integration", "completion": "Start with aligning culture before merging systems."}
+{"prompt": "On sustaining creativity in scaling teams", "completion": "Protect unstructured time for idea exploration."}
+{"prompt": "Tip for filtering inbound opportunities", "completion": "Say yes only to those that fit strategy and bandwidth."}
+{"prompt": "Principle for efficient capital use", "completion": "Deploy where returns outpace risk in clear timelines."}
+{"prompt": "Advice for early customer retention", "completion": "Deliver first value within the shortest possible time."}
+{"prompt": "Guideline for team alignment in hybrid work", "completion": "Set core collaboration hours and async norms."}
+{"prompt": "On sharpening brand differentiation", "completion": "Own one word in your customer's mind."}
+{"prompt": "Tip for reducing shipping delays", "completion": "Identify and fix the most common blocker in the process."}
+{"prompt": "Principle for equitable profit sharing", "completion": "Tie rewards to measurable contribution, not just tenure."}
+{"prompt": "Advice for securing strategic hires", "completion": "Pitch mission first, compensation second."}
+{"prompt": "Guideline for post‑project reviews", "completion": "Identify repeatable successes and avoidable failures."}
+{"prompt": "On pacing product feature growth", "completion": "Expand only after current features are fully adopted."}
+{"prompt": "Tip for simplifying cross‑platform UX", "completion": "Unify core flows while respecting platform conventions."}
+{"prompt": "Principle for prioritizing customer feedback", "completion": "Act fastest on insights that remove buying friction."}
+{"prompt": "Advice for handling co‑founder burnout", "completion": "Redistribute load and reaffirm shared vision."}
+{"prompt": "Guideline for product launch sequencing", "completion": "Launch smallest viable version to learn fast."}
+{"prompt": "On recovering from revenue dips", "completion": "Focus on upsells and reactivation before new channels."}
+{"prompt": "Tip for keeping teams adaptive", "completion": "Run regular scenario drills for likely disruptions."}
+{"prompt": "Principle for balanced marketing spend", "completion": "Split budget between proven channels and experiments."}
+{"prompt": "Advice for managing brand partnerships", "completion": "Align values and audience before tactics."}
+{"prompt": "Guideline for onboarding advisors", "completion": "Clarify role, expectations, and meeting cadence upfront."}
+{"prompt": "On protecting IP in collaborations", "completion": "Define ownership in writing before sharing work."}
+{"prompt": "Tip for fostering psychological safety", "completion": "Leaders admit mistakes first."}
+{"prompt": "Principle for continuous improvement culture", "completion": "Reward small, consistent process upgrades."}
+{"prompt": "Advice for turning support into sales", "completion": "Train support to recognize and suggest value gaps."}
+{"prompt": "Guideline for disciplined hiring", "completion": "Don’t fill seats—fill capabilities."}
+{"prompt": "On amplifying customer success stories", "completion": "Show transformation, not just testimonials."}
+{"prompt": "Tip for managing underperforming products", "completion": "Sunset or reposition before they drain focus."}
+{"prompt": "Principle for protecting strategic focus", "completion": "Reject good ideas that distract from great ones."}
+{"prompt": "Advice for preparing for fundraising", "completion": "Have clean metrics, a tight story, and clear use of funds."}
+{"prompt": "Guideline for monitoring brand consistency", "completion": "Audit all touchpoints quarterly."}
+{"prompt": "On extending product life cycle", "completion": "Add complementary features or markets."}
+{"prompt": "Tip for optimizing internal handoffs", "completion": "Define done and deliverables at every stage."}
+{"prompt": "Principle for leveraging small wins", "completion": "Stack them to build momentum and morale."}
+{"prompt": "Advice for dealing with shifting market trends", "completion": "Adjust messaging before adjusting product."}
+{"prompt": "Guideline for focusing innovation efforts", "completion": "Work where your unique assets give advantage."}
+{"prompt": "On building negotiation leverage", "completion": "Create alternatives before entering talks."}
+{"prompt": "Tip for maintaining customer trust", "completion": "Set expectations realistically and meet them."}
+{"prompt": "Principle for ethical scaling", "completion": "Grow without exploiting people or cutting quality."}
+{"prompt": "Advice for driving adoption in B2B", "completion": "Make switching the easiest part of the deal."}
+{"prompt": "Guideline for reducing cognitive load in design", "completion": "Prioritize clarity over cleverness."}
+{"prompt": "On managing seasonal demand fluctuations", "completion": "Shift resources ahead of the curve."}
+{"prompt": "Tip for getting the most from mentors", "completion": "Bring clear questions and context to every session."}
+{"prompt": "Principle for capital efficiency in marketing", "completion": "Spend where attribution is measurable."}
+{"prompt": "Advice for resolving cross‑team conflicts", "completion": "Focus discussion on shared objectives."}
+{"prompt": "Guideline for rapid market validation", "completion": "Test messaging before product build."}
+{"prompt": "On re‑engaging lapsed customers", "completion": "Offer a personalized incentive tied to past use."}
+{"prompt": "Tip for embedding values in onboarding", "completion": "Make them actionable, not just inspirational."}
+{"prompt": "Advice for pacing founder energy", "completion": "Guard deep work hours like revenue meetings."}
+{"prompt": "Guideline for refreshing product messaging", "completion": "Update language when your best customers stop repeating it back."}
+{"prompt": "On protecting margins during scale", "completion": "Automate before headcount grows."}
+{"prompt": "Tip for aligning marketing and product launch timing", "completion": "Confirm readiness two sprints before the public date."}
+{"prompt": "Principle for reducing bad hires", "completion": "Hire slow, fire fast, document both."}
+{"prompt": "Advice for maximizing conference speaking slots", "completion": "Use them to teach, not pitch."}
+{"prompt": "Guideline for identifying key growth levers", "completion": "Look for the smallest input that moves the biggest metric."}
+{"prompt": "On keeping roadmap honest", "completion": "Remove items that survive only because they’re someone’s pet idea."}
+{"prompt": "Tip for improving free‑to‑paid conversion", "completion": "Show premium value at the moment of peak engagement."}
+{"prompt": "Principle for using debt strategically", "completion": "Borrow only to accelerate proven returns."}
+{"prompt": "Advice for smoothing inter‑department friction", "completion": "Swap roles for a day to build empathy."}
+{"prompt": "Guideline for accelerating feature adoption", "completion": "Highlight user wins inside the product."}
+{"prompt": "On running competitive win‑loss analysis", "completion": "Ask lost deals what tipped the scale."}
+{"prompt": "Tip for making data dashboards actionable", "completion": "Flag anomalies and suggest the next step."}
+{"prompt": "Principle for disciplined experimentation", "completion": "Set a success metric before you start."}
+{"prompt": "Advice for reinforcing brand trust", "completion": "Deliver on small promises consistently."}
+{"prompt": "Guideline for pre‑qualifying partners", "completion": "Require proof they can deliver before signing."}
+{"prompt": "On streamlining decision approvals", "completion": "Define thresholds where teams can act without escalation."}
+{"prompt": "Tip for preventing feature creep", "completion": "Tie all new work to OKRs."}
+{"prompt": "Principle for strategic storytelling", "completion": "Make the customer the hero, not the product."}
+{"prompt": "Advice for aligning incentives company‑wide", "completion": "Reward outcomes that drive core metrics."}
+{"prompt": "Guideline for diversifying acquisition channels", "completion": "Add one new channel only after the last is predictable."}
+{"prompt": "On handling silent churn", "completion": "Track declining usage before cancellations happen."}
+{"prompt": "Tip for elevating support conversations", "completion": "Train agents to offer proactive tips."}
+{"prompt": "Principle for pricing integrity", "completion": "Never discount without removing something in return."}
+{"prompt": "Advice for keeping internal docs alive", "completion": "Archive or update anything untouched for six months."}
+{"prompt": "Guideline for inclusive product design", "completion": "Test with edge‑case users, not just the mainstream."}
+{"prompt": "On using scarcity in offers", "completion": "Make limits real and verifiable."}
+{"prompt": "Tip for optimizing sales follow‑up", "completion": "Respond within the hour while intent is fresh."}
+{"prompt": "Principle for partnership governance", "completion": "Hold quarterly reviews with clear scorecards."}
+{"prompt": "Advice for rebooting team morale", "completion": "Deliver a visible, fast‑impact win together."}
+{"prompt": "Guideline for assessing early tech debt", "completion": "Map quick fixes versus systemic rewrites."}
+{"prompt": "On capitalizing on competitor missteps", "completion": "Offer affected customers a painless switch."}
+{"prompt": "Tip for maintaining post‑launch momentum", "completion": "Line up customer stories before launch."}
+{"prompt": "Principle for avoiding strategic drift", "completion": "Revisit the mission before big decisions."}
+{"prompt": "Advice for scaling leadership capacity", "completion": "Develop lieutenants before they’re urgently needed."}
+{"prompt": "Guideline for transparent pricing changes", "completion": "Explain the why and link it to continued value."}
+{"prompt": "On testing product messaging", "completion": "Run A/B tests on headlines before full campaigns."}
+{"prompt": "Tip for improving onboarding speed", "completion": "Automate account setup and first task."}
+{"prompt": "Principle for choosing event sponsorships", "completion": "Sponsor only what your customers actually attend."}
+{"prompt": "Advice for re‑energizing stale markets", "completion": "Bundle with a fresh, adjacent use case."}
+{"prompt": "Guideline for setting R&D priorities", "completion": "Fund what has clear paths to market, not just novelty."}
+{"prompt": "On ending unproductive projects", "completion": "Shut down with a written summary of lessons learned."}
+{"prompt": "Tip for preventing burnout in leadership", "completion": "Schedule recovery weeks like product releases."}
+{"prompt": "Principle for resilient supply chains", "completion": "Qualify backups before the crisis."}
+{"prompt": "Advice for fostering cross‑industry ideas", "completion": "Study unrelated sectors for transferable wins."}
+{"prompt": "Guideline for building waitlist hype", "completion": "Drip useful content to sign‑ups while they wait."}
+{"prompt": "On converting media mentions to leads", "completion": "Link every story to a clear call to action."}
+{"prompt": "Tip for sharpening investor Q&A", "completion": "Keep answers under 30 seconds, with proof points."}
+{"prompt": "Advice for measuring partnership ROI", "completion": "Track revenue, reach, and strategic access gained."}
+{"prompt": "Guideline for empowering mid‑level managers", "completion": "Give them decision rights and the context to use them well."}
+{"prompt": "On protecting reputation during rapid hiring", "completion": "Keep quality standards visible to every interviewer."}
+{"prompt": "Tip for uncovering hidden churn signals", "completion": "Watch for decreased logins and feature usage, not just cancellations."}
+{"prompt": "Principle for reducing reliance on a single supplier", "completion": "Qualify backups before problems arise."}
+{"prompt": "Advice for making customer councils effective", "completion": "Give them early visibility on the roadmap and close the loop on feedback."}
+{"prompt": "Guideline for validating pain points", "completion": "Have users describe the last time the problem hurt them."}
+{"prompt": "On pacing product discovery", "completion": "Set fixed cycles so research doesn’t sprawl indefinitely."}
+{"prompt": "Tip for accelerating enterprise sales", "completion": "Map decision makers and blockers before the first pitch."}
+{"prompt": "Principle for fair performance reviews", "completion": "Evaluate results against clear, agreed‑upon goals."}
+{"prompt": "Advice for managing cross‑border teams", "completion": "Adapt processes for local work norms without diluting outcomes."}
+{"prompt": "Guideline for running high‑yield brainstorms", "completion": "Separate idea generation from evaluation."}
+{"prompt": "On reviving lapsed partnerships", "completion": "Return with new value tailored to their current priorities."}
+{"prompt": "Tip for tracking product adoption", "completion": "Measure time to first meaningful use."}
+{"prompt": "Principle for protecting IP during fundraising", "completion": "Share only what’s necessary to convey value."}
+{"prompt": "Advice for refining core messaging", "completion": "Test it in the language customers actually use."}
+{"prompt": "Guideline for managing multiple roadmaps", "completion": "Anchor all to a single company vision doc."}
+{"prompt": "On balancing speed and quality in launches", "completion": "Pick the minimum acceptable quality bar and never go below it."}
+{"prompt": "Tip for building opt‑in communities", "completion": "Give members a clear reason to show up and return."}
+{"prompt": "Principle for post‑acquisition integration speed", "completion": "Go slow on culture, fast on operations."}
+{"prompt": "Advice for preparing for unexpected scale", "completion": "Stress‑test systems before they’re stressed."}
+{"prompt": "Guideline for crafting loyalty programs", "completion": "Reward behavior that drives real business outcomes."}
+{"prompt": "On aligning product and customer success teams", "completion": "Sync on usage trends before roadmap planning."}
+{"prompt": "Tip for leveraging social proof", "completion": "Place endorsements at decision points in the user journey."}
+{"prompt": "Principle for clean product sunsets", "completion": "Offer a clear migration path before turning it off."}
+{"prompt": "Advice for shortening approval cycles", "completion": "Limit required sign‑offs to the truly essential."}
+{"prompt": "Guideline for identifying your best customers", "completion": "Rank by revenue, advocacy, and speed of adoption."}
+{"prompt": "On protecting brand during price changes", "completion": "Communicate the added value alongside the increase."}
+{"prompt": "Tip for managing distributed sales teams", "completion": "Use shared playbooks and regular deal reviews."}
+{"prompt": "Principle for guarding against over‑customization", "completion": "Default to the core product unless the deviation pays back fast."}
+{"prompt": "Advice for diagnosing stalled growth", "completion": "Check acquisition, activation, and retention before chasing new ideas."}
+{"prompt": "Guideline for running lean marketing tests", "completion": "Spend small, measure big, then scale."}
+{"prompt": "On sustaining founder influence post‑scale", "completion": "Embed your principles into processes, not just people."}
+{"prompt": "Tip for improving win rates", "completion": "Disqualify poor‑fit leads earlier."}
+{"prompt": "Principle for negotiating from strength", "completion": "Have a credible alternative to walk toward."}
+{"prompt": "Advice for mobilizing after a market shock", "completion": "Re‑forecast, reprioritize, and over‑communicate."}
+{"prompt": "Guideline for safeguarding customer data", "completion": "Minimize collection and encrypt in transit and at rest."}
+{"prompt": "On retaining brand authenticity", "completion": "Let values drive decisions even under pressure."}
+{"prompt": "Tip for onboarding senior hires", "completion": "Give them a quick win and deep context in the first month."}
+{"prompt": "Principle for smooth cross‑functional projects", "completion": "Agree on success metrics before you start."}
+{"prompt": "Advice for repurposing content", "completion": "Adapt format for channel while keeping core message."}
+{"prompt": "Guideline for setting market expansion KPIs", "completion": "Tie them to adoption, not just awareness."}
+{"prompt": "On avoiding over‑automation", "completion": "Keep humans in loops where empathy matters."}
+{"prompt": "Tip for preventing customer confusion", "completion": "Reduce simultaneous changes to core flows."}
+{"prompt": "Principle for keeping strategy fresh", "completion": "Re‑evaluate twice yearly against market shifts."}
+{"prompt": "Advice for post‑launch listening", "completion": "Watch behavior data before surveying."}
+{"prompt": "Guideline for leadership succession planning", "completion": "Prepare candidates before the need is urgent."}
+{"prompt": "On maximizing PR impact", "completion": "Bundle minor wins into a bigger narrative."}
+{"prompt": "Tip for aligning OKRs across departments", "completion": "Map each to a shared company objective."}
+{"prompt": "Advice for simplifying enterprise onboarding", "completion": "Automate security reviews and procurement steps wherever possible."}
+{"prompt": "Guideline for keeping early adopters engaged", "completion": "Release small, frequent improvements they can test first."}
+{"prompt": "On turning product usage data into retention wins", "completion": "Identify power users’ patterns and guide others toward them."}
+{"prompt": "Tip for adapting sales collateral by industry", "completion": "Mirror their jargon and regulatory priorities."}
+{"prompt": "Principle for disciplined roadmap planning", "completion": "Separate ‘must‑win’ bets from ‘nice‑to‑try’ ideas."}
+{"prompt": "Advice for post‑launch competitive positioning", "completion": "Highlight differences in value, not just in features."}
+{"prompt": "Guideline for managing multi‑time‑zone projects", "completion": "Design handoffs so work never waits overnight."}
+{"prompt": "On extending customer lifetime value", "completion": "Introduce adjacent offers that solve their next problem."}
+{"prompt": "Tip for rebooting stalled innovation programs", "completion": "Change the constraints to force fresh thinking."}
+{"prompt": "Principle for pricing experiments", "completion": "Test with a small, insulated segment first."}
+{"prompt": "Advice for equipping sales with product knowledge", "completion": "Arm them with stories, not just specs."}
+{"prompt": "Guideline for retiring legacy processes", "completion": "Run side‑by‑side until the new one proves better."}
+{"prompt": "On keeping acquisition channels profitable", "completion": "Drop the lowest ROI channel quarterly."}
+{"prompt": "Tip for creating habit‑forming products", "completion": "Pair utility with satisfying micro‑interactions."}
+{"prompt": "Principle for cross‑selling without fatigue", "completion": "Match offers to milestones in the customer journey."}
+{"prompt": "Advice for handling parallel strategic initiatives", "completion": "Share resources only if it speeds both."}
+{"prompt": "Guideline for reducing decision bottlenecks", "completion": "Push authority down with clear guardrails."}
+{"prompt": "On recovering lapsed enterprise accounts", "completion": "Lead with proof that their past blockers are gone."}
+{"prompt": "Tip for building referral culture internally", "completion": "Reward employees who bring in new customers."}
+{"prompt": "Principle for sustaining high‑touch service at scale", "completion": "Automate the routine to free humans for the exceptional."}
+{"prompt": "Advice for aligning quarterly targets", "completion": "Tie them directly to annual strategic objectives."}
+{"prompt": "Guideline for crafting irresistible offers", "completion": "Combine urgency with unmistakable value."}
+{"prompt": "On sequencing growth markets", "completion": "Enter those with the shortest path to local proof."}
+{"prompt": "Tip for encouraging upsells in SaaS", "completion": "Let users trial premium features in‑product."}
+{"prompt": "Principle for managing strategic pivots", "completion": "Kill the old path cleanly before starting the new one."}
+{"prompt": "Advice for building resilience into supply chains", "completion": "Diversify sources before cost forces you to."}
+{"prompt": "Guideline for effective win‑back campaigns", "completion": "Address the original reason they left first."}
+{"prompt": "On integrating customer feedback into sprints", "completion": "Tag backlog items with source and priority."}
+{"prompt": "Tip for shortening enterprise procurement cycles", "completion": "Pre‑approve standard terms with legal."}
+{"prompt": "Principle for retaining brand equity in rebrands", "completion": "Keep core symbols and promises intact."}
+{"prompt": "Advice for reducing voluntary churn", "completion": "Spot dissatisfaction in usage patterns early."}
+{"prompt": "Guideline for prioritizing technical debt payoff", "completion": "Fix what blocks new revenue or reduces reliability."}
+{"prompt": "On scaling without eroding culture", "completion": "Hire value fits before skill fits when both are rare."}
+{"prompt": "Tip for creating urgency in B2B deals", "completion": "Tie closing to fiscal or budget deadlines."}
+{"prompt": "Principle for ethical partnerships", "completion": "Collaborate only with those whose practices you can defend publicly."}
+{"prompt": "Advice for growing average deal size", "completion": "Bundle complementary solutions into a single offer."}
+{"prompt": "Guideline for evaluating sponsorship opportunities", "completion": "Assess by audience fit and conversion potential."}
+{"prompt": "On making the most of industry awards", "completion": "Promote wins in customer‑facing channels quickly."}
+{"prompt": "Tip for frictionless renewals", "completion": "Auto‑renew with ample notice and easy opt‑out."}
+{"prompt": "Principle for onboarding speed", "completion": "Reduce time to first value above all else."}
+{"prompt": "Advice for identifying high‑leverage hires", "completion": "Choose those whose work multiplies others’ output."}
+{"prompt": "Guideline for merging product lines", "completion": "Unify user experience before pricing."}
+{"prompt": "On turning market research into action", "completion": "Translate findings into one‑line decisions."}
+{"prompt": "Tip for keeping product vision alive internally", "completion": "Open every roadmap review with the mission slide."}
+{"prompt": "Principle for tightening cash flow", "completion": "Collect receivables faster than you pay out."}
+{"prompt": "Advice for protecting customer goodwill during changes", "completion": "Communicate early, clearly, and with empathy."}
+{"prompt": "Guideline for measuring innovation ROI", "completion": "Count both revenue impact and capability built."}
+{"prompt": "On building trust in new markets", "completion": "Leverage local partners and testimonials."}
+{"prompt": "Tip for refining lead qualification", "completion": "Score fit and readiness, not just interest."}
+{"prompt": "Advice for avoiding over‑extension in product lines", "completion": "Say no to anything that doesn’t strengthen the core offering."}
+{"prompt": "Guideline for turning webinars into sales", "completion": "End with a clear, time‑bound call to action."}
+{"prompt": "On building resilience during leadership changes", "completion": "Anchor the team in shared values and near‑term wins."}
+{"prompt": "Tip for accelerating content approvals", "completion": "Pre‑approve formats and key messages."}
+{"prompt": "Principle for creating defensible advantages", "completion": "Invest where your strengths compound faster than rivals can catch up."}
+{"prompt": "Advice for reducing procurement friction", "completion": "Align your terms to standard industry contracts."}
+{"prompt": "Guideline for keeping product scope lean", "completion": "Ship only what validates the next assumption."}
+{"prompt": "On handling overlapping initiatives", "completion": "Merge or kill to reduce duplication."}
+{"prompt": "Tip for measuring community health", "completion": "Track active contributors over total members."}
+{"prompt": "Principle for sustainable channel strategy", "completion": "Avoid dependence on a platform you don’t control."}
+{"prompt": "Advice for engaging quiet stakeholders", "completion": "Ask for one specific input they can own."}
+{"prompt": "Guideline for optimizing upsell paths", "completion": "Surface premium options where customers succeed most."}
+{"prompt": "On tightening product feedback loops", "completion": "Close issues in days, not weeks."}
+{"prompt": "Tip for reducing churn in high‑ticket sales", "completion": "Assign a dedicated post‑sale success owner."}
+{"prompt": "Principle for aligning brand with culture", "completion": "Live inside what you promote externally."}
+{"prompt": "Advice for running lean ops reviews", "completion": "Limit agendas to three metrics and three actions."}
+{"prompt": "Guideline for sequencing hires in scaling startups", "completion": "Plug growth‑critical gaps before comfort gaps."}
+{"prompt": "On using pilots to de‑risk big changes", "completion": "Set success criteria before launch."}
+{"prompt": "Tip for keeping marketing fresh", "completion": "Retire stale creatives quarterly."}
+{"prompt": "Principle for managing competitive messaging", "completion": "Talk about your strengths, not their flaws."}
+{"prompt": "Advice for preparing teams for rapid pivots", "completion": "Normalize change through small, frequent shifts."}
+{"prompt": "Guideline for simplifying B2B contracts", "completion": "Cut clauses customers never negotiate."}
+{"prompt": "On tracking partnership health", "completion": "Review mutual benefit at agreed intervals."}
+{"prompt": "Tip for re‑engaging disengaged users", "completion": "Offer a shortcut to a meaningful win."}
+{"prompt": "Principle for responsible cost‑cutting", "completion": "Protect revenue drivers before trimming support functions."}
+{"prompt": "Advice for aligning remote leadership teams", "completion": "Hold quarterly in‑person strategy resets."}
+{"prompt": "Guideline for identifying breakout products", "completion": "Watch for outsized retention in niche segments."}
+{"prompt": "On optimizing for word‑of‑mouth growth", "completion": "Create moments worth talking about."}
+{"prompt": "Tip for boosting post‑event conversions", "completion": "Follow up within 24 hours with a relevant offer."}
+{"prompt": "Principle for transparent investor relations", "completion": "Share both tailwinds and headwinds promptly."}
+{"prompt": "Advice for resolving customer conflicts", "completion": "Address emotion first, facts second."}
+{"prompt": "Guideline for rapid skill‑building", "completion": "Pair learners with experts on real projects."}
+{"prompt": "On capturing lessons from wins", "completion": "Debrief successes like failures."}
+{"prompt": "Tip for launching in a new geography", "completion": "Localize the experience, not just the language."}
+{"prompt": "Principle for avoiding brand dilution", "completion": "Only extend into spaces where you can be top three."}
+{"prompt": "Advice for scaling without bureaucracy", "completion": "Keep decision‑makers close to the work."}
+{"prompt": "Guideline for nurturing channel partners", "completion": "Invest in their training and co‑marketing."}
+{"prompt": "On balancing urgent vs important in crisis", "completion": "Stabilize immediate threats, then pivot to root causes."}
+{"prompt": "Tip for improving sales discovery calls", "completion": "Listen more than you talk."}
+{"prompt": "Principle for pricing fairness", "completion": "Ensure similar customers pay similar rates."}
+{"prompt": "Advice for safeguarding morale in cost cuts", "completion": "Communicate the bigger picture and path forward."}
+{"prompt": "Guideline for diversifying supplier base", "completion": "Qualify alternates before they’re needed."}
+{"prompt": "On increasing sales close rates", "completion": "Address objections before they’re raised."}
+{"prompt": "Tip for optimizing mobile UX", "completion": "Design thumb‑first, not desktop‑shrunk."}
+{"prompt": "Principle for effective delegation", "completion": "Assign outcomes, not just tasks."}
+{"prompt": "Advice for evaluating experimental ideas", "completion": "Run time‑boxed trials before scaling."}
+{"prompt": "Guideline for keeping customer personas current", "completion": "Refresh quarterly with new data."}
+{"prompt": "On recovering from public missteps", "completion": "Admit, fix, and report back quickly."}
+{"prompt": "Tip for growing share of wallet", "completion": "Layer complementary offers over time."}
