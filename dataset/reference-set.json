@@ -2,8 +2,8 @@
   {
     "principle_id": "P01_MSPW",
     "market_validation_signal": "Free trial to paid conversion jumped from 18% to 32% after onboarding email rewrite.",
-    "founder_action": "Roll out the revised onboarding sequence to all new signups; track 30‑day retention impact.",
-    "risk_flag": "Improvement may be seasonal; confirm trend sustains over 2‑3 months."
+    "founder_action": "Roll out the revised onboarding sequence to all new signups; track 30-day retention impact.",
+    "risk_flag": "Improvement may be seasonal; confirm trend sustains over 2–3 months."
   },
   {
     "principle_id": "P01_MSPW",
@@ -13,70 +13,101 @@
   },
   {
     "principle_id": "P01_MSPW",
-    "market_validation_signal": "Pilot feature usage exceeded expectations with avg. 4.5 daily sessions/user.",
+    "market_validation_signal": "Pilot feature usage exceeded expectations with avg. 4.5 daily sessions per user.",
     "founder_action": "Prioritise scaling backend to handle projected 5× load.",
     "risk_flag": "High engagement may drop if novelty wears off."
   },
   {
     "principle_id": "P01_MSPW",
-    "market_validation_signal": "Customer interviews revealed 3 pain points not addressed in current roadmap.",
-    "founder_action": "Re‑order roadmap to address top‑ranked pain point within 2 sprints.",
+    "market_validation_signal": "Customer interviews revealed three pain points not addressed in current roadmap.",
+    "founder_action": "Re-order roadmap to address top-ranked pain point within two sprints.",
     "risk_flag": "Scope creep risk; avoid diluting core focus."
   },
   {
     "principle_id": "P01_MSPW",
-    "market_validation_signal": "Test ads with rough mockup achieved 5% CTR vs. 1.2% industry avg.",
+    "market_validation_signal": "Test ads with rough mockup achieved 5% CTR vs 1.2% industry average.",
     "founder_action": "Build MVP landing page to capture leads immediately.",
     "risk_flag": "Mockup expectations may outpace actual MVP capabilities."
   },
 
   {
     "principle_id": "P02_DTTDS",
-    "scrappy_tactic": "Founder delivers surprise thank‑you packages to top 10 customers.",
-    "scalability_limit": "Manual curation caps at 15 customers/week.",
+    "scrappy_tactic": "Founder delivers surprise thank-you packages to top 10 customers.",
+    "scalability_limit": "Manual curation caps at 15 customers per week.",
     "growth_trigger": "Automate gifting once churn in top segment drops below 2%."
   },
   {
     "principle_id": "P02_DTTDS",
     "scrappy_tactic": "Manually tags and segments every new customer in CRM by founder’s hand.",
-    "scalability_limit": "10 minutes/user max before it blocks other priorities.",
+    "scalability_limit": "10 minutes per user max before it blocks other priorities.",
     "growth_trigger": "Automate tagging when segment definitions stabilise."
   },
   {
     "principle_id": "P02_DTTDS",
     "scrappy_tactic": "Founder answers every inbound support ticket personally in first month.",
-    "scalability_limit": "Max 50 tickets/day before slowing response times.",
+    "scalability_limit": "Max 50 tickets per day before slowing response times.",
     "growth_trigger": "Document top 20 answers into help centre before handoff."
   },
   {
     "principle_id": "P02_DTTDS",
-    "scrappy_tactic": "Organises in‑person meetups for first 25 customers.",
-    "scalability_limit": "Venue & travel costs unsustainable past 3 events.",
-    "growth_trigger": "Switch to virtual roundtables post‑validation."
+    "scrappy_tactic": "Organises in-person meetups for first 25 customers.",
+    "scalability_limit": "Venue and travel costs unsustainable past three events.",
+    "growth_trigger": "Switch to virtual roundtables post-validation."
   },
   {
     "principle_id": "P02_DTTDS",
     "scrappy_tactic": "Personally walks customers through competitor migration process.",
-    "scalability_limit": "Complexity rises past 10 migrations/month.",
+    "scalability_limit": "Complexity rises past 10 migrations per month.",
     "growth_trigger": "Record walkthrough video after 15 successful migrations."
+  },
+
+  {
+    "principle_id": "P03_LAUNCH_FAST",
+    "MVP_definition": "Ship only the single core job: capture request, process, and deliver result via email.",
+    "blocker_removal": "Defer SSO providers to post-launch; use passwordless magic links; push advanced analytics to backlog.",
+    "time_to_market_metric": "Target first live user within 10 days; MVP code freeze at day 7."
+  },
+  {
+    "principle_id": "P03_LAUNCH_FAST",
+    "MVP_definition": "Clickable prototype with one working flow for top persona.",
+    "blocker_removal": "Replace custom billing with Stripe payment links; stub non-critical integrations.",
+    "time_to_market_metric": "Demo to five prospects in one week; collect same-day feedback."
+  },
+  {
+    "principle_id": "P03_LAUNCH_FAST",
+    "MVP_definition": "Command-line tool exported as a simple web form with no auth.",
+    "blocker_removal": "Skip branding and dashboard; log outputs to secure sheet.",
+    "time_to_market_metric": "48-hour build; 72-hour first user result turnaround."
+  },
+  {
+    "principle_id": "P03_LAUNCH_FAST",
+    "MVP_definition": "Single feature that solves the most frequent pain point end-to-end.",
+    "blocker_removal": "Cut mobile app; ship responsive web only; avoid native SDK work.",
+    "time_to_market_metric": "Cut scope until build fits in one sprint with zero dependencies."
+  },
+  {
+    "principle_id": "P03_LAUNCH_FAST",
+    "MVP_definition": "Manual backend with automated front-door UI.",
+    "blocker_removal": "Use no-code ops for fulfillment; instrument only one KPI.",
+    "time_to_market_metric": "Launch in five working days; daily ship cadence."
   },
 
   {
     "principle_id": "P04_DEFAULT_ALIVE",
     "runway_calc": "12 months runway post recent funding; burn stable.",
     "cost_control": "Negotiate annual vendor contracts at discounted rates.",
-    "revenue_path": "Introduce small‑team pricing tier to capture emerging startups."
+    "revenue_path": "Introduce small-team pricing tier to capture emerging startups."
   },
   {
     "principle_id": "P04_DEFAULT_ALIVE",
-    "runway_calc": "5 months runway; new deal in negotiation may add 3 months.",
+    "runway_calc": "5 months runway; new deal in negotiation may add three months.",
     "cost_control": "Cut discretionary marketing spend by 25%.",
     "revenue_path": "Offer paid pilot extensions to existing enterprise clients."
   },
   {
     "principle_id": "P04_DEFAULT_ALIVE",
-    "runway_calc": "8 months runway at $50K burn; pipeline could extend by 6 months.",
-    "cost_control": "Switch analytics provider to save $12K/year.",
+    "runway_calc": "8 months runway at $50K burn; pipeline could extend by six months.",
+    "cost_control": "Switch analytics provider to save $12K per year.",
     "revenue_path": "Launch referral program with discounted annual plans."
   },
   {
@@ -87,9 +118,9 @@
   },
   {
     "principle_id": "P04_DEFAULT_ALIVE",
-    "runway_calc": "10 months runway; growth at 12% MoM.",
+    "runway_calc": "10 months runway; growth at 12% month-over-month.",
     "cost_control": "Consolidate SaaS tools to remove redundancy.",
-    "revenue_path": "Beta‑launch enterprise API for higher MRR."
+    "revenue_path": "Beta-launch enterprise API for higher MRR."
   },
 
   {
@@ -106,27 +137,27 @@
   },
   {
     "principle_id": "P05_RESOURCEFUL",
-    "constraint_hack": "Hacked together CRM using spreadsheet + free automation tools.",
+    "constraint_hack": "Hacked together CRM using spreadsheet plus free automation tools.",
     "obstacle_map": "Commercial CRM pricing was prohibitive.",
     "next_move": "Replace with custom solution after first 50 customers."
   },
   {
     "principle_id": "P05_RESOURCEFUL",
-    "constraint_hack": "Repurposed retired laptops for in‑house test rigs.",
+    "constraint_hack": "Repurposed retired laptops for in-house test rigs.",
     "obstacle_map": "Test lab budget was cut.",
     "next_move": "Expand rig pool as hardware donations arrive."
   },
   {
     "principle_id": "P05_RESOURCEFUL",
-    "constraint_hack": "Used barter to secure influencer shout‑outs without cash outlay.",
+    "constraint_hack": "Used barter to secure influencer shout-outs without cash outlay.",
     "obstacle_map": "Marketing budget frozen.",
     "next_move": "Systematise barter deals into monthly pipeline."
   },
 
   {
     "principle_id": "P06_WORK_ON_WHAT_MATTERS",
-    "impact_metric": "Top 2 features drive 80% of daily active usage.",
-    "priority_shift": "Pause development on low‑usage modules.",
+    "impact_metric": "Top two features drive 80% of daily active usage.",
+    "priority_shift": "Pause development on low-usage modules.",
     "distraction_flag": "Avoid chasing competitor features with <5% demand."
   },
   {
@@ -150,20 +181,20 @@
   {
     "principle_id": "P06_WORK_ON_WHAT_MATTERS",
     "impact_metric": "90% of feature requests align with one planned module.",
-    "priority_shift": "Fast‑track that module into current sprint.",
+    "priority_shift": "Fast-track that module into current sprint.",
     "distraction_flag": "Do not fragment dev focus with minor features."
   },
 
   {
     "principle_id": "P07_BIG_MARKET",
     "market_size": "$15B market, fragmented across regions.",
-    "adjacent_opportunity": "Regional expansion into under‑served APAC countries.",
+    "adjacent_opportunity": "Regional expansion into under-served APAC countries.",
     "entry_risk": "Localization costs may eat early profits."
   },
   {
     "principle_id": "P07_BIG_MARKET",
     "market_size": "$2B and growing at 12% CAGR.",
-    "adjacent_opportunity": "B2B cross‑sell into partner ecosystems.",
+    "adjacent_opportunity": "B2B cross-sell into partner ecosystems.",
     "entry_risk": "Requires complex integration work upfront."
   },
   {
@@ -173,4 +204,108 @@
     "entry_risk": "Heavier compliance overhead."
   },
   {
-    "principle_id": "P07_BIG_MARK
+    "principle_id": "P07_BIG_MARKET",
+    "market_size": "$6B category with fragmented SMB demand.",
+    "adjacent_opportunity": "Upsell analytics into $2B adjacent martech segment.",
+    "entry_risk": "SMB churn volatility threatens LTV/CAC ratio."
+  },
+  {
+    "principle_id": "P07_BIG_MARKET",
+    "market_size": "$1.2B domestic with regulatory reforms expected in 18–24 months.",
+    "adjacent_opportunity": "First-mover advantage in compliance automation when rules change.",
+    "entry_risk": "Timing risk; regulation timeline slippage could stall growth."
+  },
+
+  {
+    "principle_id": "P08_IGNORE_COMPETITION",
+    "focus_index": "Allocate 80% of cycles to improving activation-to-value time.",
+    "competitor_noise_filter": "Decline parity features that don’t improve activation.",
+    "core_progress": "Activation improved from 22% to 34% in four weeks."
+  },
+  {
+    "principle_id": "P08_IGNORE_COMPETITION",
+    "focus_index": "Weekly build-measure-learn loop on one core KPI.",
+    "competitor_noise_filter": "No roadmap items derived from competitor changelogs.",
+    "core_progress": "Two-week cadence delivering measurable retention lift."
+  },
+  {
+    "principle_id": "P08_IGNORE_COMPETITION",
+    "focus_index": "Daily founder check-in on user outcomes, not competitor news.",
+    "competitor_noise_filter": "Mute competitor alerts for 30 days.",
+    "core_progress": "Shipped three user-requested improvements; NPS +6."
+  },
+  {
+    "principle_id": "P08_IGNORE_COMPETITION",
+    "focus_index": "Prototype tests on core workflow friction only.",
+    "competitor_noise_filter": "Reject vanity integrations without proven demand.",
+    "core_progress": "Median task completion time down 28%."
+  },
+  {
+    "principle_id": "P08_IGNORE_COMPETITION",
+    "focus_index": "Instrument and optimize the aha-moment path.",
+    "competitor_noise_filter": "No PR-driven features; customer-only inputs.",
+    "core_progress": "Aha-moment reached by 60% of new users (up from 35%)."
+  },
+
+  {
+    "principle_id": "P09_BUILD_FOR_FEW",
+    "early_adopter_profile": "Independent fitness coaches with fewer than 50 clients.",
+    "tight_loop_feedback": "Weekly video calls with top 10 adopters to co-design new features.",
+    "niche_scaling_plan": "Expand to boutique gyms once retention exceeds 85% in core group."
+  },
+  {
+    "principle_id": "P09_BUILD_FOR_FEW",
+    "early_adopter_profile": "B2B SaaS founders doing founder-led sales.",
+    "tight_loop_feedback": "Daily Slack channel with 8 champions for rapid iteration.",
+    "niche_scaling_plan": "Scale to small sales teams after playbook success."
+  },
+  {
+    "principle_id": "P09_BUILD_FOR_FEW",
+    "early_adopter_profile": "Freelance accountants handling 20–100 clients.",
+    "tight_loop_feedback": "Office-hours twice weekly to capture workflow gaps.",
+    "niche_scaling_plan": "Move to small accounting firms post 90-day retention proof."
+  },
+  {
+    "principle_id": "P09_BUILD_FOR_FEW",
+    "early_adopter_profile": "D2C founders shipping under 500 orders per month.",
+    "tight_loop_feedback": "Instrument cohort usage; interview outliers weekly.",
+    "niche_scaling_plan": "Target micro-brands marketplace after achieving 30% time saved."
+  },
+  {
+    "principle_id": "P09_BUILD_FOR_FEW",
+    "early_adopter_profile": "Indie mobile game studios with teams of 2–5.",
+    "tight_loop_feedback": "Biweekly roadmap reviews with three design partners.",
+    "niche_scaling_plan": "Expand to mid-size studios once SDK stabilises."
+  },
+
+  {
+    "principle_id": "P10_UNDERSTAND_USERS",
+    "user_interview_exemplar": "“I export data every Friday and fix it by hand; it takes me two hours.”",
+    "pain_point_map": "Manual, recurring data cleanup; time cost and error risk.",
+    "insight_derivation": "Automate the Friday cleanup; success = zero manual steps."
+  },
+  {
+    "principle_id": "P10_UNDERSTAND_USERS",
+    "user_interview_exemplar": "“I don’t trust the dashboard until I check raw logs.”",
+    "pain_point_map": "Low trust from mismatched metrics; lack of audit trail.",
+    "insight_derivation": "Expose drill-down with raw event reconciliation to build trust."
+  },
+  {
+    "principle_id": "P10_UNDERSTAND_USERS",
+    "user_interview_exemplar": "“I only use it when my boss asks for a report.”",
+    "pain_point_map": "Tool not embedded in daily workflow; value episodic.",
+    "insight_derivation": "Push proactive insights into the user’s native tools to create pull."
+  },
+  {
+    "principle_id": "P10_UNDERSTAND_USERS",
+    "user_interview_exemplar": "“I’m afraid to click run; last time it broke billing.”",
+    "pain_point_map": "Fear from past negative outcomes; poor safety signaling.",
+    "insight_derivation": "Add sandbox mode and reversible actions; communicate safeguards."
+  },
+  {
+    "principle_id": "P10_UNDERSTAND_USERS",
+    "user_interview_exemplar": "“I wish it just told me what changed this week.”",
+    "pain_point_map": "Cognitive overload; user wants synthesized deltas.",
+    "insight_derivation": "Weekly change digest; highlight anomalies and recommended actions."
+  }
+]
