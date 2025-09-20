@@ -1,0 +1,13 @@
+[project]
+name = "Founder"
+version = "0.1.0"
+description = "Founder submodule for Buddhi."
+authors = [ { name = "ASISaga" } ]
+requires-python = ">=3.8"
+dependencies = [
+    "PurposeDrivenAgent @ git+https://github.com/ASISaga/PurposeDrivenAgent.git"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
