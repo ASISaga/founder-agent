@@ -6,8 +6,17 @@ authors = [ { name = "ASISaga" } ]
 requires-python = ">=3.8"
 dependencies = [
     "PurposeDrivenAgent @ git+https://github.com/ASISaga/PurposeDrivenAgent.git"
+	"transformers>=4.37.0",
+	"datasets>=2.14.0",
+	"peft>=0.11.1",
+	"accelerate>=0.26.0",
+	"bitsandbytes>=0.42.0",
+	"torch>=2.2.0"
 ]
 
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
