@@ -1,3 +1,5 @@
+from Boardroom.BusinessAgent.businessagent.BusinessAgent import BusinessAgent
+class FounderAgent(BusinessAgent):
 """
 FounderAgent - Business Infinity Implementation
 
