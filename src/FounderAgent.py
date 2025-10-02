@@ -1,5 +1,3 @@
-from Boardroom.BusinessAgent.businessagent.BusinessAgent import BusinessAgent
-class FounderAgent(BusinessAgent):
 """
 FounderAgent - Business Infinity Implementation
 
@@ -7,12 +5,11 @@ This agent implements founder-specific functionality for Business Infinity,
 inheriting from the generic LeadershipAgent in AOS.
 """
 
+from BusinessAgent import BusinessAgent
 from typing import Dict, Any, List
 import logging
-# Import base LeadershipAgent from AOS
-from RealmOfAgents.AgentOperatingSystem.LeadershipAgent import LeadershipAgent
 
-class FounderAgent(LeadershipAgent):
+class FounderAgent(BusinessAgent):
     """
     Founder Agent for Business Infinity.
     
