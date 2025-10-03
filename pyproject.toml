@@ -5,8 +5,7 @@ description = "Founder submodule for Buddhi."
 authors = [ { name = "ASISaga" } ]
 requires-python = ">=3.8"
 dependencies = [
-	"PurposeDrivenAgent @ git+https://github.com/ASISaga/PurposeDrivenAgent.git",
-	"BusinessAgent @ file:///c:/Development/ASISaga/Boardroom/BusinessAgent"
+	"BusinessAgent @ git+https://github.com/ASISaga/BusinessAgent.git",
 	"transformers>=4.37.0",
 	"datasets>=2.14.0",
 	"peft>=0.11.1",
