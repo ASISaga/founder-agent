@@ -1,0 +1,255 @@
+name: LoRA Fine-Tuning
+
+# Template workflow for agent repositories.
+# Copy this file to .github/workflows/finetune.yml in your agent repo
+# and update the configuration section at the top.
+#
+# This workflow:
+#   1. Uploads / refreshes the training dataset in Azure ML (via load-dataset).
+#   2. Submits an Azure ML fine-tuning command job (LoRA on Llama 3.3 70B).
+#   3. Polls the job until it completes (or fails).
+#   4. Registers the trained LoRA adapter in the Azure ML Model Registry
+#      (via persist-lora-adapter).
+#
+# Required repository secrets:
+#   AZURE_CLIENT_ID         — service principal / managed identity client ID
+#   AZURE_TENANT_ID         — Azure tenant ID
+#   AZURE_SUBSCRIPTION_ID   — Azure subscription ID
+#
+# Required repository variables:
+#   AZURE_ML_WORKSPACE      — Azure ML workspace name
+#   AZURE_RESOURCE_GROUP    — Azure resource group name
+
+on:
+  workflow_dispatch:
+    inputs:
+      adapter_version:
+        description: "Version tag for the registered LoRA adapter"
+        required: false
+        type: string
+        default: "1"
+      dataset_version:
+        description: "Dataset version to use for training (default: latest)"
+        required: false
+        type: string
+        default: "latest"
+      compute_target:
+        description: "Azure ML compute cluster name (GPU)"
+        required: false
+        type: string
+        default: "gpu-cluster"
+      base_model:
+        description: "Base model ID for LoRA fine-tuning"
+        required: false
+        type: string
+        default: "meta-llama/Llama-3.3-70B-Instruct"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CONFIGURE: update these values for your agent repository
+# ──────────────────────────────────────────────────────────────────────────────
+env:
+  AGENT_NAME: "my-agent"               # ← replace with your agent name
+  PERSONA_TYPE: "my-persona"           # ← replace with persona (e.g. ceo, cmo)
+  DATASET_TYPE: "jsonl"
+  DATASET_PATH: "data/finetune"        # ← path to training data in this repo
+  DATASET_NAME: "my-agent-finetune"    # ← Azure ML Data Asset name
+  # Path to your LoRA training script (relative to repo root)
+  TRAIN_SCRIPT: "scripts/train_lora.py"  # ← replace with your training script
+  # Azure ML environment (name:version or curated name)
+  AML_ENVIRONMENT: "azureml:AzureML-ACPT-PyTorch-2.2-cuda12.1:1"
+# ──────────────────────────────────────────────────────────────────────────────
+
+jobs:
+  upload-dataset:
+    name: Upload training dataset
+    uses: ASISaga/aos-intelligence/.github/workflows/load-dataset.yml@main
+    with:
+      agent_name: ${{ env.AGENT_NAME }}
+      dataset_type: ${{ env.DATASET_TYPE }}
+      dataset_path: ${{ env.DATASET_PATH }}
+      dataset_name: ${{ env.DATASET_NAME }}
+      dataset_version: ${{ github.event.inputs.dataset_version == 'latest' && github.run_number || github.event.inputs.dataset_version }}
+      azure_ml_workspace: ${{ vars.AZURE_ML_WORKSPACE }}
+      azure_resource_group: ${{ vars.AZURE_RESOURCE_GROUP }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  submit-training:
+    name: Submit Azure ML fine-tuning job
+    runs-on: ubuntu-latest
+    needs: upload-dataset
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      aml_job_name: ${{ steps.submit.outputs.aml_job_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Azure ML SDK
+        run: pip install "azure-ai-ml>=1.26.0" "azure-identity>=1.19.0"
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Submit LoRA fine-tuning job
+        id: submit
+        env:
+          AGENT_NAME: ${{ env.AGENT_NAME }}
+          PERSONA_TYPE: ${{ env.PERSONA_TYPE }}
+          DATASET_URI: ${{ needs.upload-dataset.outputs.dataset_uri }}
+          TRAIN_SCRIPT: ${{ env.TRAIN_SCRIPT }}
+          AML_ENVIRONMENT: ${{ env.AML_ENVIRONMENT }}
+          COMPUTE_TARGET: ${{ github.event.inputs.compute_target }}
+          BASE_MODEL: ${{ github.event.inputs.base_model }}
+          AZURE_ML_WORKSPACE: ${{ vars.AZURE_ML_WORKSPACE }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          python - <<'PYTHON'
+          import os
+
+          from azure.ai.ml import MLClient, Input, command
+          from azure.ai.ml.constants import AssetTypes
+          from azure.identity import DefaultAzureCredential
+
+          credential = DefaultAzureCredential()
+          ml_client = MLClient(
+              credential=credential,
+              subscription_id=os.environ["AZURE_SUBSCRIPTION_ID"],
+              resource_group_name=os.environ["AZURE_RESOURCE_GROUP"],
+              workspace_name=os.environ["AZURE_ML_WORKSPACE"],
+          )
+
+          persona_type = os.environ["PERSONA_TYPE"]
+          base_model = os.environ.get("BASE_MODEL", "meta-llama/Llama-3.3-70B-Instruct")
+          dataset_uri = os.environ["DATASET_URI"]
+          train_script = os.environ.get("TRAIN_SCRIPT", "scripts/train_lora.py")
+
+          job = command(
+              display_name=f"lora-finetune-{persona_type}",
+              description=f"LoRA fine-tuning for {persona_type} persona on {base_model}",
+              code=".",
+              command=(
+                  f"python {train_script} "
+                  f"--persona_type {persona_type} "
+                  f"--base_model ${{{{ inputs.base_model }}}} "
+                  f"--dataset_path ${{{{inputs.dataset}}}}"
+              ),
+              environment=os.environ.get("AML_ENVIRONMENT", "azureml:AzureML-ACPT-PyTorch-2.2-cuda12.1:1"),
+              compute=os.environ.get("COMPUTE_TARGET", "gpu-cluster"),
+              inputs={
+                  "dataset": Input(type=AssetTypes.URI_FILE, path=dataset_uri),
+                  "base_model": Input(type="string", default=base_model),
+              },
+              outputs={
+                  "model": {"type": "mlflow_model"},
+              },
+              tags={
+                  "persona_type": persona_type,
+                  "agent_name": os.environ["AGENT_NAME"],
+                  "source_repo": os.environ.get("GITHUB_REPOSITORY", ""),
+                  "source_sha": os.environ.get("GITHUB_SHA", ""),
+              },
+          )
+
+          submitted = ml_client.jobs.create_or_update(job)
+          print(f"Job submitted: {submitted.name}")
+          print(f"  Studio URL: {submitted.studio_url}")
+
+          output_file = os.environ["GITHUB_OUTPUT"]
+          with open(output_file, "a") as fh:
+              fh.write(f"aml_job_name={submitted.name}\n")
+          PYTHON
+
+      - name: Wait for training job to complete
+        env:
+          AML_JOB_NAME: ${{ steps.submit.outputs.aml_job_name }}
+          AZURE_ML_WORKSPACE: ${{ vars.AZURE_ML_WORKSPACE }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          python - <<'PYTHON'
+          import os
+          import time
+
+          from azure.ai.ml import MLClient
+          from azure.identity import DefaultAzureCredential
+
+          credential = DefaultAzureCredential()
+          ml_client = MLClient(
+              credential=credential,
+              subscription_id=os.environ["AZURE_SUBSCRIPTION_ID"],
+              resource_group_name=os.environ["AZURE_RESOURCE_GROUP"],
+              workspace_name=os.environ["AZURE_ML_WORKSPACE"],
+          )
+
+          job_name = os.environ["AML_JOB_NAME"]
+          terminal_statuses = {"Completed", "Failed", "Canceled", "NotResponding"}
+          poll_interval_seconds = 60
+          max_wait_seconds = 14400  # 4 hours
+
+          print(f"Polling job {job_name} ...")
+          elapsed = 0
+          while elapsed < max_wait_seconds:
+              job = ml_client.jobs.get(job_name)
+              status = job.status
+              print(f"  [{elapsed}s] Status: {status}")
+              if status in terminal_statuses:
+                  break
+              time.sleep(poll_interval_seconds)
+              elapsed += poll_interval_seconds
+
+          if job.status != "Completed":
+              raise RuntimeError(f"Training job ended with status: {job.status}")
+
+          print(f"Training job completed successfully: {job_name}")
+          PYTHON
+
+  persist-adapter:
+    name: Register LoRA adapter in Azure ML
+    needs: submit-training
+    uses: ASISaga/aos-intelligence/.github/workflows/persist-lora-adapter.yml@main
+    with:
+      agent_name: ${{ env.AGENT_NAME }}
+      persona_type: ${{ env.PERSONA_TYPE }}
+      adapter_version: ${{ github.event.inputs.adapter_version }}
+      adapter_source: aml_job
+      aml_job_name: ${{ needs.submit-training.outputs.aml_job_name }}
+      azure_ml_workspace: ${{ vars.AZURE_ML_WORKSPACE }}
+      azure_resource_group: ${{ vars.AZURE_RESOURCE_GROUP }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  summary:
+    name: Fine-tuning summary
+    runs-on: ubuntu-latest
+    needs: [upload-dataset, submit-training, persist-adapter]
+    if: always()
+    steps:
+      - name: Write job summary
+        run: |
+          echo "### LoRA Fine-Tuning Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Dataset URI | ${{ needs.upload-dataset.outputs.dataset_uri }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| AML Job | ${{ needs.submit-training.outputs.aml_job_name }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Model Name | ${{ needs.persist-adapter.outputs.model_name }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Model Version | ${{ needs.persist-adapter.outputs.model_version }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Asset ID | ${{ needs.persist-adapter.outputs.model_asset_id }} |" >> "$GITHUB_STEP_SUMMARY"

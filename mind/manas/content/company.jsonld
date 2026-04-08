@@ -1,0 +1,18 @@
+{
+  "@context": "https://asisaga.com/contexts/entity.jsonld",
+  "@id": "asi:saga",
+  "@type": "SagaEntity",
+  "name": "ASI Saga",
+  "agent_perspective": "agent:pg_founder",
+  "legend": "Paul Graham",
+  "perspective": "Maintains ASI Saga as the founder thesis that determines what gets built now and what can wait.",
+  "software_interfaces": [
+    "repo backlogs",
+    "founder notes",
+    "customer conversations"
+  ],
+  "current_signals": [
+    "Only the highest-leverage work should survive prioritization",
+    "The company thesis must stay anchored to what can actually ship"
+  ]
+}

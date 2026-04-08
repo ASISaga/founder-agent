@@ -1,0 +1,74 @@
+name: Load LoRA Adapter
+
+# Template workflow for agent repositories.
+# Copy this file to .github/workflows/load-adapter.yml in your agent repo
+# and update the configuration section at the top.
+#
+# This workflow calls the centralized load-lora-adapter workflow in
+# aos-intelligence to retrieve the registered LoRA adapter from the Azure ML
+# Model Registry for use in deployment, evaluation, or serving pipelines.
+#
+# Required repository secrets:
+#   AZURE_CLIENT_ID         — service principal / managed identity client ID
+#   AZURE_TENANT_ID         — Azure tenant ID
+#   AZURE_SUBSCRIPTION_ID   — Azure subscription ID
+#
+# Required repository variables:
+#   AZURE_ML_WORKSPACE      — Azure ML workspace name
+#   AZURE_RESOURCE_GROUP    — Azure resource group name
+
+on:
+  workflow_dispatch:
+    inputs:
+      adapter_version:
+        description: "Adapter version to load ('latest' resolves the newest registered version)"
+        required: false
+        type: string
+        default: "latest"
+      upload_artifact:
+        description: "Download adapter artifacts and publish as a workflow artifact"
+        required: false
+        type: boolean
+        default: false
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CONFIGURE: update these values for your agent repository
+# ──────────────────────────────────────────────────────────────────────────────
+env:
+  PERSONA_TYPE: "my-persona"           # ← replace with persona (e.g. ceo, cmo)
+  ARTIFACT_NAME: "lora-adapter"        # ← GitHub Actions artifact name
+# ──────────────────────────────────────────────────────────────────────────────
+
+jobs:
+  load-adapter:
+    name: Load LoRA adapter from Azure ML
+    uses: ASISaga/aos-intelligence/.github/workflows/load-lora-adapter.yml@main
+    with:
+      persona_type: ${{ env.PERSONA_TYPE }}
+      adapter_version: ${{ github.event.inputs.adapter_version }}
+      download_path: adapter
+      upload_artifact: ${{ github.event.inputs.upload_artifact && 'true' || 'false' }}
+      artifact_name: ${{ env.ARTIFACT_NAME }}
+      azure_ml_workspace: ${{ vars.AZURE_ML_WORKSPACE }}
+      azure_resource_group: ${{ vars.AZURE_RESOURCE_GROUP }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  summary:
+    name: Load summary
+    runs-on: ubuntu-latest
+    needs: load-adapter
+    if: always()
+    steps:
+      - name: Write job summary
+        run: |
+          echo "### LoRA Adapter Load Result" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Model Name | ${{ needs.load-adapter.outputs.model_name }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Version | ${{ needs.load-adapter.outputs.model_version }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Adapter URI | ${{ needs.load-adapter.outputs.adapter_uri }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Asset ID | ${{ needs.load-adapter.outputs.model_asset_id }} |" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,96 @@
+name: Upload Fine-Tuning Dataset
+
+# Template workflow for agent repositories.
+# Copy this file to .github/workflows/dataset-upload.yml in your agent repo
+# and update the configuration section at the top.
+#
+# This workflow calls the centralized load-dataset workflow in aos-intelligence
+# to upload a JSONL / MLTable fine-tuning dataset to Azure ML as a versioned
+# Data Asset whenever training data is pushed or updated.
+#
+# Required repository secrets (set in your agent repo Settings → Secrets):
+#   AZURE_CLIENT_ID         — service principal / managed identity client ID
+#   AZURE_TENANT_ID         — Azure tenant ID
+#   AZURE_SUBSCRIPTION_ID   — Azure subscription ID
+#
+# Required repository variables (set in your agent repo Settings → Variables):
+#   AZURE_ML_WORKSPACE      — Azure ML workspace name
+#   AZURE_RESOURCE_GROUP    — Azure resource group name
+
+on:
+  push:
+    paths:
+      # ── CONFIGURE: adjust to match the path(s) where your datasets live ──
+      - "data/finetune/**"
+      - "data/preferences/**"
+  workflow_dispatch:
+    inputs:
+      dataset_version:
+        description: "Dataset version to register (default: auto-incremented)"
+        required: false
+        type: string
+        default: ""
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CONFIGURE: update these values for your agent repository
+# ──────────────────────────────────────────────────────────────────────────────
+env:
+  # The persona type / agent name (e.g. ceo, cmo, cfo, coo, cto)
+  AGENT_NAME: "my-agent"               # ← replace with your agent name
+  # Dataset format: jsonl or mltable
+  DATASET_TYPE: "jsonl"
+  # Path to dataset file or directory (relative to repo root)
+  DATASET_PATH: "data/finetune"        # ← replace with your dataset path
+  # Azure ML Data Asset name
+  DATASET_NAME: "my-agent-finetune"    # ← replace with your dataset name
+# ──────────────────────────────────────────────────────────────────────────────
+
+jobs:
+  compute-version:
+    name: Compute dataset version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Resolve dataset version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.dataset_version }}" ]; then
+            echo "version=${{ github.event.inputs.dataset_version }}" >> "$GITHUB_OUTPUT"
+          else
+            # Use the short SHA as the version suffix for push-triggered runs
+            SHORT_SHA="${GITHUB_SHA::8}"
+            echo "version=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+
+  upload-dataset:
+    name: Upload dataset to Azure ML
+    needs: compute-version
+    uses: ASISaga/aos-intelligence/.github/workflows/load-dataset.yml@main
+    with:
+      agent_name: ${{ env.AGENT_NAME }}
+      dataset_type: ${{ env.DATASET_TYPE }}
+      dataset_path: ${{ env.DATASET_PATH }}
+      dataset_name: ${{ env.DATASET_NAME }}
+      dataset_version: ${{ needs.compute-version.outputs.version }}
+      azure_ml_workspace: ${{ vars.AZURE_ML_WORKSPACE }}
+      azure_resource_group: ${{ vars.AZURE_RESOURCE_GROUP }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  summary:
+    name: Upload summary
+    runs-on: ubuntu-latest
+    needs: upload-dataset
+    if: always()
+    steps:
+      - name: Print dataset URI
+        run: |
+          echo "### Dataset Upload Result" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Dataset URI | ${{ needs.upload-dataset.outputs.dataset_uri }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Asset ID | ${{ needs.upload-dataset.outputs.dataset_asset_id }} |" >> "$GITHUB_STEP_SUMMARY"
