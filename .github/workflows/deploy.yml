@@ -1,0 +1,74 @@
+name: Deploy Founder Agent
+
+# Thin caller: delegates all deployment logic to the reusable workflow in
+# ASISaga/aos-infrastructure. See deployment/workflow-templates/README.md
+# in that repository for full setup instructions.
+#
+# Required GitHub Environments: dev, staging, prod
+# Each environment needs the following secrets:
+#   AZURE_CLIENT_ID          — Managed identity client ID for OIDC
+#   AZURE_TENANT_ID          — Azure AD tenant ID
+#   AZURE_SUBSCRIPTION_ID    — Azure subscription ID
+#   FOUNDRY_PROJECT_ENDPOINT — Azure AI Foundry project endpoint URL
+#
+# Deployment triggers:
+#   Push to main                    → dev
+#   GitHub Release published        → prod
+#   workflow_dispatch               → environment selected by user
+#   repository_dispatch (infra_provisioned) → environment from payload
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (dev | staging | prod)"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+        default: dev
+  repository_dispatch:
+    types:
+      - infra_provisioned
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  resolve-env:
+    name: Resolve target environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.env.outputs.environment }}
+    steps:
+      - name: Determine environment
+        id: env
+        run: |
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "environment=${{ github.event.client_payload.environment }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ inputs.environment }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event_name }}" == "release" ]]; then
+            echo "environment=prod" >> "$GITHUB_OUTPUT"
+          else
+            echo "environment=dev" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    name: Deploy to Azure AI Foundry
+    needs: resolve-env
+    environment: ${{ needs.resolve-env.outputs.environment }}
+    uses: ASISaga/aos-infrastructure/.github/workflows/deploy-foundry-agent.yml@main
+    with:
+      agent-name: founder-agent
+      environment: ${{ needs.resolve-env.outputs.environment }}
+    secrets: inherit
