@@ -1,8 +1,6 @@
 name: Deploy Founder Agent
 
-# Thin caller: delegates all deployment logic to the reusable workflow in
-# ASISaga/aos-infrastructure. See deployment/workflow-templates/README.md
-# in that repository for full setup instructions.
+# Deploys the Founder agent defined in agent.yaml to Azure AI Foundry Agent Service.
 #
 # Required GitHub Environments: dev, staging, prod
 # Each environment needs the following secrets:
@@ -65,10 +63,110 @@ jobs:
 
   deploy:
     name: Deploy to Azure AI Foundry
+    runs-on: ubuntu-latest
     needs: resolve-env
     environment: ${{ needs.resolve-env.outputs.environment }}
-    uses: ASISaga/aos-infrastructure/.github/workflows/deploy-foundry-agent.yml@main
-    with:
-      agent-name: founder-agent
-      environment: ${{ needs.resolve-env.outputs.environment }}
-    secrets: inherit
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Azure AI dependencies
+        run: pip install "azure-ai-projects>=1.0.0" "azure-identity>=1.19.0" "pyyaml>=6.0"
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy Founder Agent to Azure AI Foundry
+        env:
+          FOUNDRY_PROJECT_ENDPOINT: ${{ secrets.FOUNDRY_PROJECT_ENDPOINT }}
+          DEPLOY_ENVIRONMENT: ${{ needs.resolve-env.outputs.environment }}
+        run: |
+          python - <<'PYTHON'
+          import os
+          import sys
+          import yaml
+          from azure.ai.projects import AIProjectClient
+          from azure.core.exceptions import AzureError
+          from azure.identity import DefaultAzureCredential, CredentialUnavailableError
+
+          endpoint = os.environ["FOUNDRY_PROJECT_ENDPOINT"]
+          environment = os.environ["DEPLOY_ENVIRONMENT"]
+          agent_name = "founder-agent"
+
+          try:
+              with open("agent.yaml") as f:
+                  config = yaml.safe_load(f)
+          except FileNotFoundError:
+              print("ERROR: agent.yaml not found in repository root", file=sys.stderr)
+              sys.exit(1)
+          except yaml.YAMLError as exc:
+              print(f"ERROR: Failed to parse agent.yaml: {exc}", file=sys.stderr)
+              sys.exit(1)
+
+          try:
+              credential = DefaultAzureCredential()
+              client = AIProjectClient(endpoint=endpoint, credential=credential)
+          except CredentialUnavailableError as exc:
+              print(f"ERROR: Azure authentication failed: {exc}", file=sys.stderr)
+              sys.exit(1)
+
+          tools = [{"type": t["type"]} for t in config.get("tools", []) if t.get("type")]
+          metadata = {
+              **config.get("metadata", {}),
+              "environment": environment,
+              "source_sha": os.environ.get("GITHUB_SHA", ""),
+          }
+
+          try:
+              existing = None
+              for a in client.agents.list_agents():
+                  if a.name == agent_name:
+                      existing = a
+                      break
+
+              if existing:
+                  agent = client.agents.update_agent(
+                      assistant_id=existing.id,
+                      model=config["model"],
+                      name=agent_name,
+                      instructions=config["instructions"],
+                      tools=tools,
+                      metadata=metadata,
+                  )
+                  print(f"Updated agent: {agent.id}")
+              else:
+                  agent = client.agents.create_agent(
+                      model=config["model"],
+                      name=agent_name,
+                      instructions=config["instructions"],
+                      tools=tools,
+                      metadata=metadata,
+                  )
+                  print(f"Created agent: {agent.id}")
+          except AzureError as exc:
+              print(f"ERROR: Agent deployment failed: {exc}", file=sys.stderr)
+              sys.exit(1)
+
+          print(f"  Name: {agent.name}")
+          print(f"  Model: {agent.model}")
+          print(f"  Environment: {environment}")
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("### Founder Agent Deployment\n\n")
+              f.write("| Field | Value |\n")
+              f.write("|-------|-------|\n")
+              f.write(f"| Agent ID | {agent.id} |\n")
+              f.write(f"| Agent Name | {agent.name} |\n")
+              f.write(f"| Model | {agent.model} |\n")
+              f.write(f"| Environment | {environment} |\n")
+          PYTHON
