@@ -1,23 +1,16 @@
 name: Deploy Founder Agent
 
-# Deploys the Founder agent to Azure AI Foundry Agent Service.
+# Deploys the Founder agent to Azure AI Foundry as a hosted (containerised) agent.
 #
-# Job 1 — deploy (Python SDK):
-#   Deploys agent.yaml configuration via the Azure AI Projects SDK.
+# Job — deploy-hosted-agent (Azure CLI):
+#   Builds the container image via ACR Tasks (no Docker required on runner),
+#   creates a new agent version in Foundry, and starts it.
 #   Required GitHub Environments: dev, staging, prod
 #   Each environment needs the following secrets:
-#     AZURE_CLIENT_ID          — Managed identity client ID for OIDC
-#     AZURE_TENANT_ID          — Azure AD tenant ID
-#     AZURE_SUBSCRIPTION_ID    — Azure subscription ID
-#     FOUNDRY_PROJECT_ENDPOINT — Azure AI Foundry project endpoint URL
-#
-# Job 2 — deploy-container (Azure CLI):
-#   Builds a Docker image, pushes it to Azure Container Registry, and updates
-#   the Foundry agent with the new image via `az ai project agent update`.
-#   Required secret:
-#     AZURE_CREDENTIALS        — Service principal JSON credential
-#   Configure the env vars below (ACR_NAME, HUB_NAME, etc.) for your project.
-#   The job also expects an instructions.md file in the repository root.
+#     AZURE_CLIENT_ID       — Managed identity client ID for OIDC
+#     AZURE_TENANT_ID       — Azure AD tenant ID
+#     AZURE_SUBSCRIPTION_ID — Azure subscription ID
+#   Configure the env vars below (ACR_NAME, ACCOUNT_NAME, etc.) for your project.
 #
 # Deployment triggers:
 #   Push to main                    → dev
@@ -51,15 +44,16 @@ permissions:
   id-token: write
   contents: read
 
-# Container deployment settings (used by deploy-container job).
+# Container deployment settings (used by deploy-hosted-agent job).
 # Update these values for your project before enabling that job.
 # AGENT_NAME uses a "BusinessInfinity-<repo>" convention; adjust the prefix as needed.
 env:
   AGENT_NAME: "BusinessInfinity-${{ github.event.repository.name }}"
   ACR_NAME: "your-acr-name"
-  HUB_NAME: "your-foundry-hub"
+  ACCOUNT_NAME: "your-foundry-account"
   PROJECT_NAME: "your-foundry-project"
   RG_NAME: "your-resource-group"
+  AGENT_VERSION: "1"
 
 jobs:
   resolve-env:
@@ -81,23 +75,14 @@ jobs:
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           fi
 
-  deploy:
-    name: Deploy to Azure AI Foundry
+  deploy-hosted-agent:
+    name: Build, Push & Deploy Hosted Agent
     runs-on: ubuntu-latest
     needs: resolve-env
     environment: ${{ needs.resolve-env.outputs.environment }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      - name: Install Azure AI dependencies
-        run: pip install "azure-ai-projects>=1.0.0" "azure-identity>=1.19.0" "pyyaml>=6.0"
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
@@ -106,133 +91,28 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy Founder Agent to Azure AI Foundry
-        env:
-          FOUNDRY_PROJECT_ENDPOINT: ${{ secrets.FOUNDRY_PROJECT_ENDPOINT }}
-          DEPLOY_ENVIRONMENT: ${{ needs.resolve-env.outputs.environment }}
+      - name: Build and Push Image to ACR
         run: |
-          python - <<'PYTHON'
-          import os
-          import sys
-          import yaml
-          from azure.ai.projects import AIProjectClient
-          from azure.core.exceptions import AzureError
-          from azure.identity import DefaultAzureCredential, CredentialUnavailableError
+          az acr build \
+            --registry ${{ env.ACR_NAME }} \
+            --image ${{ env.AGENT_NAME }}:${{ github.sha }} \
+            --platform linux/amd64 .
 
-          endpoint = os.environ["FOUNDRY_PROJECT_ENDPOINT"]
-          environment = os.environ["DEPLOY_ENVIRONMENT"]
-          agent_name = "founder-agent"
-
-          try:
-              with open("agent.yaml") as f:
-                  config = yaml.safe_load(f)
-          except FileNotFoundError:
-              print("ERROR: agent.yaml not found in repository root", file=sys.stderr)
-              sys.exit(1)
-          except yaml.YAMLError as exc:
-              print(f"ERROR: Failed to parse agent.yaml: {exc}", file=sys.stderr)
-              sys.exit(1)
-
-          try:
-              credential = DefaultAzureCredential()
-              client = AIProjectClient(endpoint=endpoint, credential=credential)
-          except CredentialUnavailableError as exc:
-              print(f"ERROR: Azure authentication failed: {exc}", file=sys.stderr)
-              sys.exit(1)
-
-          tools = [{"type": t["type"]} for t in config.get("tools", []) if t.get("type")]
-          metadata = {
-              **config.get("metadata", {}),
-              "environment": environment,
-              "source_sha": os.environ.get("GITHUB_SHA", ""),
-          }
-
-          try:
-              existing = None
-              for a in client.agents.list_agents():
-                  if a.name == agent_name:
-                      existing = a
-                      break
-
-              if existing:
-                  agent = client.agents.update_agent(
-                      assistant_id=existing.id,
-                      model=config["model"],
-                      name=agent_name,
-                      instructions=config["instructions"],
-                      tools=tools,
-                      metadata=metadata,
-                  )
-                  print(f"Updated agent: {agent.id}")
-              else:
-                  agent = client.agents.create_agent(
-                      model=config["model"],
-                      name=agent_name,
-                      instructions=config["instructions"],
-                      tools=tools,
-                      metadata=metadata,
-                  )
-                  print(f"Created agent: {agent.id}")
-          except AzureError as exc:
-              print(f"ERROR: Agent deployment failed: {exc}", file=sys.stderr)
-              sys.exit(1)
-
-          print(f"  Name: {agent.name}")
-          print(f"  Model: {agent.model}")
-          print(f"  Environment: {environment}")
-
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
-              f.write("### Founder Agent Deployment\n\n")
-              f.write("| Field | Value |\n")
-              f.write("|-------|-------|\n")
-              f.write(f"| Agent ID | {agent.id} |\n")
-              f.write(f"| Agent Name | {agent.name} |\n")
-              f.write(f"| Model | {agent.model} |\n")
-              f.write(f"| Environment | {environment} |\n")
-          PYTHON
-
-  deploy-container:
-    name: Deploy Container to Azure AI Foundry
-    runs-on: ubuntu-latest
-    needs: resolve-env
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Build and Push Image
+      - name: Create new agent version in Foundry
         run: |
-          TAG=${{ github.sha }}
-          IMAGE_URI=${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:$TAG
+          az cognitiveservices agent create-version \
+            --account-name ${{ env.ACCOUNT_NAME }} \
+            --project-name ${{ env.PROJECT_NAME }} \
+            --name ${{ env.AGENT_NAME }} \
+            --image "${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:${{ github.sha }}" \
+            --agent-version ${{ env.AGENT_VERSION }}
 
-          az acr login --name ${{ env.ACR_NAME }}
-          docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
-
-          # Store the URI for the next step
-          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
-
-      - name: Update Foundry Agent
+      - name: Start the agent deployment
         run: |
-          az extension add --name ai
-
-          # Validate instructions file exists before reading
-          if [ ! -f ./instructions.md ]; then
-            echo "ERROR: instructions.md not found in repository root" >&2
-            exit 1
-          fi
-
-          # Use local files for instructions
-          INSTRUCTIONS=$(cat ./instructions.md)
-
-          az ai project agent update \
-            --name "${{ env.AGENT_NAME }}" \
-            --image "${{ env.IMAGE_URI }}" \
-            --instructions "$INSTRUCTIONS" \
-            --resource-group ${{ env.RG_NAME }} \
-            --workspace-name ${{ env.HUB_NAME }} \
-            --project-name ${{ env.PROJECT_NAME }}
+          az cognitiveservices agent start \
+            --account-name ${{ env.ACCOUNT_NAME }} \
+            --project-name ${{ env.PROJECT_NAME }} \
+            --name ${{ env.AGENT_NAME }} \
+            --agent-version ${{ env.AGENT_VERSION }} \
+            --min-replicas 1 \
+            --max-replicas 2
