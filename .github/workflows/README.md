@@ -191,3 +191,37 @@ az role assignment create \
 
 For production workflows, consider using a semantic version tag (e.g. `v1.2.0`)
 or an incrementing integer tied to your release process.
+
+---
+
+## Deploy Workflow (`deploy.yml`)
+
+The `deploy.yml` workflow consolidates two deployment approaches:
+
+### Job 1 — `deploy` (Python SDK, OIDC)
+
+Reads `agent.yaml` and creates/updates the agent via the Azure AI Projects SDK.
+Uses Workload Identity Federation (OIDC) — no long-lived credential required.
+
+Required secrets per environment (`dev` / `staging` / `prod`):
+
+| Secret | Description |
+|--------|-------------|
+| `AZURE_CLIENT_ID` | Managed identity client ID |
+| `AZURE_TENANT_ID` | Azure AD tenant ID |
+| `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
+| `FOUNDRY_PROJECT_ENDPOINT` | Azure AI Foundry project endpoint URL |
+
+### Job 2 — `deploy-container` (Azure CLI, service principal)
+
+Builds a Docker image, pushes it to Azure Container Registry, and updates the
+Foundry agent with the new image via `az ai project agent update`.
+
+Required secret:
+
+| Secret | Description |
+|--------|-------------|
+| `AZURE_CREDENTIALS` | Service principal JSON (`az ad sp create-for-rbac --sdk-auth`) |
+
+Configure the `env:` block at the top of `deploy.yml` with your project-specific
+values (`ACR_NAME`, `HUB_NAME`, `PROJECT_NAME`, `RG_NAME`) before using this job.
