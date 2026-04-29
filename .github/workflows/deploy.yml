@@ -84,7 +84,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Validate deployment configuration
+        id: validate-config
+        run: |
+          missing=()
+          [[ -z "$AZURE_CLIENT_ID" ]]       && missing+=("AZURE_CLIENT_ID secret")
+          [[ -z "$AZURE_TENANT_ID" ]]       && missing+=("AZURE_TENANT_ID secret")
+          [[ -z "$AZURE_SUBSCRIPTION_ID" ]] && missing+=("AZURE_SUBSCRIPTION_ID secret")
+          [[ "$ACR_NAME"      == "your-acr-name"       ]] && missing+=("ACR_NAME env var")
+          [[ "$ACCOUNT_NAME"  == "your-foundry-account" ]] && missing+=("ACCOUNT_NAME env var")
+          [[ "$PROJECT_NAME"  == "your-foundry-project" ]] && missing+=("PROJECT_NAME env var")
+          [[ "$RG_NAME"       == "your-resource-group"  ]] && missing+=("RG_NAME env var")
+          if [[ ${#missing[@]} -gt 0 ]]; then
+            echo "::warning::Deployment skipped — configure the following before enabling: ${missing[*]}"
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ACR_NAME:              ${{ env.ACR_NAME }}
+          ACCOUNT_NAME:          ${{ env.ACCOUNT_NAME }}
+          PROJECT_NAME:          ${{ env.PROJECT_NAME }}
+          RG_NAME:               ${{ env.RG_NAME }}
+
       - name: Azure Login (OIDC)
+        if: steps.validate-config.outputs.configured == 'true'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -92,6 +119,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and Push Image to ACR
+        if: steps.validate-config.outputs.configured == 'true'
         run: |
           az acr build \
             --registry ${{ env.ACR_NAME }} \
@@ -99,6 +127,7 @@ jobs:
             --platform linux/amd64 .
 
       - name: Create new agent version in Foundry
+        if: steps.validate-config.outputs.configured == 'true'
         run: |
           az cognitiveservices agent create-version \
             --account-name ${{ env.ACCOUNT_NAME }} \
@@ -108,6 +137,7 @@ jobs:
             --agent-version ${{ env.AGENT_VERSION }}
 
       - name: Start the agent deployment
+        if: steps.validate-config.outputs.configured == 'true'
         run: |
           az cognitiveservices agent start \
             --account-name ${{ env.ACCOUNT_NAME }} \
