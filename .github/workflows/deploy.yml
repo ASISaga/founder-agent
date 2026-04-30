@@ -10,7 +10,7 @@ name: Deploy Founder Agent
 #     AZURE_CLIENT_ID       — Managed identity client ID for OIDC
 #     AZURE_TENANT_ID       — Azure AD tenant ID
 #     AZURE_SUBSCRIPTION_ID — Azure subscription ID
-#   Configure the env vars below (ACR_NAME, ACCOUNT_NAME, etc.) for your project.
+#   Configure the env vars below (ACR_NAME, FOUNDRY_HUB_NAME, etc.) for your project.
 #
 # Deployment triggers:
 #   Push to main                    → dev
@@ -35,7 +35,7 @@ on:
           - dev
           - staging
           - prod
-        default: dev
+        default: staging
   repository_dispatch:
     types:
       - infra_provisioned
@@ -49,11 +49,22 @@ permissions:
 # AGENT_NAME uses a "BusinessInfinity-<repo>" convention; adjust the prefix as needed.
 env:
   AGENT_NAME: "BusinessInfinity-${{ github.event.repository.name }}"
-  ACR_NAME: "your-acr-name"
-  ACCOUNT_NAME: "your-foundry-account"
-  PROJECT_NAME: "your-foundry-project"
-  RG_NAME: "your-resource-group"
-  AGENT_VERSION: "1"
+
+  # Pulling from GitHub Settings > Variables
+
+  # The name of your Azure Container Registry (e.g., 'asiacr') where the agent's Docker image is stored.
+  ACR_NAME: ${{ vars.ACR_NAME }}
+
+  # The name of your Azure AI Foundry Hub/Account (the top-level resource for your AI assets).
+  FOUNDRY_HUB_NAME: ${{ vars.FOUNDRY_HUB_NAME }}
+
+  # The specific Azure AI Foundry Project where this agent will be provisioned and managed.
+  FOUNDRY_PROJECT_NAME: ${{ vars.FOUNDRY_PROJECT_NAME }}
+
+  # The Azure Resource Group containing your Foundry, ACR, and related boardroom infrastructure.
+  RG_NAME: ${{ vars.RG_NAME }}
+  
+  AGENT_VERSION: ${{ vars.AGENT_VERSION }}
 
 jobs:
   resolve-env:
@@ -92,8 +103,8 @@ jobs:
           [[ -z "$AZURE_TENANT_ID" ]]       && missing+=("AZURE_TENANT_ID secret")
           [[ -z "$AZURE_SUBSCRIPTION_ID" ]] && missing+=("AZURE_SUBSCRIPTION_ID secret")
           [[ "$ACR_NAME"      == "your-acr-name"       ]] && missing+=("ACR_NAME env var")
-          [[ "$ACCOUNT_NAME"  == "your-foundry-account" ]] && missing+=("ACCOUNT_NAME env var")
-          [[ "$PROJECT_NAME"  == "your-foundry-project" ]] && missing+=("PROJECT_NAME env var")
+          [[ "$FOUNDRY_HUB_NAME"  == "your-foundry-account" ]] && missing+=("FOUNDRY_HUB_NAME env var")
+          [[ "$FOUNDRY_PROJECT_NAME"  == "your-foundry-project" ]] && missing+=("FOUNDRY_PROJECT_NAME env var")
           [[ "$RG_NAME"       == "your-resource-group"  ]] && missing+=("RG_NAME env var")
           if [[ ${#missing[@]} -gt 0 ]]; then
             echo "::warning::Deployment skipped — configure the following before enabling: ${missing[*]}"
@@ -106,8 +117,8 @@ jobs:
           AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ACR_NAME:              ${{ env.ACR_NAME }}
-          ACCOUNT_NAME:          ${{ env.ACCOUNT_NAME }}
-          PROJECT_NAME:          ${{ env.PROJECT_NAME }}
+          FOUNDRY_HUB_NAME:          ${{ env.FOUNDRY_HUB_NAME }}
+          FOUNDRY_PROJECT_NAME:          ${{ env.FOUNDRY_PROJECT_NAME }}
           RG_NAME:               ${{ env.RG_NAME }}
 
       - name: Azure Login (OIDC)
@@ -130,8 +141,8 @@ jobs:
         if: steps.validate-config.outputs.configured == 'true'
         run: |
           az cognitiveservices agent create-version \
-            --account-name ${{ env.ACCOUNT_NAME }} \
-            --project-name ${{ env.PROJECT_NAME }} \
+            --account-name ${{ env.FOUNDRY_HUB_NAME }} \
+            --project-name ${{ env.FOUNDRY_PROJECT_NAME }} \
             --name ${{ env.AGENT_NAME }} \
             --image "${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:${{ github.sha }}" \
             --agent-version ${{ env.AGENT_VERSION }}
@@ -140,8 +151,8 @@ jobs:
         if: steps.validate-config.outputs.configured == 'true'
         run: |
           az cognitiveservices agent start \
-            --account-name ${{ env.ACCOUNT_NAME }} \
-            --project-name ${{ env.PROJECT_NAME }} \
+            --account-name ${{ env.FOUNDRY_HUB_NAME }} \
+            --project-name ${{ env.FOUNDRY_PROJECT_NAME }} \
             --name ${{ env.AGENT_NAME }} \
             --agent-version ${{ env.AGENT_VERSION }} \
             --min-replicas 1 \
