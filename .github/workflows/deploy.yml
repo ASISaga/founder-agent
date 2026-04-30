@@ -48,7 +48,7 @@ permissions:
 # Update these values for your project before enabling that job.
 # AGENT_NAME uses a "BusinessInfinity-<repo>" convention; adjust the prefix as needed.
 env:
-  AGENT_NAME: "BusinessInfinity-${{ github.event.repository.name }}"
+  AGENT_NAME: "${{ vars.APP_NAME }}-${{ github.event.repository.name }}"
 
   # Pulling from GitHub Settings > Variables
 
