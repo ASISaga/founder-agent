@@ -83,7 +83,7 @@ jobs:
           elif [[ "${{ github.event_name }}" == "release" ]]; then
             echo "environment=prod" >> "$GITHUB_OUTPUT"
           else
-            echo "environment=dev" >> "$GITHUB_OUTPUT"
+            echo "environment=staging" >> "$GITHUB_OUTPUT"
           fi
 
   deploy-hosted-agent:
