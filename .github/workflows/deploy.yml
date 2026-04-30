@@ -135,7 +135,8 @@ jobs:
           az acr build \
             --registry ${{ env.ACR_NAME }} \
             --image ${{ env.AGENT_NAME }}:${{ github.sha }} \
-            --platform linux/amd64 .
+            --platform linux/amd64 \
+            --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} .
 
       - name: Create new agent version in Foundry
         if: steps.validate-config.outputs.configured == 'true'
