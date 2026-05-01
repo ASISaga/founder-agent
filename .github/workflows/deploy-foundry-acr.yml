@@ -32,7 +32,8 @@ permissions:
   contents: read
 
 env:
-  AGENT_NAME: "${{ vars.APP_NAME }}-${{ github.event.repository.name }}"
+  # Using repository name directly for the image name to match build logs
+  AGENT_NAME: "boardroom-founder-agent" 
   ACR_NAME: ${{ vars.ACR_NAME }}
   FOUNDRY_HUB_NAME: ${{ vars.FOUNDRY_HUB_NAME }}
   FOUNDRY_PROJECT_NAME: ${{ vars.FOUNDRY_PROJECT_NAME }}
@@ -94,15 +95,24 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # REPLACED: No longer building. Using the SHA or 'latest' from the registry.
-      - name: Verify Image in ACR
+      - name: Verify and Set Image Tag
         if: steps.validate-config.outputs.configured == 'true'
         run: |
+          # Use the exact SHA associated with this run
           IMAGE_TAG="${{ github.sha }}"
-          echo "Checking for image: ${{ env.AGENT_NAME }}:$IMAGE_TAG in ${{ env.ACR_NAME }}"
+          echo "Verifying image: ${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:$IMAGE_TAG"
           
-          # Optional: Verify the image exists before proceeding
-          az acr repository show-tags --name ${{ env.ACR_NAME }} --repository ${{ env.AGENT_NAME }} --output table | grep $IMAGE_TAG
+          # Use tsv output to avoid formatting issues during grep
+          TAG_EXISTS=$(az acr repository show-tags --name ${{ env.ACR_NAME }} --repository ${{ env.AGENT_NAME }} --output tsv | grep "$IMAGE_TAG" || echo "NOT_FOUND")
+          
+          if [ "$TAG_EXISTS" == "NOT_FOUND" ]; then
+            echo "::error::Image tag $IMAGE_TAG not found in ACR. Deployment halted."
+            exit 1
+          fi
+          
+          # Set for subsequent steps
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "::info::Successfully verified image in registry."
 
       - name: Set up Python
         if: steps.validate-config.outputs.configured == 'true'
@@ -121,6 +131,6 @@ jobs:
           FOUNDRY_PROJECT_NAME: ${{ env.FOUNDRY_PROJECT_NAME }}
           AGENT_NAME:           ${{ env.AGENT_NAME }}
           ACR_NAME:             ${{ env.ACR_NAME }}
-          IMAGE_TAG:            ${{ github.sha }}
+          IMAGE_TAG:            ${{ env.IMAGE_TAG }}
           AGENT_VERSION:        ${{ env.AGENT_VERSION }}
         run: python .github/scripts/deploy_agent.py
