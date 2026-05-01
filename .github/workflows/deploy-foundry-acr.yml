@@ -3,12 +3,9 @@ name: Deploy Founder Agent from ACR
 # Deploys the Founder agent to Azure AI Foundry using an EXISTING container image.
 #
 # Job — deploy-hosted-agent (Azure CLI):
-#   Pulls the identified image from ACR and creates/starts the agent in Foundry.
+#   Pulls the latest image tag from ACR dynamically and creates/starts the agent in Foundry.
 
 on:
-#  push:
-#    branches:
-#      - main
   release:
     types:
       - published
@@ -32,8 +29,7 @@ permissions:
   contents: read
 
 env:
-  # Using repository name directly for the image name to match build logs
-  AGENT_NAME: "boardroom-founder-agent" 
+  AGENT_NAME: "boardroom-founder-agent"
   ACR_NAME: ${{ vars.ACR_NAME }}
   FOUNDRY_HUB_NAME: ${{ vars.FOUNDRY_HUB_NAME }}
   FOUNDRY_PROJECT_NAME: ${{ vars.FOUNDRY_PROJECT_NAME }}
@@ -95,24 +91,26 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Verify and Set Image Tag
+      - name: Resolve latest image tag from ACR
         if: steps.validate-config.outputs.configured == 'true'
         run: |
-          # Use the exact SHA associated with this run
-          IMAGE_TAG="${{ github.sha }}"
-          echo "Verifying image: ${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:$IMAGE_TAG"
-          
-          # Use tsv output to avoid formatting issues during grep
-          TAG_EXISTS=$(az acr repository show-tags --name ${{ env.ACR_NAME }} --repository ${{ env.AGENT_NAME }} --output tsv | grep "$IMAGE_TAG" || echo "NOT_FOUND")
-          
-          if [ "$TAG_EXISTS" == "NOT_FOUND" ]; then
-            echo "::error::Image tag $IMAGE_TAG not found in ACR. Deployment halted."
+          echo "Fetching latest tag for repository: ${{ env.AGENT_NAME }}"
+
+          IMAGE_TAG=$(az acr repository show-tags \
+            --name ${{ env.ACR_NAME }} \
+            --repository ${{ env.AGENT_NAME }} \
+            --orderby time_desc \
+            --top 1 \
+            --output tsv)
+
+          if [[ -z "$IMAGE_TAG" ]]; then
+            echo "::error::No tags found in ACR for repository '${{ env.AGENT_NAME }}'. Has the image been built and pushed?"
             exit 1
           fi
-          
-          # Set for subsequent steps
+
+          echo "Resolved latest image tag: $IMAGE_TAG"
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-          echo "::info::Successfully verified image in registry."
+          echo "Full image: ${{ env.ACR_NAME }}.azurecr.io/${{ env.AGENT_NAME }}:$IMAGE_TAG"
 
       - name: Set up Python
         if: steps.validate-config.outputs.configured == 'true'
