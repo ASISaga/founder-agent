@@ -3,7 +3,7 @@ import requests
 from azure.identity import DefaultAzureCredential
 
 credential = DefaultAzureCredential()
-token = credential.get_token("https://ai.azure.com/.default").token
+token = credential.get_token("https://cognitiveservices.azure.com/.default").token
 
 endpoint = (
     f"https://{os.environ['FOUNDRY_HUB_NAME']}.services.ai.azure.com"
