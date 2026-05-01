@@ -17,10 +17,22 @@ image = (
     f"/{os.environ['AGENT_NAME']}:{os.environ['IMAGE_TAG']}"
 )
 
-agent = client.agents.create_agent(
-    model=image,
-    name=os.environ["AGENT_NAME"],
-    instructions="You are the Founder agent.",
-)
+# Check if agent already exists — update it, otherwise create
+agents = client.agents.list()
+existing = next((a for a in agents if a.name == os.environ["AGENT_NAME"]), None)
 
-print(f"Agent deployed: {agent.id}")
+if existing:
+    agent = client.agents.update(
+        agent_id=existing.id,
+        model=image,
+        name=os.environ["AGENT_NAME"],
+        instructions="You are the Founder agent.",
+    )
+    print(f"Agent updated: {agent.id}")
+else:
+    agent = client.agents.create(
+        model=image,
+        name=os.environ["AGENT_NAME"],
+        instructions="You are the Founder agent.",
+    )
+    print(f"Agent created: {agent.id}")
