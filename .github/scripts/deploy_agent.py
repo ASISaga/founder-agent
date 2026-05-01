@@ -1,15 +1,13 @@
 import os
+import requests
 from azure.identity import DefaultAzureCredential
-from azure.ai.projects import AIProjectClient
+
+credential = DefaultAzureCredential()
+token = credential.get_token("https://ai.azure.com/.default").token
 
 endpoint = (
     f"https://{os.environ['FOUNDRY_HUB_NAME']}.services.ai.azure.com"
     f"/api/projects/{os.environ['FOUNDRY_PROJECT_NAME']}"
-)
-
-client = AIProjectClient(
-    endpoint=endpoint,
-    credential=DefaultAzureCredential()
 )
 
 image = (
@@ -17,22 +15,43 @@ image = (
     f"/{os.environ['AGENT_NAME']}:{os.environ['IMAGE_TAG']}"
 )
 
-# Check if agent already exists — update it, otherwise create
-agents = client.agents.list()
-existing = next((a for a in agents if a.name == os.environ["AGENT_NAME"]), None)
+agent_name = os.environ["AGENT_NAME"]
+api_version = "2025-05-15-preview"
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Content-Type": "application/json"
+}
 
-if existing:
-    agent = client.agents.update(
-        agent_id=existing.id,
-        model=image,
-        name=os.environ["AGENT_NAME"],
-        instructions="You are the Founder agent.",
+# Check if agent already exists
+list_resp = requests.get(
+    f"{endpoint}/agents/{agent_name}",
+    headers=headers,
+    params={"api-version": api_version}
+)
+
+payload = {
+    "image": image,
+    "resources": {"cpu": 1, "memory": 2},
+    "minReplicas": 1,
+    "maxReplicas": 2
+}
+
+if list_resp.status_code == 200:
+    # Update existing agent with new image version
+    resp = requests.post(
+        f"{endpoint}/agents/{agent_name}/versions",
+        headers=headers,
+        json=payload,
+        params={"api-version": api_version}
     )
-    print(f"Agent updated: {agent.id}")
 else:
-    agent = client.agents.create(
-        model=image,
-        name=os.environ["AGENT_NAME"],
-        instructions="You are the Founder agent.",
+    # Create new agent
+    resp = requests.put(
+        f"{endpoint}/agents/{agent_name}",
+        headers=headers,
+        json={**payload, "name": agent_name},
+        params={"api-version": api_version}
     )
-    print(f"Agent created: {agent.id}")
+
+resp.raise_for_status()
+print(f"Agent deployed: {resp.json()}")
