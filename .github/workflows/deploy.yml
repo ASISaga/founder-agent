@@ -19,9 +19,9 @@ name: Deploy Founder Agent
 #   repository_dispatch (infra_provisioned) → environment from payload
 
 on:
-  push:
-    branches:
-      - main
+#  push:
+#    branches:
+#      - main
   release:
     types:
       - published
