@@ -51,4 +51,15 @@ model = PeftModel.from_pretrained(base, first_path)
 model.set_adapter(first_name)
 
 # Load remaining adapters
-for name
+for name, path in list(adapters.items())[1:]:
+    model.load_adapter(path, adapter_name=name)
+
+# Set active adapter
+model.set_adapter(args.active)
+
+# Tokenize prompt
+inputs = tokenizer(args.prompt, return_tensors="pt").to(model.device)
+
+# Generate
+outputs = model.generate(**inputs, max_new_tokens=args.max_new_tokens)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
