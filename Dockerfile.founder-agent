@@ -31,7 +31,7 @@
 FROM acraosstagingerm2srfd.azurecr.io/aos/business-agent@sha256:1c68cef1567b7a80801117cd57cfc86b054bd3dc2099674f1dbfbfad3e79ab82 AS base
 
 LABEL org.opencontainers.image.title="AOS Founder Agent"
-LABEL org.opencontainers.image.description="Layer 5: FounderAgent — founder persona, vision, strategy"
+LABEL org.opencontainers.image.description="Layer 5: FounderAgent — orchestrator, Paul Graham persona"
 LABEL org.opencontainers.image.vendor="ASI Saga"
 LABEL org.opencontainers.image.source="https://github.com/ASISaga/founder-agent"
 LABEL aos.layer="5"
@@ -39,6 +39,8 @@ LABEL aos.layer.name="founder-agent"
 LABEL aos.parent.digest="sha256:1c68cef1567b7a80801117cd57cfc86b054bd3dc2099674f1dbfbfad3e79ab82"
 
 WORKDIR /app
+
+ENV PYTHONPATH=/app
 
 # ── Copy this layer's Python source ──────────────────────────────────────────
 COPY --chown=aosuser:aosuser src/Founder/ ./Founder/
@@ -51,7 +53,11 @@ USER aosuser
 RUN python -m compileall -b -j0 -q ./Founder/
 
 # ── Smoke test ────────────────────────────────────────────────────────────────
-RUN python -c "from Founder import FounderAgent; print('Layer 5 founder-agent smoke test passed.')"
+RUN python -c "from Founder import FounderAgent; \
+agent = FounderAgent(); \
+assert agent.get_default_routing_tag() == '[COMPLETE]', 'wrong default tag'; \
+assert '[ROUTE:CFO]' in agent.get_routing_tags(), 'ROUTE:CFO missing'; \
+print('Layer 5 founder-agent smoke test passed.')"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FAS stage — stripped image for Foundry Agent Service (.pyc only)
