@@ -11,4 +11,4 @@ RUN if [ -n "$GITHUB_TOKEN" ]; then \
       git config --global --remove-section "url.https://${GITHUB_TOKEN}@github.com/" 2>/dev/null || true; \
     fi
 # Command to start your agent logic
-CMD ["python", "src/Founder/FounderAgent.py"]
+CMD ["python", "-m", "Founder"]

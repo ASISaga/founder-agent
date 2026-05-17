@@ -1,227 +1,120 @@
-# Agent Repository Workflow Templates
+# Founder Agent GitHub Actions Workflows
 
-This directory contains **ready-to-copy GitHub Actions workflow templates** for
-agent repositories (e.g. `ceo-agent`, `cmo-agent`, `cfo-agent`) built with the
-Microsoft Agent Framework and deployed on Azure AI Foundry Agent Service.
-
-These templates invoke the centralized, reusable workflows in
-`ASISaga/aos-intelligence` to manage fine-tuning datasets and LoRA adapter
-artifacts without duplicating infrastructure logic in every agent repo.
+This directory contains the GitHub Actions workflows for building, deploying, and
+maintaining the `FounderAgent` FAS container and its associated LoRA fine-tuning pipeline.
 
 ---
 
-## Centralized Reusable Workflows (in this repo)
+## Workflow Reference
 
-| Workflow | Purpose |
-|----------|---------|
-| `.github/workflows/load-dataset.yml` | Upload JSONL / MLTable dataset to Azure ML as a versioned Data Asset |
-| `.github/workflows/persist-lora-adapter.yml` | Register a trained LoRA adapter (MLflow) in the Azure ML Model Registry |
-| `.github/workflows/load-lora-adapter.yml` | Resolve and optionally download a LoRA adapter from the Azure ML Model Registry |
+### `build-founder-agent.yml` — Build and push FAS container images
 
-These workflows use `on: workflow_call` and are designed to be called from any
-agent repository via:
+**Trigger:** Push to `main` affecting `Dockerfile.founder-agent` or `src/Founder/**`; `workflow_dispatch`
 
-```yaml
-uses: ASISaga/aos-intelligence/.github/workflows/<workflow-name>.yml@main
-```
+Builds two image targets from `Dockerfile.founder-agent` and pushes them to ACR:
 
----
+| Image | Target | Contents |
+|-------|--------|----------|
+| `aos/founder-agent` | `base` | `.py` + `.pyc` — development / debugging |
+| `aos/founder-agent-fas` | `fas` | `.pyc` only — Foundry Agent Service production |
 
-## Templates to Copy to Agent Repositories
+After pushing, it runs an in-container verification for each image to confirm the correct file set. A step summary shows digests, parent manifest, and the full layer hierarchy.
 
-| Template file | Destination in agent repo | Purpose |
-|---------------|--------------------------|---------|
-| `dataset-upload.yml` | `.github/workflows/dataset-upload.yml` | Push training data to Azure ML whenever datasets change |
-| `finetune.yml` | `.github/workflows/finetune.yml` | Run LoRA fine-tuning job end-to-end (upload data → train → register adapter) |
-| `load-adapter.yml` | `.github/workflows/load-adapter.yml` | Retrieve a registered adapter from the Azure ML Model Registry |
+**Required:** GitHub Environment `staging`, secrets `AZURE_CLIENT_ID` / `AZURE_TENANT_ID` / `AZURE_SUBSCRIPTION_ID`, variable `ACR_NAME`.
 
 ---
 
-## Quick Setup
+### `deploy.yml` — Build and deploy to Foundry
 
-### 1. Copy the template workflows to your agent repo
+**Trigger:** GitHub Release published → `prod`; `workflow_dispatch` (choose environment); `repository_dispatch: infra_provisioned`
 
-```bash
-# Example: setting up a ceo-agent repository
-cp .github/agent-repo-workflows/dataset-upload.yml  /path/to/ceo-agent/.github/workflows/
-cp .github/agent-repo-workflows/finetune.yml        /path/to/ceo-agent/.github/workflows/
-cp .github/agent-repo-workflows/load-adapter.yml    /path/to/ceo-agent/.github/workflows/
-```
+Builds the container image via ACR Tasks (no Docker required on the runner), creates a new agent version in Azure AI Foundry, and starts it. The agent name follows `<APP_NAME>-<repo>` convention.
 
-### 2. Configure the templates
-
-Open each copied file and update the `env:` section at the top with your
-agent's specific values:
-
-```yaml
-env:
-  AGENT_NAME: "ceo-agent"         # Your agent name
-  PERSONA_TYPE: "ceo"             # Persona type (matches LoRAAdapterRegistry key)
-  DATASET_TYPE: "jsonl"           # 'jsonl' or 'mltable'
-  DATASET_PATH: "data/finetune"   # Path to training data in your repo
-  DATASET_NAME: "ceo-finetune"    # Azure ML Data Asset name
-  TRAIN_SCRIPT: "scripts/train_lora.py"  # Your LoRA training script
-```
-
-### 3. Create Azure credentials
-
-Each agent repo needs the following **secrets** (Settings → Secrets and variables → Actions):
-
-| Secret | Description |
-|--------|-------------|
-| `AZURE_CLIENT_ID` | Client ID of the service principal or user-assigned managed identity |
-| `AZURE_TENANT_ID` | Azure tenant ID |
-| `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
-
-And the following **variables** (Settings → Secrets and variables → Actions → Variables):
-
-| Variable | Description |
-|----------|-------------|
-| `AZURE_ML_WORKSPACE` | Azure ML workspace name |
-| `AZURE_RESOURCE_GROUP` | Azure resource group containing the workspace |
-
-> **Tip**: Use a single service principal with appropriate RBAC roles across all
-> agent repositories, or use Workload Identity Federation (OIDC) for keyless
-> authentication — both are supported by the `azure/login@v2` action used in
-> these workflows.
-
-### 4. (Optional) Add a training script
-
-The `finetune.yml` template expects a training script in your repo.
-A minimal LoRA training script using HuggingFace PEFT looks like:
-
-```python
-# scripts/train_lora.py
-import argparse
-from peft import LoraConfig, get_peft_model
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
-from trl import SFTTrainer
-import mlflow
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--persona_type", required=True)
-parser.add_argument("--base_model", default="meta-llama/Llama-3.3-70B-Instruct")
-parser.add_argument("--dataset_path", required=True)
-args = parser.parse_args()
-
-# Enable MLflow autologging so Azure ML automatically logs the adapter
-mlflow.autolog()
-
-lora_config = LoraConfig(r=16, lora_alpha=32, target_modules="all-linear")
-model = AutoModelForCausalLM.from_pretrained(args.base_model)
-model = get_peft_model(model, lora_config)
-tokenizer = AutoTokenizer.from_pretrained(args.base_model)
-
-training_args = TrainingArguments(
-    output_dir="./outputs/model",
-    num_train_epochs=3,
-    per_device_train_batch_size=4,
-    learning_rate=3e-4,
-)
-
-trainer = SFTTrainer(
-    model=model,
-    args=training_args,
-    train_dataset=...,  # load from args.dataset_path
-)
-trainer.train()
-trainer.save_model("./outputs/model")
-```
+**Required:** Secrets `AZURE_CLIENT_ID` / `AZURE_TENANT_ID` / `AZURE_SUBSCRIPTION_ID`; variables `ACR_NAME`, `FOUNDRY_HUB_NAME`, `FOUNDRY_PROJECT_NAME`, `RG_NAME`, `AGENT_VERSION`, `APP_NAME`.
 
 ---
 
-## Workflow Sequence Diagram
+### `deploy-foundry-acr.yml` — Deploy existing image from ACR
 
-```
-Agent Repository                        aos-intelligence
-─────────────────                       ──────────────────────────────────
-dataset-upload.yml
-  ├─ push to data/finetune/**
-  └─ calls ──────────────────────────► load-dataset.yml
-                                            ├─ Azure Login (OIDC)
-                                            └─ Upload to Azure ML Data Asset
-                                                     │
-                                                     ▼
-finetune.yml (workflow_dispatch)
-  ├─ calls ──────────────────────────► load-dataset.yml (refresh data)
-  ├─ Submit Azure ML training job
-  ├─ Wait for job completion
-  └─ calls ──────────────────────────► persist-lora-adapter.yml
-                                            ├─ Azure Login (OIDC)
-                                            └─ Register MLflow model
-                                                 in Azure ML Model Registry
-                                                     │
-                                                     ▼
-load-adapter.yml (workflow_dispatch)
-  └─ calls ──────────────────────────► load-lora-adapter.yml
-                                            ├─ Azure Login (OIDC)
-                                            ├─ Resolve model version
-                                            └─ Download artifacts (optional)
-```
+**Trigger:** GitHub Release published → `prod`; `workflow_dispatch`; `repository_dispatch: infra_provisioned`
+
+Resolves the latest image tag from ACR dynamically (no build step) and deploys it to Foundry via the Azure AI Projects Python SDK. Uses a deploy script at `.github/scripts/deploy_agent.py`.
+
+Agent name is hard-coded as `boardroom-founder-agent`.
+
+**Required:** Same secrets and variables as `deploy.yml`.
 
 ---
 
-## RBAC Requirements
+### `update-base-image-founder.yml` — Automated base image manifest update
 
-The service principal / managed identity used by these workflows requires the
-following Azure RBAC roles on the target Azure ML workspace:
+**Trigger:** `repository_dispatch: base-image-updated` (sent by `business-agent` build pipeline)
 
-| Role | Reason |
-|------|--------|
-| `AzureML Data Scientist` | Submit training jobs, register models and data assets |
-| `Storage Blob Data Contributor` | Upload dataset files to the workspace storage account |
+When the parent `aos/business-agent` image is rebuilt, this workflow:
+1. Validates the incoming `base_digest` payload
+2. Checks whether the digest in `Dockerfile.founder-agent` already matches
+3. If different, updates the `FROM` and `LABEL aos.parent.digest` lines
+4. Commits to a new branch and opens a PR
 
-Assign these roles via the Azure Portal or CLI:
+Merging the PR triggers `build-founder-agent.yml`, completing the cascade.
 
-```bash
-az role assignment create \
-  --assignee <service-principal-object-id> \
-  --role "AzureML Data Scientist" \
-  --scope /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.MachineLearningServices/workspaces/<ws>
+**Required:** Secret `DEPLOY_DISPATCH_TOKEN` (PAT with `contents: write` and `pull-requests: write`).
+
+---
+
+### `finetune.yml` — LoRA fine-tuning pipeline
+
+**Trigger:** `workflow_dispatch`
+
+End-to-end LoRA fine-tuning job: uploads the training dataset to Azure ML as a versioned Data Asset, submits the training job, waits for completion, and registers the resulting adapter in the Azure ML Model Registry as an MLflow model.
+
+---
+
+### `dataset-upload.yml` — Upload training dataset
+
+**Trigger:** Push to `data/**`
+
+Uploads JSONL / MLTable training data to Azure ML whenever the dataset changes.
+
+---
+
+### `load-adapter.yml` — Load LoRA adapter from registry
+
+**Trigger:** `workflow_dispatch`
+
+Resolves the specified adapter version from the Azure ML Model Registry and optionally downloads the artifacts.
+
+---
+
+## Layer Hierarchy
+
+```
+python:3.12-slim
+  └── aos/infrastructure
+        └── aos/purpose-driven-agent
+              └── aos/leadership-agent
+                    └── aos/business-agent   ← parent (manifest in Dockerfile.founder-agent FROM line)
+                          └── aos/founder-agent:${{ github.sha }}
+                                ├── (base)  .py + .pyc
+                                └── (fas)   .pyc only → Foundry Agent Service
 ```
 
----
-
-## Versioning Strategy
-
-| Artifact | Versioning |
-|----------|------------|
-| Dataset (Data Asset) | Push-triggered: short Git SHA; manual: user-supplied |
-| LoRA Adapter (Model Asset) | User-supplied via `adapter_version` input (default `"1"`) |
-
-For production workflows, consider using a semantic version tag (e.g. `v1.2.0`)
-or an incrementing integer tied to your release process.
+`founder-agent` is a **leaf node** — no downstream cascade.
 
 ---
 
-## Deploy Workflow (`deploy.yml`)
+## Secrets and Variables
 
-The `deploy.yml` workflow consolidates two deployment approaches:
+| Name | Type | Used By |
+|------|------|---------|
+| `AZURE_CLIENT_ID` | Secret | All Azure workflows (OIDC) |
+| `AZURE_TENANT_ID` | Secret | All Azure workflows |
+| `AZURE_SUBSCRIPTION_ID` | Secret | All Azure workflows |
+| `DEPLOY_DISPATCH_TOKEN` | Secret | `update-base-image-founder.yml` |
+| `ACR_NAME` | Variable | `build-founder-agent.yml`, `deploy.yml`, `deploy-foundry-acr.yml` |
+| `FOUNDRY_HUB_NAME` | Variable | `deploy.yml`, `deploy-foundry-acr.yml` |
+| `FOUNDRY_PROJECT_NAME` | Variable | `deploy.yml`, `deploy-foundry-acr.yml` |
+| `RG_NAME` | Variable | `deploy.yml`, `deploy-foundry-acr.yml` |
+| `AGENT_VERSION` | Variable | `deploy.yml`, `deploy-foundry-acr.yml` |
+| `APP_NAME` | Variable | `deploy.yml` (agent name prefix) |
 
-### Job 1 — `deploy` (Python SDK, OIDC)
-
-Reads `agent.yaml` and creates/updates the agent via the Azure AI Projects SDK.
-Uses Workload Identity Federation (OIDC) — no long-lived credential required.
-
-Required secrets per environment (`dev` / `staging` / `prod`):
-
-| Secret | Description |
-|--------|-------------|
-| `AZURE_CLIENT_ID` | Managed identity client ID |
-| `AZURE_TENANT_ID` | Azure AD tenant ID |
-| `AZURE_SUBSCRIPTION_ID` | Azure subscription ID |
-| `FOUNDRY_PROJECT_ENDPOINT` | Azure AI Foundry project endpoint URL |
-
-### Job 2 — `deploy-container` (Azure CLI, service principal)
-
-Builds a Docker image, pushes it to Azure Container Registry, and updates the
-Foundry agent with the new image via `az ai project agent update`.
-
-Required secret:
-
-| Secret | Description |
-|--------|-------------|
-| `AZURE_CREDENTIALS` | Service principal JSON (`az ad sp create-for-rbac --sdk-auth`) |
-
-Configure the `env:` block at the top of `deploy.yml` with your project-specific
-values (`ACR_NAME`, `HUB_NAME`, `PROJECT_NAME`, `RG_NAME`) before using this job.
