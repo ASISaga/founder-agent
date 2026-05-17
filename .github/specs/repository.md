@@ -1,139 +1,171 @@
-# BusinessInfinity Repository Specification
+# Founder Agent Repository Specification
 
-**Version**: 1.0.0  
+**Version**: 2.0.0  
 **Status**: Active  
-**Last Updated**: 2026-03-07
+**Last Updated**: 2026-05-17
 
 ## Overview
 
-BusinessInfinity is a lean Azure Functions application that delegates all agent orchestration, Service Bus communication, authentication, and deployment scaffolding to the **`aos-client-sdk`**. The application contains only business logic — expressed as workflow functions decorated with `@app.workflow`.
+`ASISaga/founder-agent` is the **Layer 5** container in the AOS container hierarchy. It provides `FounderAgent` — the Paul Graham orchestrator persona in the ASI Saga Boardroom — hosted as a Foundry Agent Service (FAS) container backing the `founder-mvp` agent in the `boardroom-mvp` workflow.
 
 ## Scope
 
 - Repository role in the AOS ecosystem
-- Technology stack and coding patterns
-- Testing and validation workflows
-- Key design principles for agents and contributors
+- Technology stack and container hierarchy
+- Package structure and key classes
+- Build, test, and deployment patterns
+- Key design principles
 
 ## Repository Role
 
 | Concern | Owner |
 |---------|-------|
-| Business workflows (strategic review, market analysis, budget approval, etc.) | **BusinessInfinity** |
-| Azure Functions scaffolding, HTTP/Service Bus triggers, auth | `aos-client-sdk` |
-| Agent lifecycle, perpetual orchestration, messaging, storage, monitoring | AOS |
-| Agent catalog (C-suite agents, capabilities) | RealmOfAgents |
-
-BusinessInfinity **knows nothing about agent internals**. It calls `start_orchestration` / `submit_orchestration` and lets AOS handle the rest.
+| `FounderAgent` class, routing protocol, Paul Graham persona | **founder-agent** (this repo) |
+| FAS hosting adapter, `RoutingMixin`, `enforce_routing_tag()` | `purpose-driven-agent` |
+| `BusinessAgent` base class | `BusinessAgent` |
+| Container image registry (`aos/founder-agent`, `aos/founder-agent-fas`) | ACR `acraosstagingerm2srfd` |
+| Foundry workflow invoking `founder-mvp` | `boardroom-mvp` |
 
 ## Technology Stack
 
 | Component | Technology |
 |-----------|-----------|
-| Runtime | Python 3.10+ |
-| App framework | `aos-client-sdk[azure]` — `AOSApp` / `WorkflowRequest` |
-| Hosting | Azure Functions (provisioned by SDK) |
-| Messaging | Azure Service Bus (provisioned by SDK) |
-| Tests | `pytest` + `pytest-asyncio` |
-| Linter | `pylint` |
-| Build / deploy | `azure.yaml` (Azure Developer CLI) |
+| Runtime | Python 3.12 |
+| Base image | `aos/business-agent` (inherits `PurposeDrivenAgent` → `LeadershipAgent` → `BusinessAgent`) |
+| FAS hosting | Azure AI Foundry Agent Service — `.pyc`-only stripped image |
+| Container build | `Dockerfile.founder-agent` — two-stage (`base` + `fas`) |
+| Package build | `setuptools` / `pyproject.toml` |
+| Fine-tuning | HuggingFace `transformers`, `peft` (LoRA), `accelerate` |
+| CI/CD | GitHub Actions + Azure Container Registry |
 
-## Directory Structure
+## Package Structure
 
 ```
-business-infinity/
-├── src/
-│   └── business_infinity/
-│       ├── __init__.py
-│       └── workflows.py       # @app.workflow decorators — all business logic lives here
-├── tests/
-│   └── test_workflows.py      # pytest unit tests
-├── function_app.py            # Azure Functions entry point: app.get_functions()
-├── pyproject.toml             # Build config, dependencies, pytest settings
-└── azure.yaml                 # Azure Developer CLI deployment config
+src/Founder/               ← Python package (PascalCase, matches import path in container)
+├── __init__.py            ← exports FounderAgent
+├── agent.py               ← FounderAgent class — orchestrator with routing enforcement
+├── __main__.py            ← python -m Founder FAS entry point
+├── boardroom_repl.py      ← multi-role LoRA REPL (local development)
+├── inference_role.py      ← CLI: run inference with a named LoRA adapter
+├── loader.py              ← multi-adapter loader utility
+├── train_role.py          ← CLI launcher for LoRA fine-tuning
+├── trainer.py             ← Stage1RoleTrainer / Stage2RoleTrainer classes
+├── RSSScrapper.py         ← download articles from paulgraham.com RSS feed
+├── WebScrapper.py         ← scrape paulgraham.com article list
+└── usage.py               ← example usage / manual test harness
 ```
 
-## Core Patterns
+## Key Classes
 
-### Workflow Definition
+### `FounderAgent` (`src/Founder/agent.py`)
 
-```python
-from aos_client import AOSApp, WorkflowRequest
+Inherits: `RoutingMixin`, `BusinessAgent` (graceful import — works standalone too).
 
-app = AOSApp(name="business-infinity")
+| Class variable | Value | Purpose |
+|----------------|-------|---------|
+| `ROUTING_ROLE` | `"orchestrator"` | Declares role to FAS hosting adapter |
+| `PERSONA_NAME` | `"Paul Graham"` | Used in system prompt construction |
+| `BOARDROOM_PURPOSE` | `"Orchestrating the Genesis of ASI"` | Embedded in system prompt |
 
-@app.workflow("workflow-name")
-async def my_workflow(request: WorkflowRequest) -> dict:
-    agents = await request.client.list_agents()
-    status = await request.client.start_orchestration(
-        agent_ids=[a.agent_id for a in agents],
-        purpose="Describe the perpetual goal",
-        context=request.body,
-    )
-    return {"orchestration_id": status.orchestration_id, "status": status.status.value}
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `get_routing_tags()` | `frozenset[str]` | Valid tags: `[ROUTE:CFO]`, `[ROUTE:CMO]`, `[COMPLETE]` |
+| `get_default_routing_tag()` | `str` | `"[COMPLETE]"` — conservative orchestrator default |
+| `build_system_prompt()` | `str` | Full Paul Graham persona prompt with routing protocol |
+| `process_response(text)` | `str` | Calls `enforce_routing_tag()` — hard routing guarantee |
+
+### FAS Discovery
+
+`FounderAgent` is discovered by `agent-framework-foundry-hosting` via:
+1. `pyproject.toml` entry point: `agent_framework.hosted_agents:default = "Founder.agent:FounderAgent"`
+2. `PurposeDrivenAgent.__init_subclass__` registry (fallback, seeded when `Founder` is imported)
+
+## Container Hierarchy
+
+```
+python:3.12-slim
+  └── aos/infrastructure
+        └── aos/purpose-driven-agent    (PurposeDrivenAgent, RoutingMixin, FAS hosting)
+              └── aos/leadership-agent   (LeadershipAgent)
+                    └── aos/business-agent  (BusinessAgent)
+                          └── aos/founder-agent  ← this repo
+                                ├── (base)  .py + .pyc
+                                └── (fas)   .pyc only → Foundry Agent Service
 ```
 
-### Perpetual Orchestrations
+`Dockerfile.founder-agent` FROM line is the layer manifest. Updated automatically by `update-base-image-founder.yml` via PR when `business-agent` rebuilds.
 
-All orchestrations are **perpetual and purpose-driven** — agents work toward the purpose indefinitely. There is no finite completion.
-
-```python
-status = await request.client.start_orchestration(
-    agent_ids=agent_ids,
-    purpose="Drive strategic review and continuous organisational improvement",
-    purpose_scope="C-suite strategic alignment and cross-functional coordination",
-    context=request.body,
-)
-```
-
-### C-Suite Agent Selection
-
-```python
-# Prefer explicit IDs; fall back to type-based selection
-all_agents = await client.list_agents()
-by_id = {a.agent_id: a for a in all_agents}
-selected = [by_id[aid] for aid in C_SUITE_AGENT_IDS if aid in by_id]
-```
-
-## Testing Workflow
+## Build and Test
 
 ```bash
-# Install dev dependencies
-pip install -e ".[dev]"
+# Install package for local development
+pip install -e .
 
-# Run all tests
-pytest tests/ -v
+# Verify agent class loads and routing methods work
+python -c "from Founder import FounderAgent; a = FounderAgent(); print(a.get_routing_tags())"
+python -c "from Founder.agent import FounderAgent; a = FounderAgent(); print(a.get_default_routing_tag())"
 
-# Lint
-pylint src/business_infinity/
+# Build FAS container locally (requires Docker and ACR access)
+docker buildx build --target fas -f Dockerfile.founder-agent -t founder-agent-fas:local .
 
-# Specific test
-pytest tests/test_workflows.py -v -k "test_workflows_registered"
+# Run smoke test inside local container
+docker run --rm founder-agent-fas:local python -c "\
+from Founder import FounderAgent; \
+agent = FounderAgent(); \
+assert agent.get_default_routing_tag() == '[COMPLETE]'; \
+assert '[ROUTE:CFO]' in agent.get_routing_tags(); \
+print('smoke test passed.')"
 ```
 
-**CI**: GitHub Actions runs `pytest` across Python 3.10, 3.11, and 3.12 on every push/PR to `main`.
+## GitHub Actions Workflows
 
-→ **CI workflow**: `.github/workflows/ci.yml`
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `build-founder-agent.yml` | Push to `main` (paths: `Dockerfile.founder-agent`, `src/Founder/**`) | Build and push `aos/founder-agent` + `aos/founder-agent-fas` to ACR |
+| `deploy.yml` | Release, `workflow_dispatch`, `repository_dispatch` | Build via ACR Tasks and deploy to Foundry |
+| `deploy-foundry-acr.yml` | Release, `workflow_dispatch`, `repository_dispatch` | Deploy existing ACR image to Foundry |
+| `update-base-image-founder.yml` | `repository_dispatch: base-image-updated` | Automated PR to bump `FROM` digest when `business-agent` rebuilds |
+| `finetune.yml` | `workflow_dispatch` | End-to-end LoRA fine-tuning pipeline |
+| `dataset-upload.yml` | Push to `data/**` | Upload training data to Azure ML |
+| `load-adapter.yml` | `workflow_dispatch` | Download LoRA adapter from Azure ML Model Registry |
+
+## Required Secrets and Variables
+
+| Name | Type | Description |
+|------|------|-------------|
+| `AZURE_CLIENT_ID` | Secret | Managed identity client ID (OIDC) |
+| `AZURE_TENANT_ID` | Secret | Azure AD tenant ID |
+| `AZURE_SUBSCRIPTION_ID` | Secret | Azure subscription ID |
+| `DEPLOY_DISPATCH_TOKEN` | Secret | PAT for opening automated PRs |
+| `ACR_NAME` | Variable | Azure Container Registry name |
+| `FOUNDRY_HUB_NAME` | Variable | Azure AI Foundry Hub name |
+| `FOUNDRY_PROJECT_NAME` | Variable | Azure AI Foundry Project name |
+| `RG_NAME` | Variable | Azure Resource Group name |
+| `AGENT_VERSION` | Variable | Foundry agent version string |
+
+## Key Design Principles
+
+1. **Routing is enforced in code** — `enforce_routing_tag()` guarantees a valid tag regardless of LLM compliance
+2. **`[COMPLETE]` as conservative default** — orchestrators never loop forever; unknown state → complete
+3. **No `.py` in production** — the FAS stage strips all source; `.pyc` only in the deployed image
+4. **Graceful base-class import** — `RoutingMixin` import is wrapped in `try/except`; `FounderAgent` works standalone for local testing
+5. **Manifest-driven updates** — `FROM` line is the sole source of truth for the parent image version; never edited by hand
 
 ## Related Repositories
 
 | Repository | Role |
 |-----------|------|
-| [aos-client-sdk](https://github.com/ASISaga/aos-client-sdk) | Client SDK & App Framework |
-| [aos-dispatcher](https://github.com/ASISaga/aos-dispatcher) | AOS Orchestration API |
-| [aos-realm-of-agents](https://github.com/ASISaga/aos-realm-of-agents) | Agent catalog (C-suite) |
-| [aos-kernel](https://github.com/ASISaga/aos-kernel) | OS kernel |
-
-## Key Design Principles
-
-1. **Zero boilerplate** — No Azure Functions scaffolding in this repo
-2. **Purpose-driven** — Orchestrations are perpetual; describe *why*, not *how*
-3. **SDK-delegated** — All infrastructure concerns belong to `aos-client-sdk`
-4. **Business-only** — Only business logic lives here; no agent internals
+| [purpose-driven-agent](https://github.com/ASISaga/purpose-driven-agent) | Layer 2 — base class, `RoutingMixin`, FAS hosting |
+| [leadership-agent](https://github.com/ASISaga/leadership-agent) | Layer 3 |
+| [BusinessAgent](https://github.com/ASISaga/BusinessAgent) | Layer 4 |
+| [boardroom-mvp](https://github.com/ASISaga/boardroom-mvp) | Foundry workflow invoking `founder-mvp` |
+| [cfo-agent](https://github.com/ASISaga/cfo-agent) | CFO specialist (`[ROUTE:CFO]` target) |
+| [cmo-agent](https://github.com/ASISaga/cmo-agent) | CMO specialist (`[ROUTE:CMO]` target) |
 
 ## References
 
-→ **Agent framework**: `.github/specs/agent-intelligence-framework.md`  
-→ **Conventional tools**: `.github/docs/conventional-tools.md`  
+→ **FAS wiring specification**: `docs/founder-agent-refactor.md`  
 → **Python coding standards**: `.github/instructions/python.instructions.md`  
-→ **Azure Functions patterns**: `.github/instructions/azure-functions.instructions.md`
+→ **Agent framework**: `.github/specs/agent-intelligence-framework.md`  
+→ **Container build workflow**: `.github/workflows/build-founder-agent.yml`
+
