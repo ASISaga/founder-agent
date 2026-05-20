@@ -1,0 +1,253 @@
+name: Deploy Founder Agent to Foundry
+
+# =============================================================================
+# Deploys aos/founder-agent-fas from ACR to Foundry Agent Service as a
+# hosted container agent named "founder-mvp" in the boardroom-mvp workflow.
+#
+# Triggered:
+#   - Automatically after build-founder-agent.yml completes (tag-as-fas job)
+#   - Manually via workflow_dispatch for re-deployment or rollback
+#
+# What this does:
+#   1. Fetches the current digest of aos/founder-agent-fas:latest from ACR
+#   2. Ensures capability host exists on the Foundry account
+#   3. Creates a new hosted agent version via Python SDK (azure-ai-projects)
+#   4. Polls until the version reaches "Started" status
+#   5. Writes deployment summary with version ID and digest
+#
+# Rollback: re-run with workflow_dispatch and set image_tag to a previous SHA
+# =============================================================================
+
+on:
+  workflow_run:
+    workflows: ["Build Founder Agent"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "ACR image tag to deploy (default: latest)"
+        required: false
+        default: "latest"
+      agent_name:
+        description: "Foundry agent name (default: founder-mvp)"
+        required: false
+        default: "founder-mvp"
+      dry_run:
+        description: "Dry run - resolve digest and validate without deploying"
+        required: false
+        default: "false"
+
+concurrency:
+  group: deploy-founder-foundry
+  cancel-in-progress: false
+
+env:
+  FAS_IMAGE: aos/founder-agent-fas
+
+jobs:
+  deploy:
+    name: Deploy to Foundry Agent Service
+    runs-on: ubuntu-latest
+    environment: staging
+
+    # Only run if triggered manually, or if the upstream build succeeded
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # -- Resolve image digest from ACR -------------------------------------
+      - name: Resolve FAS image digest
+        id: image
+        run: |
+          TAG="${{ inputs.image_tag || 'latest' }}"
+
+          DIGEST=$(az acr repository show-manifests \
+            --name ${{ vars.ACR_NAME }} \
+            --repository ${{ env.FAS_IMAGE }} \
+            --orderby time_desc \
+            --query "[?tags[?@ == '${TAG}']].digest | [0]" \
+            --output tsv)
+
+          if [ -z "${DIGEST}" ]; then
+            echo "::error::No manifest found for ${{ vars.ACR_NAME }}.azurecr.io/${{ env.FAS_IMAGE }}:${TAG}"
+            exit 1
+          fi
+
+          IMAGE_REF="${{ vars.ACR_NAME }}.azurecr.io/${{ env.FAS_IMAGE }}@${DIGEST}"
+          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          echo "image_ref=${IMAGE_REF}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "Resolved: ${IMAGE_REF}"
+
+      # -- Ensure capability host exists -------------------------------------
+      # Idempotent - safe to run on every deployment.
+      # Required before any hosted agent can be created on the account.
+      - name: Ensure capability host
+        run: |
+          az rest --method put \
+            --url "https://management.azure.com/subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ vars.RG_NAME }}/providers/Microsoft.CognitiveServices/accounts/${{ vars.FOUNDRY_HUB_NAME }}/capabilityHosts/accountcaphost?api-version=2025-10-01-preview" \
+            --headers "content-type=application/json" \
+            --body '{
+              "properties": {
+                "capabilityHostKind": "Agents",
+                "enablePublicHostingEnvironment": true
+              }
+            }' \
+            --output none
+          echo "Capability host ensured"
+
+      # -- Install Python SDK ------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install azure-ai-projects SDK
+        run: |
+          pip install --pre "azure-ai-projects>=2.0.0b4" azure-identity --quiet
+
+      # -- Deploy hosted agent version ---------------------------------------
+      - name: Deploy to Foundry
+        if: inputs.dry_run != 'true'
+        id: deploy
+        env:
+          AZURE_AI_PROJECT_ENDPOINT: "https://${{ vars.FOUNDRY_HUB_NAME }}.services.ai.azure.com/api/projects/${{ vars.FOUNDRY_PROJECT_NAME }}"
+          IMAGE_REF: ${{ steps.image.outputs.image_ref }}
+          AGENT_NAME: ${{ inputs.agent_name || 'founder-mvp' }}
+        run: |
+          python - << 'PYEOF'
+          import os
+          import time
+          from azure.ai.projects import AIProjectClient
+          from azure.ai.projects.models import (
+              HostedAgentDefinition,
+              ProtocolVersionRecord,
+              AgentProtocol,
+          )
+          from azure.identity import DefaultAzureCredential
+
+          endpoint    = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
+          image_ref   = os.environ["IMAGE_REF"]
+          agent_name  = os.environ["AGENT_NAME"]
+
+          print(f"Endpoint:   {endpoint}")
+          print(f"Agent name: {agent_name}")
+          print(f"Image:      {image_ref}")
+
+          client = AIProjectClient(
+              endpoint=endpoint,
+              credential=DefaultAzureCredential(),
+              allow_preview=True,
+          )
+
+          # Create a new hosted agent version
+          agent = client.agents.create_version(
+              agent_name=agent_name,
+              definition=HostedAgentDefinition(
+                  container_protocol_versions=[
+                      ProtocolVersionRecord(
+                          protocol=AgentProtocol.RESPONSES,
+                          version="v1",
+                      )
+                  ],
+                  cpu="1",
+                  memory="2Gi",
+                  image=image_ref,
+                  environment_variables={
+                      "PYTHONPATH": "/app",
+                      "LOG_LEVEL": "INFO",
+                      "AGENT_ENTRY_POINT": "default",
+                      "AZURE_AI_PROJECT_ENDPOINT": endpoint,
+                  },
+              ),
+          )
+
+          print(f"Created agent version: {agent.version}")
+
+          # Poll for Started status (max 10 minutes)
+          TIMEOUT = 600
+          INTERVAL = 15
+          elapsed = 0
+
+          while elapsed < TIMEOUT:
+              status = client.agents.get_version(
+                  agent_name=agent_name,
+                  agent_version=agent.version,
+              )
+              current = getattr(status, "status", "unknown")
+              print(f"  [{elapsed}s] Status: {current}")
+
+              if current == "Started":
+                  print(f"Agent version {agent.version} is active.")
+                  # Write outputs for summary step
+                  with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                      f.write(f"agent_version={agent.version}\n")
+                      f.write(f"agent_status=Started\n")
+                  break
+              elif current in ("Failed", "Canceled"):
+                  raise RuntimeError(
+                      f"Deployment failed with status: {current}. "
+                      "Check Foundry portal for container logs."
+                  )
+
+              time.sleep(INTERVAL)
+              elapsed += INTERVAL
+          else:
+              raise TimeoutError(
+                  f"Agent version did not reach Started within {TIMEOUT}s. "
+                  f"Last status: {current}"
+              )
+          PYEOF
+
+      # -- Dry run output ----------------------------------------------------
+      - name: Dry run summary
+        if: inputs.dry_run == 'true'
+        run: |
+          echo "DRY RUN - no deployment made"
+          echo "Would deploy:"
+          echo "  Agent:   ${{ inputs.agent_name || 'founder-mvp' }}"
+          echo "  Image:   ${{ steps.image.outputs.image_ref }}"
+          echo "  Foundry: https://${{ vars.FOUNDRY_HUB_NAME }}.services.ai.azure.com/api/projects/${{ vars.FOUNDRY_PROJECT_NAME }}"
+
+      # -- Verify deployment -------------------------------------------------
+      - name: Verify deployment
+        if: inputs.dry_run != 'true'
+        run: |
+          az cognitiveservices agent show \
+            --account-name ${{ vars.FOUNDRY_HUB_NAME }} \
+            --project-name ${{ vars.FOUNDRY_PROJECT_NAME }} \
+            --name "${{ inputs.agent_name || 'founder-mvp' }}" \
+            --output table
+
+      - name: Summary
+        if: always()
+        run: |
+          STATUS="${{ steps.deploy.outputs.agent_status || (inputs.dry_run == 'true' && 'dry-run') || 'unknown' }}"
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## Founder Agent - Foundry Deployment
+
+          | | |
+          |--|--|
+          | **Agent name** | ${{ inputs.agent_name || 'founder-mvp' }} |
+          | **Image** | ${{ steps.image.outputs.image_ref }} |
+          | **Agent version** | ${{ steps.deploy.outputs.agent_version || 'n/a' }} |
+          | **Status** | ${STATUS} |
+          | **Foundry project** | ${{ vars.FOUNDRY_PROJECT_NAME }} |
+          | **Dry run** | ${{ inputs.dry_run || 'false' }} |
+          EOF
