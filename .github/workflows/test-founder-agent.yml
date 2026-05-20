@@ -1,0 +1,73 @@
+name: Test Founder Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      agent_name:
+        description: "Foundry agent name to test"
+        required: false
+        default: "Founder"
+      agent_version:
+        description: "Agent version to test"
+        required: false
+        default: "1"
+  workflow_run:
+    workflows: ["Deploy Founder Agent to Foundry"]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: test-founder-agent
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    environment: staging
+
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SDK
+        run: pip install "azure-ai-projects>=2.1.0" azure-identity --quiet
+
+      - name: Run integration tests
+        id: test
+        env:
+          AZURE_AI_PROJECT_ENDPOINT: "https://${{ vars.FOUNDRY_HUB_NAME }}.services.ai.azure.com/api/projects/${{ vars.FOUNDRY_PROJECT_NAME }}"
+          AGENT_NAME: ${{ inputs.agent_name || 'Founder' }}
+          AGENT_VERSION: ${{ inputs.agent_version || '1' }}
+        run: python .github/scripts/test_founder.py
+
+      - name: Summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          | | |
+          |--|--|
+          | **Agent** | ${{ inputs.agent_name || 'Founder' }} v${{ inputs.agent_version || '1' }} |
+          | **Passed** | ${{ steps.test.outputs.passed || 'n/a' }} |
+          | **Failed** | ${{ steps.test.outputs.failed || 'n/a' }} |
+          EOF
