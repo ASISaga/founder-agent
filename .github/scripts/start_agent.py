@@ -51,7 +51,8 @@ LOG_URL = (
 # Build URL correctly from endpoint
 base = ENDPOINT.rstrip("/")
 # endpoint format: https://hub.services.ai.azure.com/api/projects/project-name
-LOG_URL = f"{base}/agents/{AGENT_NAME}/versions/{VERSION}/containers/default:logstream"
+API_VERSION = "2025-10-01-preview"
+LOG_URL = f"{base}/agents/{AGENT_NAME}/versions/{VERSION}/containers/default:logstream?api-version={API_VERSION}"
 
 print(f"Agent:    {AGENT_NAME} v{VERSION}")
 print(f"Endpoint: {ENDPOINT}")
