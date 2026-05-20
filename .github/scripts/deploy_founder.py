@@ -10,6 +10,7 @@ from azure.ai.projects.models import (
     ProtocolVersionRecord,
     AgentProtocol,
 )
+from azure.core.exceptions import ResourceNotFoundError
 from azure.identity import DefaultAzureCredential
 
 endpoint   = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
@@ -39,11 +40,8 @@ try:
     else:
         print("Existing hosted agent found - creating new version.")
 
-except Exception as e:
-    if "not found" in str(e).lower() or "404" in str(e):
-        print(f"No existing agent '{agent_name}' - creating fresh.")
-    else:
-        raise
+except ResourceNotFoundError:
+    print(f"No existing agent '{agent_name}' - creating fresh.")
 
 # Create hosted agent version
 agent = client.agents.create_version(
