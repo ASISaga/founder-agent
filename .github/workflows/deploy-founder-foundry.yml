@@ -28,7 +28,7 @@ on:
       agent_name:
         description: "Foundry agent name (default: founder-mvp)"
         required: false
-        default: "Founder"
+        default: "founder-mvp"
       dry_run:
         description: "Dry run - resolve digest and validate without deploying"
         required: false
@@ -126,8 +126,7 @@ jobs:
         run: |
           python - << 'PYEOF'
           import os
-          import time
-          from azure.ai.projects import AIProjectClient
+                    from azure.ai.projects import AIProjectClient
           from azure.ai.projects.models import (
               HostedAgentDefinition,
               ProtocolVersionRecord,
@@ -188,57 +187,13 @@ jobs:
           )
 
           print(f"Created agent version: {agent.version}")
+          print(f"Image: {image_ref}")
+          print(f"Foundry provisions asynchronously - check portal for status.")
 
-          # Poll for active status (max 10 minutes)
-          TIMEOUT = 600
-          INTERVAL = 15
-          elapsed = 0
-          current = "unknown"
-
-          ACTIVE_STATES   = {"started", "running", "active", "succeeded"}
-          TERMINAL_STATES = {"failed", "canceled", "error"}
-
-          while elapsed < TIMEOUT:
-              ver = client.agents.get_version(
-                  agent_name=agent_name,
-                  agent_version=agent.version,
-              )
-
-              # Inspect all attributes on first poll to find status field
-              if elapsed == 0:
-                  attrs = {k: v for k, v in vars(ver).items() if not k.startswith("_")}
-                  print(f"  Version attributes: {attrs}")
-
-              # Try every plausible status field name
-              current = (
-                  getattr(ver, "status",              None) or
-                  getattr(ver, "state",               None) or
-                  getattr(ver, "provisioning_state",  None) or
-                  getattr(ver, "deployment_status",   None) or
-                  "unknown"
-              )
-              print(f"  [{elapsed}s] status={current}")
-
-              if str(current).lower() in ACTIVE_STATES:
-                  print(f"Agent version {agent.version} is active.")
-                  with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
-                      fh.write(f"agent_version={agent.version}\n")
-                      fh.write(f"agent_status={current}\n")
-                  break
-              elif str(current).lower() in TERMINAL_STATES:
-                  raise RuntimeError(
-                      f"Deployment reached terminal state: {current}. "
-                      "Check Foundry portal container logs."
-                  )
-
-              time.sleep(INTERVAL)
-              elapsed += INTERVAL
-          else:
-              raise TimeoutError(
-                  f"Agent did not reach active state within {TIMEOUT}s. "
-                  f"Last status: {current}. "
-                  "Agent may still be starting - check Foundry portal."
-              )
+          # Write outputs
+          with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+              fh.write(f"agent_version={agent.version}\n")
+              fh.write(f"agent_status=provisioning\n")
           PYEOF
 
       # -- Dry run output ----------------------------------------------------
