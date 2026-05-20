@@ -71,7 +71,8 @@ jobs:
           TAG="${{ inputs.image_tag || 'latest' }}"
 
           DIGEST=$(az acr manifest list-metadata \
-            --name ${{ vars.ACR_NAME }}.azurecr.io/${{ env.FAS_IMAGE }} \
+            --registry ${{ vars.ACR_NAME }} \
+            --name ${{ env.FAS_IMAGE }} \
             --orderby time_desc \
             --query "[?tags[?@ == '${TAG}']].digest | [0]" \
             --output tsv)
