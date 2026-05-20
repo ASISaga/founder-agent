@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/founder_agent/**"
+      - "src/Founder/**"
       - "Dockerfile.aos-agent"
       - ".github/workflows/build-founder-agent.yml"
   repository_dispatch:
@@ -20,18 +20,19 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment: staging
     uses: ASISaga/aos-infra/.github/workflows/aos-agent-build.yml@main
     with:
-      trigger:         "${{ github.event_name == 'repository_dispatch' && 'rebase' || 'source-change' }}"
-      layer_number:    "2"
-      layer_name:      "founder-agent"
-      image:           "aos/founder-agent"
-      parent_image:    "${{ vars.AOS_INFRA_IMAGE }}"
-      package_dir:     "founder_agent"
-      package_module:  "founder_agent"
-      repo_name:       "ASISaga/founder-agent"
-      src_path:        "src/founder_agent"
-      parent_digest:   "${{ github.event.client_payload.parent_digest || '' }}"
+      trigger:        "${{ github.event_name == 'repository_dispatch' && 'rebase' || 'source-change' }}"
+      layer_number:   "5"
+      layer_name:     "founder-agent"
+      image:          "aos/founder-agent"
+      parent_image:   "${{ vars.AOS_BUSINESS_IMAGE }}"
+      package_dir:    "Founder"
+      package_module: "Founder"
+      repo_name:      "ASISaga/founder-agent"
+      src_path:       "src/Founder"
+      parent_digest:  "${{ github.event.client_payload.parent_digest || '' }}"
       breaking_candidate: "${{ github.event.client_payload.breaking_candidate || 'false' }}"
     secrets:
       AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
@@ -39,18 +40,19 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       DEPLOY_DISPATCH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
 
-  dispatch-downstream:
+  deploy-to-foundry:
+    name: Trigger Foundry deployment
     needs: build
     runs-on: ubuntu-latest
     environment: staging
     permissions:
       contents: read
     steps:
-      - name: Dispatch manifest-update to boardroom
+      - name: Trigger deploy-founder-foundry workflow
         env:
           GH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
         run: |
-          gh api repos/ASISaga/founder-agent/dispatches \
-            --method POST \
-            --field event_type=manifest-update \
-            --field client_payload='{"parent_image":"aos/purpose-driven-agent","parent_digest":"${{ needs.build.outputs.digest }}","parent_sha":"${{ github.sha }}","breaking_candidate":"false"}'
+          gh workflow run deploy-founder-foundry.yml \
+            --repo ASISaga/founder-agent \
+            --ref main
+          echo "Triggered deploy-founder-foundry.yml"
