@@ -149,6 +149,22 @@ jobs:
               allow_preview=True,
           )
 
+          # If an agent with this name already exists as a prompt agent,
+          # delete it before creating the hosted version.
+          try:
+              existing = client.agents.get(agent_name=agent_name)
+              existing_kind = getattr(existing, "kind", None)
+              print(f"Existing agent kind: {existing_kind}")
+              if existing_kind == "prompt":
+                  print(f"Deleting existing prompt agent '{agent_name}' before creating hosted version...")
+                  client.agents.delete(agent_name=agent_name)
+                  print("Deleted.")
+          except Exception as e:
+              if "not found" in str(e).lower() or "404" in str(e):
+                  print(f"No existing agent named '{agent_name}' - creating fresh.")
+              else:
+                  raise
+
           # Create a new hosted agent version
           agent = client.agents.create_version(
               agent_name=agent_name,
@@ -173,38 +189,55 @@ jobs:
 
           print(f"Created agent version: {agent.version}")
 
-          # Poll for Started status (max 10 minutes)
+          # Poll for active status (max 10 minutes)
           TIMEOUT = 600
           INTERVAL = 15
           elapsed = 0
+          current = "unknown"
+
+          ACTIVE_STATES   = {"started", "running", "active", "succeeded"}
+          TERMINAL_STATES = {"failed", "canceled", "error"}
 
           while elapsed < TIMEOUT:
-              status = client.agents.get_version(
+              ver = client.agents.get_version(
                   agent_name=agent_name,
                   agent_version=agent.version,
               )
-              current = getattr(status, "status", "unknown")
-              print(f"  [{elapsed}s] Status: {current}")
 
-              if current == "Started":
+              # Inspect all attributes on first poll to find status field
+              if elapsed == 0:
+                  attrs = {k: v for k, v in vars(ver).items() if not k.startswith("_")}
+                  print(f"  Version attributes: {attrs}")
+
+              # Try every plausible status field name
+              current = (
+                  getattr(ver, "status",              None) or
+                  getattr(ver, "state",               None) or
+                  getattr(ver, "provisioning_state",  None) or
+                  getattr(ver, "deployment_status",   None) or
+                  "unknown"
+              )
+              print(f"  [{elapsed}s] status={current}")
+
+              if str(current).lower() in ACTIVE_STATES:
                   print(f"Agent version {agent.version} is active.")
-                  # Write outputs for summary step
-                  with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-                      f.write(f"agent_version={agent.version}\n")
-                      f.write(f"agent_status=Started\n")
+                  with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+                      fh.write(f"agent_version={agent.version}\n")
+                      fh.write(f"agent_status={current}\n")
                   break
-              elif current in ("Failed", "Canceled"):
+              elif str(current).lower() in TERMINAL_STATES:
                   raise RuntimeError(
-                      f"Deployment failed with status: {current}. "
-                      "Check Foundry portal for container logs."
+                      f"Deployment reached terminal state: {current}. "
+                      "Check Foundry portal container logs."
                   )
 
               time.sleep(INTERVAL)
               elapsed += INTERVAL
           else:
               raise TimeoutError(
-                  f"Agent version did not reach Started within {TIMEOUT}s. "
-                  f"Last status: {current}"
+                  f"Agent did not reach active state within {TIMEOUT}s. "
+                  f"Last status: {current}. "
+                  "Agent may still be starting - check Foundry portal."
               )
           PYEOF
 
