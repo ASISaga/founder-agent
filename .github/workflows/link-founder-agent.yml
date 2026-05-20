@@ -47,7 +47,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ACI_NAME: founder-link-${{ github.run_id }}
   IMAGE_REPO: aos/founder-agent
   PORT: 8000
 
@@ -63,6 +62,9 @@ jobs:
       contents: read
 
     steps:
+      - name: Set ACI name
+        run: echo "ACI_NAME=founder-link-${{ github.run_id }}" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@v4
 

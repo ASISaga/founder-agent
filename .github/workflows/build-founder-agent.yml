@@ -15,7 +15,7 @@ jobs:
     environment: staging
     uses: ASISaga/aos-infra/.github/workflows/aos-agent-build.yml@main
     with:
-      trigger:        "${{ github.event_name == 'repository_dispatch' && 'rebase' || 'source-change' }}"
+      trigger:        "source-change"
       layer_number:   "5"
       layer_name:     "founder-agent"
       image:          "aos/founder-agent"
@@ -24,8 +24,8 @@ jobs:
       package_module: "Founder"
       repo_name:      "ASISaga/founder-agent"
       src_path:       "src/Founder"
-      parent_digest:  "${{ github.event.client_payload.parent_digest || '' }}"
-      breaking_candidate: "${{ github.event.client_payload.breaking_candidate || 'false' }}"
+      parent_digest:  ""
+      breaking_candidate: "false"
     secrets:
       AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
