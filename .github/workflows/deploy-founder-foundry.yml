@@ -19,10 +19,6 @@ name: Deploy Founder Agent to Foundry
 # =============================================================================
 
 on:
-  workflow_run:
-    workflows: ["Build Founder Agent"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       image_tag:
@@ -43,7 +39,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  FAS_IMAGE: aos/founder-agent-fas
+  FAS_IMAGE: aos/founder-agent
 
 jobs:
   deploy:
@@ -51,10 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
 
-    # Only run if triggered manually, or if the upstream build succeeded
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
+
 
     permissions:
       id-token: write
@@ -77,9 +70,8 @@ jobs:
         run: |
           TAG="${{ inputs.image_tag || 'latest' }}"
 
-          DIGEST=$(az acr repository show-manifests \
-            --name ${{ vars.ACR_NAME }} \
-            --repository ${{ env.FAS_IMAGE }} \
+          DIGEST=$(az acr manifest list-metadata \
+            --name ${{ vars.ACR_NAME }}.azurecr.io/${{ env.FAS_IMAGE }} \
             --orderby time_desc \
             --query "[?tags[?@ == '${TAG}']].digest | [0]" \
             --output tsv)
