@@ -62,7 +62,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install SDK
-        run: pip install "azure-ai-projects>=2.1.0" azure-identity requests --quiet
+        run: pip install "azure-ai-projects>=2.1.0" azure-identity --quiet
 
       - name: Inspect agent (diagnostic)
         run: python .github/scripts/inspect_agent.py
