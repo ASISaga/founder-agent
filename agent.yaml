@@ -35,5 +35,5 @@ metadata:
   routing_role: "orchestrator"
   boardroom_role: "Founder / Orchestrator"
   fas_image: "acraosstagingerm2srfd.azurecr.io/aos/founder-agent-fas"
-  entry_point: "Founder.agent:FounderAgent"
+  entry_point: "founder_agent.agent:FounderAgent"
 
