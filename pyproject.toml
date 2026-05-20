@@ -1,5 +1,5 @@
 [project]
-name = "Founder"
+name = "founder_agent"
 version = "0.1.0"
 description = "Founder submodule for Buddhi."
 authors = [ { name = "ASISaga" } ]
@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.entry-points."agent_framework.hosted_agents"]
-default = "Founder.agent:FounderAgent"
+default = "founder_agent.agent:FounderAgent"
 
 [build-system]
 requires = ["setuptools", "wheel"]
@@ -25,4 +25,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/Founder"]
+packages = ["src/founder_agent"]

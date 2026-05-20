@@ -2,7 +2,7 @@
 Entry point for running FounderAgent as a FAS hosted container.
 
 Executed by:
-    CMD ["python", "-m", "Founder"]
+    CMD ["python", "-m", "founder_agent"]
 
 Discovery chain:
 1. Imports FounderAgent — triggers __init_subclass__ registration in base class
@@ -15,7 +15,7 @@ from __future__ import annotations
 
 # Import FounderAgent first — this seeds the __init_subclass__ registry
 # before run_server() calls _ensure_imports() and _discover_agent_class()
-from Founder.agent import FounderAgent  # noqa: F401  (import for side effect)
+from founder_agent.agent import FounderAgent  # noqa: F401  (import for side effect)
 
 from purpose_driven_agent.hosting import run_server
 
