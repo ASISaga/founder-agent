@@ -11,6 +11,10 @@ on:
         description: "Agent version to test"
         required: false
         default: "1"
+      inspect_only:
+        description: "Run diagnostic inspection only, skip tests"
+        required: false
+        default: "false"
   workflow_run:
     workflows: ["Deploy Founder Agent to Foundry"]
     types: [completed]
@@ -25,6 +29,7 @@ jobs:
     name: Integration Test
     runs-on: ubuntu-latest
     environment: staging
+    timeout-minutes: 15
 
     if: >
       github.event_name == 'workflow_dispatch' ||
@@ -33,6 +38,12 @@ jobs:
     permissions:
       id-token: write
       contents: read
+
+    env:
+      AZURE_AI_PROJECT_ENDPOINT: "https://${{ vars.FOUNDRY_HUB_NAME }}.services.ai.azure.com/api/projects/${{ vars.FOUNDRY_PROJECT_NAME }}"
+      AGENT_NAME: ${{ inputs.agent_name || 'Founder' }}
+      AGENT_VERSION: ${{ inputs.agent_version || '1' }}
+      COLD_START_TIMEOUT: "120"
 
     steps:
       - name: Checkout
@@ -53,12 +64,12 @@ jobs:
       - name: Install SDK
         run: pip install "azure-ai-projects>=2.1.0" azure-identity --quiet
 
+      - name: Inspect agent (diagnostic)
+        run: python .github/scripts/inspect_agent.py
+
       - name: Run integration tests
+        if: inputs.inspect_only != 'true'
         id: test
-        env:
-          AZURE_AI_PROJECT_ENDPOINT: "https://${{ vars.FOUNDRY_HUB_NAME }}.services.ai.azure.com/api/projects/${{ vars.FOUNDRY_PROJECT_NAME }}"
-          AGENT_NAME: ${{ inputs.agent_name || 'Founder' }}
-          AGENT_VERSION: ${{ inputs.agent_version || '1' }}
         run: python .github/scripts/test_founder.py
 
       - name: Summary
