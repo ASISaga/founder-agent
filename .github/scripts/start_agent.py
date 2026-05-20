@@ -1,127 +1,91 @@
 """
-Start the Founder agent and stream container logs until ready.
+Warm up the Founder agent by sending a lightweight ping request and retrying
+until the session sandbox is ready.
 
-Uses the Foundry log stream endpoint to watch container startup in real time.
-Exits 0 when the readiness probe passes (GET /readiness 200 OK).
-Exits 1 if the container fails to start within the timeout.
+Foundry hosted agents use per-session VM-isolated sandboxes. There is no
+persistent container to tail. The sandbox provisions when the first request
+arrives -- Foundry returns "not in Running state" while provisioning.
+This script retries until the sandbox responds, logging each attempt.
 
-Log stream endpoint:
-  GET {endpoint}/api/projects/{project}/agents/{name}/versions/{version}/containers/default:logstream
+Exit 0: sandbox ready
+Exit 1: timeout exceeded
 """
 import os
+import re
 import sys
 import time
-import requests
+
+from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
 
 ENDPOINT   = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
 AGENT_NAME = os.environ.get("AGENT_NAME", "Founder")
 VERSION    = os.environ.get("AGENT_VERSION", "1")
 TIMEOUT    = int(os.environ.get("START_TIMEOUT", "300"))
+INTERVAL   = 15
 
-READY_SIGNALS = [
-    "GET /readiness HTTP/1.1\" 200",
-    "GET /health HTTP/1.1\" 200",
-    "Application startup complete",
-    "Uvicorn running",
-    "Hypercorn running",
-    "serving on",
-    "started server",
+NOT_READY_PHRASES = [
+    "not in running state",
+    "not in started state",
+    "try again",
+    "provisioning",
+    "starting",
 ]
 
-FAIL_SIGNALS = [
-    "error",
-    "exception",
-    "traceback",
-    "modulenotfounderror",
-    "importerror",
-    "failed",
-]
+CODE_PATTERN = re.compile(r"Error code: (\d+)")
 
-# Get an access token for the Foundry data plane
-credential = DefaultAzureCredential()
-token = credential.get_token("https://ai.azure.com/.default")
-
-LOG_URL = (
-    f"{ENDPOINT}/api/projects/"
-    f"{ENDPOINT.split('/projects/')[-1] if '/projects/' in ENDPOINT else ENDPOINT.split('/')[-1]}"
-    f"/agents/{AGENT_NAME}/versions/{VERSION}/containers/default:logstream"
-)
-
-# Build URL correctly from endpoint
-base = ENDPOINT.rstrip("/")
-# endpoint format: https://hub.services.ai.azure.com/api/projects/project-name
-API_VERSION = "2025-10-01-preview"
-LOG_URL = f"{base}/agents/{AGENT_NAME}/versions/{VERSION}/containers/default:logstream?api-version={API_VERSION}"
-
-print(f"Agent:    {AGENT_NAME} v{VERSION}")
-print(f"Endpoint: {ENDPOINT}")
-print(f"Log URL:  {LOG_URL}")
-print(f"Timeout:  {TIMEOUT}s")
+print(f"Warming up: {AGENT_NAME} v{VERSION}")
+print(f"Endpoint:   {ENDPOINT}")
+print(f"Timeout:    {TIMEOUT}s  interval: {INTERVAL}s")
 print("")
-print("Streaming container logs...")
-print("-" * 60)
 
-start_time = time.time()
-ready = False
-error_lines = []
+client = AIProjectClient(
+    endpoint=ENDPOINT,
+    credential=DefaultAzureCredential(),
+)
+openai_client = client.get_openai_client()
 
-try:
-    with requests.get(
-        LOG_URL,
-        headers={
-            "Authorization": f"Bearer {token.token}",
-            "Accept": "text/plain",
-        },
-        stream=True,
-        timeout=TIMEOUT,
-    ) as resp:
-        if resp.status_code != 200:
-            print(f"::error::Log stream returned HTTP {resp.status_code}: {resp.text}")
-            sys.exit(1)
+elapsed = 0
+attempt = 0
 
-        for chunk in resp.iter_lines(decode_unicode=True):
-            if not chunk:
-                continue
+while elapsed < TIMEOUT:
+    attempt += 1
+    print(f"[{elapsed:3d}s] Attempt {attempt} - pinging agent...")
 
-            elapsed = int(time.time() - start_time)
-            print(f"[{elapsed:3d}s] {chunk}")
+    try:
+        response = openai_client.responses.create(
+            input=[{"role": "user", "content": "ping"}],
+            extra_body={
+                "agent_reference": {
+                    "name":    AGENT_NAME,
+                    "version": VERSION,
+                    "type":    "agent_reference",
+                }
+            },
+        )
+        text = getattr(response, "output_text", None) or str(response)
+        print(f"[{elapsed:3d}s] READY after {attempt} attempt(s)")
+        print(f"           status:   200 OK")
+        print(f"           response: {text[:200]}")
+        sys.exit(0)
 
-            lower = chunk.lower()
+    except Exception as e:
+        error_str = str(e)
+        code_match = CODE_PATTERN.search(error_str)
+        http_code = code_match.group(1) if code_match else "?"
+        msg_lower = error_str.lower()
 
-            # Check for readiness signal
-            if any(sig.lower() in lower for sig in READY_SIGNALS):
-                print("-" * 60)
-                print(f"Container ready after {elapsed}s.")
-                ready = True
-                break
+        if any(phrase in msg_lower for phrase in NOT_READY_PHRASES):
+            print(f"[{elapsed:3d}s] NOT READY  status: HTTP {http_code}")
+            print(f"           message: {error_str[:200]}")
+        else:
+            print(f"[{elapsed:3d}s] ERROR      status: HTTP {http_code}")
+            print(f"           message: {error_str[:200]}")
 
-            # Collect error lines for diagnosis
-            if any(sig in lower for sig in FAIL_SIGNALS):
-                error_lines.append(chunk)
+        print(f"           retrying in {INTERVAL}s...")
 
-            # Timeout check
-            if elapsed >= TIMEOUT:
-                break
+    time.sleep(INTERVAL)
+    elapsed += INTERVAL
 
-except requests.exceptions.Timeout:
-    print(f"::error::Log stream timed out after {TIMEOUT}s")
-    sys.exit(1)
-except Exception as e:
-    print(f"::error::Log stream error: {e}")
-    # Fall back to probe-based wait if log stream fails
-    print("Falling back to probe-based readiness check...")
-    sys.exit(0)
-
-print("-" * 60)
-
-if not ready:
-    if error_lines:
-        print("::error::Container startup errors detected:")
-        for line in error_lines[-10:]:
-            print(f"  {line}")
-    else:
-        print(f"::error::Container did not signal readiness within {TIMEOUT}s")
-    sys.exit(1)
-
-sys.exit(0)
+print(f"::error::Sandbox not ready after {TIMEOUT}s ({attempt} attempts)")
+sys.exit(1)
