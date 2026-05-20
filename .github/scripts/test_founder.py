@@ -1,11 +1,13 @@
 """
 Integration test for FounderAgent hosted in Foundry Agent Service.
 
-Invokes the agent with three test messages and validates:
-  - Response is non-empty
-  - Response ends with exactly one valid routing tag
-  - Routing tag matches the expected tag for the input topic
-  - No invalid tags present (e.g. HANDBACK which is specialist-only)
+The agent uses scale-to-zero. After 15 minutes idle the container is
+deprovisioned. The first request triggers a cold start which Foundry
+handles transparently -- the invocation blocks until the container is
+ready. This script retries on cold-start errors to handle the case
+where Foundry returns an explicit "not ready" response.
+
+Status field: ver.status == AgentVersionStatus.ACTIVE (not "Started"/"Running")
 
 Exit code 0: all tests passed
 Exit code 1: one or more tests failed
@@ -13,17 +15,31 @@ Exit code 1: one or more tests failed
 import os
 import re
 import sys
+import time
 
 from azure.ai.projects import AIProjectClient
+from azure.ai.projects.models import AgentVersionStatus
+from azure.core.exceptions import ResourceNotFoundError
 from azure.identity import DefaultAzureCredential
 
-ENDPOINT   = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
-AGENT_NAME = os.environ.get("AGENT_NAME", "Founder")
-VERSION    = os.environ.get("AGENT_VERSION", "1")
+ENDPOINT     = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
+AGENT_NAME   = os.environ.get("AGENT_NAME", "Founder")
+VERSION      = os.environ.get("AGENT_VERSION", "1")
+COLD_START_TIMEOUT  = int(os.environ.get("COLD_START_TIMEOUT", "120"))
+COLD_START_INTERVAL = 10
 
-VALID_TAGS   = {"[ROUTE:CFO]", "[ROUTE:CMO]", "[COMPLETE]", "[HANDBACK]"}
-INVALID_TAGS = {"[HANDBACK]"}  # orchestrators must never emit this
 TAG_PATTERN  = re.compile(r"\[(ROUTE:CFO|ROUTE:CMO|COMPLETE|HANDBACK)\]", re.IGNORECASE)
+INVALID_TAGS = {"[HANDBACK]"}
+
+COLD_START_PHRASES = [
+    "not in running state",
+    "not in started state",
+    "not in active state",
+    "starting",
+    "provisioning",
+    "cold start",
+    "try again",
+]
 
 TESTS = [
     {
@@ -50,28 +66,38 @@ def extract_tag(text):
     return f"[{match.group(1).upper()}]" if match else None
 
 
-def run_tests():
-    print(f"Endpoint:   {ENDPOINT}")
-    print(f"Agent:      {AGENT_NAME} v{VERSION}")
-    print("")
+def is_cold_start_error(e):
+    msg = str(e).lower()
+    return any(phrase in msg for phrase in COLD_START_PHRASES)
 
-    client = AIProjectClient(
-        endpoint=ENDPOINT,
-        credential=DefaultAzureCredential(),
-    )
-    openai_client = client.get_openai_client()
 
-    passed = 0
-    failed = 0
-    results = []
+def check_agent_active(client):
+    """Verify agent status is ACTIVE before running tests."""
+    try:
+        ver = client.agents.get_version(
+            agent_name=AGENT_NAME,
+            agent_version=VERSION,
+        )
+        status = ver.status
+        print(f"Agent status: {status}")
+        if status == AgentVersionStatus.ACTIVE:
+            print("Agent is ACTIVE - proceeding with tests.")
+            return True
+        else:
+            print(f"::warning::Agent status is {status} - tests may fail.")
+            return True  # Still attempt tests
+    except Exception as e:
+        print(f"::warning::Could not verify agent status: {e}")
+        return True  # Still attempt tests
 
-    for i, test in enumerate(TESTS, 1):
-        print(f"[{i}/{len(TESTS)}] {test['name']}")
-        print(f"  Input: {test['input']}")
 
+def invoke_with_retry(openai_client, input_text):
+    """Invoke agent, retrying on cold-start errors until timeout."""
+    elapsed = 0
+    while True:
         try:
-            response = openai_client.responses.create(
-                input=[{"role": "user", "content": test["input"]}],
+            return openai_client.responses.create(
+                input=[{"role": "user", "content": input_text}],
                 extra_body={
                     "agent_reference": {
                         "name":    AGENT_NAME,
@@ -80,6 +106,26 @@ def run_tests():
                     }
                 },
             )
+        except Exception as e:
+            if is_cold_start_error(e) and elapsed < COLD_START_TIMEOUT:
+                print(f"  Cold start ({elapsed}s) - retrying in {COLD_START_INTERVAL}s: {e}")
+                time.sleep(COLD_START_INTERVAL)
+                elapsed += COLD_START_INTERVAL
+            else:
+                raise
+
+
+def run_tests(openai_client):
+    passed = 0
+    failed = 0
+    results = []
+
+    for i, test in enumerate(TESTS, 1):
+        print(f"\n[{i}/{len(TESTS)}] {test['name']}")
+        print(f"  Input: {test['input']}")
+
+        try:
+            response = invoke_with_retry(openai_client, test["input"])
             text = response.output_text or ""
             print(f"  Response ({len(text)} chars): {text[:300]}{'...' if len(text) > 300 else ''}")
 
@@ -110,35 +156,47 @@ def run_tests():
             failed += 1
             results.append({"test": test["name"], "status": "ERROR", "error": str(e)})
 
-        print("")
+    return passed, failed, results
 
-    # Summary
-    print(f"Results: {passed} passed, {failed} failed out of {len(TESTS)} tests")
 
-    # Write GitHub Actions step summary
-    github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY", "")
-    if github_step_summary:
-        with open(github_step_summary, "a") as fh:
-            fh.write(f"## Founder Agent - Integration Test Results\n\n")
-            fh.write(f"| Test | Status | Tag |\n")
-            fh.write(f"|---|---|---|\n")
+def write_outputs(passed, failed, results):
+    summary = os.environ.get("GITHUB_STEP_SUMMARY", "")
+    if summary:
+        with open(summary, "a") as fh:
+            fh.write("## Founder Agent - Integration Test Results\n\n")
+            fh.write("| Test | Status | Tag |\n")
+            fh.write("|---|---|---|\n")
             for r in results:
-                status = r["status"]
                 tag    = r.get("tag", "n/a")
                 errors = "; ".join(r.get("errors", [])) or r.get("error", "")
                 detail = f" ({errors})" if errors else ""
-                fh.write(f"| {r['test']} | {status}{detail} | {tag} |\n")
+                fh.write(f"| {r['test']} | {r['status']}{detail} | {tag} |\n")
             fh.write(f"\n**{passed} passed, {failed} failed**\n")
 
-    # Write GitHub output
-    github_output = os.environ.get("GITHUB_OUTPUT", "")
-    if github_output:
-        with open(github_output, "a") as fh:
+    output = os.environ.get("GITHUB_OUTPUT", "")
+    if output:
+        with open(output, "a") as fh:
             fh.write(f"passed={passed}\n")
             fh.write(f"failed={failed}\n")
 
-    return failed
-
 
 if __name__ == "__main__":
-    sys.exit(run_tests())
+    print(f"Endpoint:   {ENDPOINT}")
+    print(f"Agent:      {AGENT_NAME} v{VERSION}")
+    print(f"Cold start timeout: {COLD_START_TIMEOUT}s")
+    print("")
+
+    client = AIProjectClient(
+        endpoint=ENDPOINT,
+        credential=DefaultAzureCredential(),
+    )
+
+    check_agent_active(client)
+
+    openai_client = client.get_openai_client()
+    passed, failed, results = run_tests(openai_client)
+
+    print(f"\nResults: {passed} passed, {failed} failed out of {len(TESTS)} tests")
+    write_outputs(passed, failed, results)
+
+    sys.exit(0 if failed == 0 else 1)
