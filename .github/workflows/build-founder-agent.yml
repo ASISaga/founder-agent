@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/founder_agent/**"
+      - "src/Founder/**"
       - "Dockerfile.aos-agent"
       - ".github/workflows/build-founder-agent.yml"
   repository_dispatch:
@@ -39,20 +39,3 @@ jobs:
       AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       DEPLOY_DISPATCH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
-
-  deploy-to-foundry:
-    name: Trigger Foundry deployment
-    needs: build
-    runs-on: ubuntu-latest
-    environment: staging
-    permissions:
-      contents: read
-    steps:
-      - name: Trigger deploy-founder-foundry workflow
-        env:
-          GH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
-        run: |
-          gh workflow run deploy-founder-foundry.yml \
-            --repo ASISaga/founder-agent \
-            --ref main
-          echo "Triggered deploy-founder-foundry.yml"
