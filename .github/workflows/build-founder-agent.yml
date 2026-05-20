@@ -1,169 +1,56 @@
-name: Build Founder Agent Image
+name: Build Founder Agent
 
 on:
   push:
     branches: [main]
     paths:
-      - "Dockerfile.founder-agent"
-      - "src/Founder/**"
+      - "src/founder_agent/**"
+      - "Dockerfile.aos-agent"
       - ".github/workflows/build-founder-agent.yml"
+  repository_dispatch:
+    types: [manifest-update]
   workflow_dispatch:
-    inputs:
-      force_rebuild:
-        description: "Force rebuild even if no file changes"
-        type: boolean
-        default: false
 
 concurrency:
   group: founder-agent-build
   cancel-in-progress: false
 
-env:
-  ACR_LOGIN_SERVER: ${{ vars.ACR_NAME }}.azurecr.io
-  IMAGE_NAME: aos/founder-agent
-  FAS_IMAGE_NAME: aos/founder-agent-fas
-
 jobs:
-  build-and-push:
-    name: Build and push founder-agent images
-    runs-on: ubuntu-latest
-    environment: staging      # OIDC subject: repo:ASISaga/founder-agent:environment:staging
-
+  build:
     permissions:
       id-token: write
       contents: read
+    uses: ASISaga/aos-infra/.github/workflows/aos-agent-build.yml@main
+    with:
+      trigger:         "${{ github.event_name == 'repository_dispatch' && 'rebase' || 'source-change' }}"
+      layer_number:    "2"
+      layer_name:      "founder-agent"
+      image:           "aos/founder-agent"
+      parent_image:    "${{ vars.AOS_INFRA_IMAGE }}"
+      package_dir:     "founder_agent"
+      package_module:  "founder_agent"
+      repo_name:       "ASISaga/founder-agent"
+      src_path:        "src/founder_agent"
+      parent_digest:   "${{ github.event.client_payload.parent_digest || '' }}"
+      breaking_candidate: "${{ github.event.client_payload.breaking_candidate || 'false' }}"
+    secrets:
+      AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      DEPLOY_DISPATCH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
 
-    outputs:
-      image_digest: ${{ steps.push-base.outputs.digest }}
-      fas_digest: ${{ steps.push-fas.outputs.digest }}
-
+  dispatch-downstream:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      contents: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Login to ACR
-        run: az acr login --name ${{ vars.ACR_NAME }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Read parent manifest
-        id: manifest
+      - name: Dispatch manifest-update to boardroom
+        env:
+          GH_TOKEN: ${{ secrets.DEPLOY_DISPATCH_TOKEN }}
         run: |
-          PARENT_DIGEST=$(grep -oP '(?<=@)sha256:[0-9a-f]{64}' Dockerfile.founder-agent | head -1)
-          if [[ -z "$PARENT_DIGEST" ]]; then
-            echo "::error::Could not read parent digest from Dockerfile.founder-agent"
-            exit 1
-          fi
-          echo "parent_digest=${PARENT_DIGEST}" >> $GITHUB_OUTPUT
-          echo "Parent manifest digest: ${PARENT_DIGEST}"
-
-      - name: Compute image tags
-        id: meta
-        run: |
-          BASE="${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}"
-          FAS="${{ env.ACR_LOGIN_SERVER }}/${{ env.FAS_IMAGE_NAME }}"
-          SHA="${{ github.sha }}"
-
-          echo "sha_tag=${BASE}:${SHA}"       >> $GITHUB_OUTPUT
-          echo "latest_tag=${BASE}:latest"    >> $GITHUB_OUTPUT
-          echo "fas_sha_tag=${FAS}:${SHA}"    >> $GITHUB_OUTPUT
-          echo "fas_latest_tag=${FAS}:latest" >> $GITHUB_OUTPUT
-
-      - name: Build and push base image
-        id: push-base
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile.founder-agent
-          target: base
-          push: true
-          platforms: linux/amd64
-          tags: |
-            ${{ steps.meta.outputs.sha_tag }}
-            ${{ steps.meta.outputs.latest_tag }}
-          cache-from: |
-            type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
-          cache-to: type=inline
-          provenance: true
-          sbom: true
-
-      - name: Build and push FAS image
-        id: push-fas
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile.founder-agent
-          target: fas
-          push: true
-          platforms: linux/amd64
-          tags: |
-            ${{ steps.meta.outputs.fas_sha_tag }}
-            ${{ steps.meta.outputs.fas_latest_tag }}
-          cache-from: |
-            type=registry,ref=${{ env.ACR_LOGIN_SERVER }}/${{ env.FAS_IMAGE_NAME }}:latest
-          cache-to: type=inline
-          provenance: true
-          sbom: true
-
-      - name: Verify base image
-        run: |
-          docker run --rm ${{ steps.meta.outputs.sha_tag }} python -c "\
-          from Founder import FounderAgent; \
-          import pathlib; \
-          py  = list(pathlib.Path('/app/Founder').rglob('*.py')); \
-          pyc = list(pathlib.Path('/app/Founder').rglob('*.pyc')); \
-          assert len(py)  > 0, 'No .py files in base image'; \
-          assert len(pyc) > 0, 'No .pyc files in base image'; \
-          print(f'Base: {len(py)} .py, {len(pyc)} .pyc. OK') \
-          "
-
-      - name: Verify FAS image
-        run: |
-          docker run --rm ${{ steps.meta.outputs.fas_sha_tag }} python -c "\
-          from Founder import FounderAgent; \
-          import pathlib; \
-          py  = list(pathlib.Path('/app/Founder').rglob('*.py')); \
-          pyc = list(pathlib.Path('/app/Founder').rglob('*.pyc')); \
-          assert len(py)  == 0, f'Found .py in FAS image: {py}'; \
-          assert len(pyc)  > 0, 'No .pyc files in FAS image'; \
-          print(f'FAS: 0 .py, {len(pyc)} .pyc. OK') \
-          "
-
-      - name: Job summary
-        if: always()
-        run: |
-          ICON=$([[ "${{ job.status }}" == "success" ]] && echo "✅" || echo "❌")
-          cat >> $GITHUB_STEP_SUMMARY << EOF
-          ## ${ICON} AOS Founder Agent
-
-          | | |
-          |--|--|
-          | **Status** | \`${{ job.status }}\` |
-          | **Base image** | \`${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}\` |
-          | **FAS image** | \`${{ env.ACR_LOGIN_SERVER }}/${{ env.FAS_IMAGE_NAME }}\` |
-          | **SHA** | \`${{ github.sha }}\` |
-          | **Base digest** | \`${{ steps.push-base.outputs.digest }}\` |
-          | **FAS digest** | \`${{ steps.push-fas.outputs.digest }}\` |
-          | **Parent digest** | \`${{ steps.manifest.outputs.parent_digest }}\` |
-          | **Triggered by** | \`${{ github.event_name }}\` |
-
-          ### Layer hierarchy
-          \`\`\`
-          python:3.12-slim
-            └── aos/infrastructure
-                  └── aos/purpose-driven-agent
-                        └── aos/leadership-agent
-                              └── aos/business-agent:${{ steps.manifest.outputs.parent_digest }}
-                                    └── aos/founder-agent:${{ github.sha }}
-                                          ├── (base)  .py + .pyc
-                                          └── (fas)   .pyc only → Foundry Agent Service
-          \`\`\`
-          EOF
+          gh api repos/ASISaga/founder-agent/dispatches \
+            --method POST \
+            --field event_type=manifest-update \
+            --field client_payload='{"parent_image":"aos/purpose-driven-agent","parent_digest":"${{ needs.build.outputs.digest }}","parent_sha":"${{ github.sha }}","breaking_candidate":"false"}'
