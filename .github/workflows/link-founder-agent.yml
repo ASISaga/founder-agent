@@ -1,0 +1,260 @@
+name: Link Founder Agent
+
+# =============================================================================
+# The linker - verifies the fully-built aos/founder-agent image is deployable
+# before it is registered with Foundry Agent Service.
+#
+# Analogous to the linker in a compiled language pipeline:
+#   compiler  : .py -> .pyc  (done in build-founder-agent.yml)
+#   linker    : THIS WORKFLOW - spins up the container, confirms the full
+#               symbol chain resolves, the FAS adapter initialises, the
+#               HTTP server binds, and the health endpoint responds 200
+#
+# Only when this workflow exits 0 is the image considered fit for Foundry.
+#
+# Triggered:
+#   - Automatically after build-founder-agent.yml completes
+#   - Manually via workflow_dispatch for re-verification
+#
+# What it tests (in order):
+#   1. Container starts without error (import chain resolves from .pyc)
+#   2. FAS hosting adapter initialises and binds to AGENT_SERVICE_PORT
+#   3. GET /health returns 200 (container is ready to receive invocations)
+#   4. FounderAgent class is reachable and routing contract is met:
+#        get_default_routing_tag() == "[COMPLETE]"
+#        "[ROUTE:CFO]" in get_routing_tags()
+#        "[ROUTE:CMO]" in get_routing_tags()
+#        "[HANDBACK]" not in get_routing_tags()
+#   5. Container logs are printed for traceability
+#   6. ACI instance is deleted regardless of outcome (always teardown)
+#
+# Infrastructure:
+#   Azure Container Instances - ephemeral, torn down after each run.
+#   Same resource group and managed identity as the rest of the AOS stack.
+#   No persistent infrastructure required.
+# =============================================================================
+
+on:
+  workflow_run:
+    workflows: ["Build Founder Agent"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to link-test (default: latest)"
+        required: false
+        default: "latest"
+
+concurrency:
+  group: link-founder-agent
+  cancel-in-progress: false
+
+env:
+  ACI_NAME: founder-link-${{ github.run_id }}
+  IMAGE_REPO: aos/founder-agent
+  PORT: 8000
+
+jobs:
+  link:
+    name: Link Test - ACI Runtime Verification
+    runs-on: ubuntu-latest
+    environment: staging
+
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # -- Resolve image reference -------------------------------------------
+      - name: Resolve image digest
+        id: image
+        run: |
+          TAG="${{ inputs.image_tag || 'latest' }}"
+          DIGEST=$(az acr manifest list-metadata \
+            --registry ${{ vars.ACR_NAME }} \
+            --name ${{ env.IMAGE_REPO }} \
+            --orderby time_desc \
+            --query "[?tags[?@ == '${TAG}']].digest | [0]" \
+            --output tsv)
+
+          if [ -z "${DIGEST}" ]; then
+            echo "::error::No manifest found for ${{ vars.ACR_NAME }}.azurecr.io/${{ env.IMAGE_REPO }}:${TAG}"
+            exit 1
+          fi
+
+          IMAGE_REF="${{ vars.ACR_NAME }}.azurecr.io/${{ env.IMAGE_REPO }}@${DIGEST}"
+          echo "image_ref=${IMAGE_REF}" >> $GITHUB_OUTPUT
+          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          echo "Image: ${IMAGE_REF}"
+
+      # -- Deploy ephemeral ACI instance -------------------------------------
+      - name: Deploy ACI link-test container
+        id: aci_create
+        run: |
+          az container create \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ env.ACI_NAME }} \
+            --image ${{ steps.image.outputs.image_ref }} \
+            --registry-login-server ${{ vars.ACR_NAME }}.azurecr.io \
+            --assign-identity \
+            --ports ${{ env.PORT }} \
+            --ip-address Public \
+            --os-type Linux \
+            --cpu 1 \
+            --memory 2 \
+            --restart-policy Never \
+            --environment-variables \
+              PYTHONPATH=/app \
+              LOG_LEVEL=INFO \
+              AGENT_ENTRY_POINT=default \
+              AGENT_SERVICE_PORT=${{ env.PORT }} \
+            --output none
+
+          echo "ACI instance ${{ env.ACI_NAME }} created"
+
+      # -- Wait for container to get a public IP -----------------------------
+      - name: Get ACI public IP
+        id: aci_ip
+        run: |
+          for i in $(seq 1 12); do
+            IP=$(az container show \
+              --resource-group ${{ vars.RG_NAME }} \
+              --name ${{ env.ACI_NAME }} \
+              --query "ipAddress.ip" \
+              --output tsv 2>/dev/null)
+            if [ -n "${IP}" ] && [ "${IP}" != "null" ]; then
+              echo "ip=${IP}" >> $GITHUB_OUTPUT
+              echo "Container IP: ${IP}"
+              break
+            fi
+            echo "Waiting for IP... (${i}/12)"
+            sleep 5
+          done
+
+          if [ -z "${IP}" ]; then
+            echo "::error::Container did not receive a public IP"
+            exit 1
+          fi
+
+      # -- Stream container startup logs -------------------------------------
+      # Shows import chain resolution, FAS adapter init, and server bind
+      - name: Stream startup logs
+        run: |
+          echo "=== Container startup logs ==="
+          az container logs \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ env.ACI_NAME }} \
+            --follow &
+          LOG_PID=$!
+
+          # Give the container 60s to start then kill the log tail
+          sleep 60
+          kill $LOG_PID 2>/dev/null || true
+          echo "=== End startup logs ==="
+
+      # -- Health probe ------------------------------------------------------
+      - name: Probe health endpoint
+        id: health
+        run: |
+          IP="${{ steps.aci_ip.outputs.ip }}"
+          URL="http://${IP}:${{ env.PORT }}/health"
+          echo "Probing: ${URL}"
+
+          for i in $(seq 1 20); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --connect-timeout 5 --max-time 10 "${URL}" 2>/dev/null || echo "000")
+
+            echo "  [attempt ${i}] HTTP ${STATUS}"
+
+            if [ "${STATUS}" = "200" ]; then
+              echo "health_ok=true" >> $GITHUB_OUTPUT
+              echo "Health endpoint: OK (HTTP 200)"
+              break
+            fi
+
+            sleep 5
+          done
+
+          if [ "${STATUS}" != "200" ]; then
+            echo "::error::Health endpoint did not return 200 after 20 attempts"
+            echo "health_ok=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      # -- Runtime contract verification -------------------------------------
+      # Verify FounderAgent routing contract via a direct Python invocation
+      # inside the running container - confirms .pyc symbols resolve correctly
+      - name: Verify FounderAgent routing contract
+        id: contract
+        run: |
+          az container exec \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ env.ACI_NAME }} \
+            --exec-command "python -c \
+              from Founder import FounderAgent; \
+              a = FounderAgent(); \
+              mro = [c.__name__ for c in a.__class__.__mro__]; \
+              print('MRO:', mro); \
+              assert a.get_default_routing_tag() == '[COMPLETE]', \
+                f'Wrong default tag: {a.get_default_routing_tag()}'; \
+              tags = a.get_routing_tags(); \
+              assert '[ROUTE:CFO]' in tags, 'ROUTE:CFO missing'; \
+              assert '[ROUTE:CMO]' in tags, 'ROUTE:CMO missing'; \
+              assert '[HANDBACK]' not in tags, 'HANDBACK must not be in orchestrator tags'; \
+              print('Routing contract: OK'); \
+              print('Default tag:', a.get_default_routing_tag()); \
+              print('Allowed tags:', tags); \
+              "
+
+      # -- Final log capture -------------------------------------------------
+      - name: Capture final container logs
+        if: always()
+        run: |
+          echo "=== Final container logs ==="
+          az container logs \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ env.ACI_NAME }} \
+            2>/dev/null || echo "(no logs available)"
+          echo "=== End container logs ==="
+
+      # -- Teardown - always runs --------------------------------------------
+      - name: Delete ACI instance
+        if: always()
+        run: |
+          az container delete \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ env.ACI_NAME }} \
+            --yes \
+            --no-wait
+          echo "ACI instance ${{ env.ACI_NAME }} deletion initiated"
+
+      # -- Summary -----------------------------------------------------------
+      - name: Summary
+        if: always()
+        run: |
+          HEALTH="${{ steps.health.outputs.health_ok || 'false' }}"
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## Founder Agent - Link Test
+
+          | | |
+          |--|--|
+          | **Image** | ${{ steps.image.outputs.image_ref }} |
+          | **ACI instance** | ${{ env.ACI_NAME }} |
+          | **Health endpoint** | ${HEALTH} |
+          | **Routing contract** | ${{ steps.contract.outcome }} |
+          EOF
