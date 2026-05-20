@@ -29,7 +29,7 @@ jobs:
     name: Integration Test
     runs-on: ubuntu-latest
     environment: staging
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     if: >
       github.event_name == 'workflow_dispatch' ||
@@ -62,10 +62,16 @@ jobs:
           python-version: "3.12"
 
       - name: Install SDK
-        run: pip install "azure-ai-projects>=2.1.0" azure-identity --quiet
+        run: pip install "azure-ai-projects>=2.1.0" azure-identity requests --quiet
 
       - name: Inspect agent (diagnostic)
         run: python .github/scripts/inspect_agent.py
+
+      - name: Start agent deployment
+        if: inputs.inspect_only != 'true'
+        env:
+          START_TIMEOUT: "300"
+        run: python .github/scripts/start_agent.py
 
       - name: Run integration tests
         if: inputs.inspect_only != 'true'
