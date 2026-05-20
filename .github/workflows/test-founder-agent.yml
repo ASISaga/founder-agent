@@ -15,11 +15,6 @@ on:
         description: "Run diagnostic inspection only, skip tests"
         required: false
         default: "false"
-  workflow_run:
-    workflows: ["Deploy Founder Agent to Foundry"]
-    types: [completed]
-    branches: [main]
-
 concurrency:
   group: test-founder-agent
   cancel-in-progress: false
@@ -31,9 +26,6 @@ jobs:
     environment: staging
     timeout-minutes: 25
 
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
 
     permissions:
       id-token: write
@@ -62,10 +54,36 @@ jobs:
           python-version: "3.12"
 
       - name: Install SDK
-        run: pip install "azure-ai-projects>=2.1.0" azure-identity --quiet
+        run: pip install "azure-ai-projects>=2.1.0" azure-identity requests --quiet
 
       - name: Inspect agent (diagnostic)
         run: python .github/scripts/inspect_agent.py
+
+      - name: Check container status (diagnostic)
+        run: |
+          python - << 'EOF'
+          import os, requests
+          from azure.identity import DefaultAzureCredential
+
+          endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
+          agent    = os.environ["AGENT_NAME"]
+          version  = os.environ["AGENT_VERSION"]
+
+          token = DefaultAzureCredential().get_token("https://ai.azure.com/.default").token
+          headers = {
+              "Authorization": f"Bearer {token}",
+              "Foundry-Features": "HostedAgents=V1Preview",
+          }
+
+          for label, path in [
+              ("Container status", f"agents/{agent}/versions/{version}/containers/default"),
+              ("Container ops",    f"agents/{agent}/versions/{version}/containers/default/operations"),
+          ]:
+              url = f"{endpoint}/{path}?api-version=v1"
+              r = requests.get(url, headers=headers, timeout=30)
+              print(f"\n=== {label} === HTTP {r.status_code}")
+              print(r.text[:800])
+          EOF
 
       - name: Start agent deployment
         if: inputs.inspect_only != 'true'

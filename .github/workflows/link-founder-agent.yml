@@ -35,10 +35,6 @@ name: Link Founder Agent
 # =============================================================================
 
 on:
-  workflow_run:
-    workflows: ["Build Founder Agent"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       image_tag:
@@ -61,9 +57,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
 
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
 
     permissions:
       id-token: write
