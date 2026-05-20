@@ -28,7 +28,7 @@ on:
       agent_name:
         description: "Foundry agent name (default: founder-mvp)"
         required: false
-        default: "founder-mvp"
+        default: "Founder"
       dry_run:
         description: "Dry run - resolve digest and validate without deploying"
         required: false
