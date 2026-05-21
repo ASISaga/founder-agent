@@ -101,11 +101,16 @@ jobs:
       - name: Deploy ACI link-test container
         id: aci_create
         run: |
+          # Get ACR token for image pull
+          ACR_TOKEN=$(az acr login             --name ${{ vars.ACR_NAME }}             --expose-token             --query accessToken             --output tsv)
+
           az container create \
             --resource-group ${{ vars.RG_NAME }} \
             --name ${{ env.ACI_NAME }} \
             --image ${{ steps.image.outputs.image_ref }} \
             --registry-login-server ${{ vars.ACR_NAME }}.azurecr.io \
+            --registry-username 00000000-0000-0000-0000-000000000000 \
+            --registry-password "${ACR_TOKEN}" \
             --assign-identity \
             --ports ${{ env.PORT }} \
             --ip-address Public \
