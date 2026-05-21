@@ -34,6 +34,7 @@ ARG LAYER_NAME
 ARG PACKAGE_DIR
 ARG PACKAGE_MODULE
 ARG REPO_NAME
+ENV PACKAGE_MODULE=${PACKAGE_MODULE}
 
 # ── Labels ────────────────────────────────────────────────────────────────────
 LABEL org.opencontainers.image.vendor="ASI Saga"
@@ -63,4 +64,4 @@ print(f'Layer ${LAYER_NUMBER} (${LAYER_NAME}): 0 .py, {len(pyc)} .pyc. OK') \
 "
 
 USER aosuser
-CMD ["python", "-m", "${PACKAGE_MODULE}"]
+CMD python -m ${PACKAGE_MODULE}

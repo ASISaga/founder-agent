@@ -239,8 +239,7 @@ jobs:
           az container delete \
             --resource-group ${{ vars.RG_NAME }} \
             --name ${{ env.ACI_NAME }} \
-            --yes \
-            --no-wait
+            --yes
           echo "ACI instance ${{ env.ACI_NAME }} deletion initiated"
 
       # -- Summary -----------------------------------------------------------
