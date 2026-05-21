@@ -123,7 +123,6 @@ jobs:
               LOG_LEVEL=INFO \
               AGENT_ENTRY_POINT=default \
               AGENT_SERVICE_PORT=${{ env.PORT }} \
-            --output none
 
           echo "ACI instance ${{ env.ACI_NAME }} created"
 
@@ -239,14 +238,14 @@ jobs:
           az container delete \
             --resource-group ${{ vars.RG_NAME }} \
             --name ${{ env.ACI_NAME }} \
-            --yes
-          echo "ACI instance ${{ env.ACI_NAME }} deleted"
+            --yes \
+            --no-wait
+          echo "ACI instance ${{ env.ACI_NAME }} deletion initiated"
 
       # -- Summary -----------------------------------------------------------
       - name: Summary
         if: always()
         run: |
-          HEALTH="${{ steps.health.outputs.health_ok || 'false' }}"
           cat >> $GITHUB_STEP_SUMMARY << EOF
           ## Founder Agent - Link Test
 
@@ -254,6 +253,6 @@ jobs:
           |--|--|
           | **Image** | ${{ steps.image.outputs.image_ref }} |
           | **ACI instance** | ${{ env.ACI_NAME }} |
-          | **Health endpoint** | ${HEALTH} |
+          | **Contract check** | ${{ steps.contract.outcome }} |
           | **Routing contract** | ${{ steps.contract.outcome }} |
           EOF
