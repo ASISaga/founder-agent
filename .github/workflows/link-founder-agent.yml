@@ -66,10 +66,10 @@ jobs:
         run: echo "ACI_NAME=founder-link-${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Azure login
-        uses: azure/login@v2
+        uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -239,7 +239,8 @@ jobs:
           az container delete \
             --resource-group ${{ vars.RG_NAME }} \
             --name ${{ env.ACI_NAME }} \
-            --yes
+            --yes \
+            --no-wait
           echo "ACI instance ${{ env.ACI_NAME }} deletion initiated"
 
       # -- Summary -----------------------------------------------------------
