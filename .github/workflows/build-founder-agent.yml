@@ -28,8 +28,8 @@ jobs:
       - name: Lint
         run: |
           pip install pylint mypy --quiet
-          pylint src/Founder/ --fail-under=8 || true
-          mypy src/Founder/ --ignore-missing-imports || true
+          pylint src/founder_agent/ --fail-under=8 || true
+          mypy src/founder_agent/ --ignore-missing-imports || true
 
       - name: Test
         run: |
@@ -43,9 +43,9 @@ jobs:
 
       - name: Compile source to bytecode
         run: |
-          mkdir -p compiled/Founder
-          cp -r src/Founder/ compiled/Founder/
-          python -m compileall -b -j0 -q compiled/Founder/
+          mkdir -p compiled/founder_agent
+          cp -r src/founder_agent/ compiled/founder_agent/
+          python -m compileall -b -j0 -q compiled/founder_agent/
           find compiled/ -name "*.py" -delete
           PYC=$(find compiled/ -name "*.pyc" | wc -l)
           PY=$(find compiled/ -name "*.py" | wc -l)
@@ -83,8 +83,8 @@ jobs:
             --build-arg PARENT_DIGEST=${{ steps.parent.outputs.digest }} \
             --build-arg LAYER_NUMBER=5 \
             --build-arg LAYER_NAME=founder-agent \
-            --build-arg PACKAGE_DIR=Founder \
-            --build-arg PACKAGE_MODULE=Founder \
+            --build-arg PACKAGE_DIR=founder_agent \
+            --build-arg PACKAGE_MODULE=founder_agent \
             --build-arg REPO_NAME=ASISaga/founder-agent \
             --platform  linux/amd64 \
             .

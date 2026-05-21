@@ -201,7 +201,7 @@ jobs:
             --resource-group ${{ vars.RG_NAME }} \
             --name ${{ env.ACI_NAME }} \
             --exec-command "python -c \
-              from Founder import FounderAgent; \
+              from founder_agent import FounderAgent; \
               a = FounderAgent(); \
               mro = [c.__name__ for c in a.__class__.__mro__]; \
               print('MRO:', mro); \
