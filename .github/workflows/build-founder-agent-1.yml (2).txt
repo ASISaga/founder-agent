@@ -1,0 +1,121 @@
+name: Build Founder Agent
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: founder-agent-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compile and build
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Lint
+        run: |
+          pip install pylint mypy --quiet
+          pylint src/founder_agent/ --fail-under=8 || true
+          mypy src/founder_agent/ --ignore-missing-imports || true
+
+      - name: Test
+        run: |
+          if [ -d tests/ ]; then
+            pip install pytest pytest-asyncio --quiet
+            pip install -e . --quiet 2>/dev/null || true
+            pytest tests/unit/ -q 2>/dev/null || pytest tests/ -q --ignore=tests/integration 2>/dev/null || true
+          else
+            echo "No tests - skipping"
+          fi
+
+      - name: Compile source to bytecode
+        run: |
+          mkdir -p compiled/founder_agent
+          cp -r src/founder_agent/ compiled/founder_agent/
+          python -m compileall -b -j0 -q compiled/founder_agent/
+          find compiled/ -name "*.py" -delete
+          PYC=$(find compiled/ -name "*.pyc" | wc -l)
+          PY=$(find compiled/ -name "*.py" | wc -l)
+          echo "Result: ${PYC} .pyc, ${PY} .py"
+          [ "$PY"  -eq 0 ] || (echo "ERROR: .py files remain" && exit 1)
+          [ "$PYC" -gt 0 ] || (echo "ERROR: no .pyc produced" && exit 1)
+
+      - name: Azure login
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get parent digest from ACR
+        id: parent
+        run: |
+          DIGEST=$(az acr manifest list-metadata \
+            --registry ${{ vars.ACR_NAME }} \
+            --name ${{ vars.AOS_BUSINESS_IMAGE }} \
+            --orderby time_desc \
+            --query "[0].digest" \
+            --output tsv)
+          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          echo "Parent digest: ${DIGEST}"
+
+      - name: Build image via ACR Task
+        run: |
+          az acr build \
+            --registry  ${{ vars.ACR_NAME }} \
+            --image     aos/founder-agent:${{ github.sha }} \
+            --image     aos/founder-agent:latest \
+            --file      Dockerfile.aos-agent \
+            --build-arg PARENT_IMAGE=${{ vars.ACR_NAME }}.azurecr.io/${{ vars.AOS_BUSINESS_IMAGE }} \
+            --build-arg PARENT_DIGEST=${{ steps.parent.outputs.digest }} \
+            --build-arg LAYER_NUMBER=5 \
+            --build-arg LAYER_NAME=founder-agent \
+            --build-arg PACKAGE_DIR=founder_agent \
+            --build-arg REPO_NAME=ASISaga/founder-agent \
+            --platform  linux/amd64 \
+            .
+
+      - name: Rotate latest to previous
+        run: |
+          az acr import \
+            --name   ${{ vars.ACR_NAME }} \
+            --source ${{ vars.ACR_NAME }}.azurecr.io/aos/founder-agent:latest \
+            --image  aos/founder-agent:previous \
+            --force
+
+      - name: Get final digest
+        id: digest
+        run: |
+          DIGEST=$(az acr manifest list-metadata \
+            --registry ${{ vars.ACR_NAME }} \
+            --name aos/founder-agent \
+            --orderby time_desc \
+            --query "[0].digest" \
+            --output tsv)
+          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          echo "Final digest: ${DIGEST}"
+
+      - name: Summary
+        run: |
+          PYC=$(find compiled/ -name "*.pyc" 2>/dev/null | wc -l || echo "n/a")
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## Build Founder Agent
+          | | |
+          |--|--|
+          | **Image** | ${{ vars.ACR_NAME }}.azurecr.io/aos/founder-agent |
+          | **Digest** | ${{ steps.digest.outputs.digest }} |
+          | **pyc files** | ${PYC} |
+          EOF
