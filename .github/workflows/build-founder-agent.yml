@@ -1,6 +1,14 @@
 name: Build Founder Agent
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "src/founder_agent/**"
+      - "Dockerfile.aos-agent"
+      - ".github/workflows/build-founder-agent.yml"
+  repository_dispatch:
+    types: [manifest-update]
   workflow_dispatch:
 
 concurrency:
