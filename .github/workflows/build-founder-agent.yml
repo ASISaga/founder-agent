@@ -52,7 +52,7 @@ jobs:
       - name: Compile source to bytecode
         run: |
           mkdir -p compiled/founder_agent
-          cp -r src/founder_agent/ compiled/founder_agent/
+          cp -r src/founder_agent/. compiled/founder_agent/
           python -m compileall -b -j0 -q compiled/founder_agent/
           find compiled/ -name "*.py" -delete
           PYC=$(find compiled/ -name "*.pyc" | wc -l)
