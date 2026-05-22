@@ -119,7 +119,8 @@ jobs:
             --memory 2 \
             --restart-policy Never \
             --environment-variables \
-              PYTHONPATH=/app \
+              PYTHONPATH=/app:/app/lib/python3.12/site-packages \
+              AGENT_PACKAGE=founder_agent \
               LOG_LEVEL=INFO \
               AGENT_ENTRY_POINT=default \
               AGENT_SERVICE_PORT=${{ env.PORT }} \
